@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Jetpack.cs" />
+     <Compile Include="Assets\Scripts\magnetpickme.cs" />
+     <Compile Include="Assets\Scripts\PickMe.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/user/Desktop/cosas agus/universidad/UCM/Segundo/PVLI/Prototipos/Prototipando/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

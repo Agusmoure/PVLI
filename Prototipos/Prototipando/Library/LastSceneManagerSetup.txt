@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Jetpack.unity
+- path: Assets/Scenes/ImanConsuminbles.unity
   isLoaded: 1
   isActive: 1
