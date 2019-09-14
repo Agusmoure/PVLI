@@ -22,11 +22,15 @@ public class Jetpack : MonoBehaviour {
     void FixedUpdate()
     {
         if (Input.GetAxis("Vertical") > 0)
-            if (impulse && rigi.velocity.y < maxSpeed)
+            if (/*!impulse &&*/ rigi.velocity.y < maxSpeed && rigi.gravityScale>0)
             {
                 rigi.AddForce(new Vector2(0, impulseForce), ForceMode2D.Impulse);
             }
-            else
+        else if (/*impulse &&*/ rigi.velocity.y < maxSpeed && rigi.gravityScale <0)
+            {
+                rigi.AddForce(new Vector2(0, -impulseForce), ForceMode2D.Impulse);
+            }
+            else 
             {
                 rigi.velocity = new Vector2(rigi.velocity.x, speed);
             }

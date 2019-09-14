@@ -519,6 +519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedX: 20
+  gravMax: 3
+  cambioGrav: 2
+  gravMin: 1
 --- !u!114 &943146986
 MonoBehaviour:
   m_ObjectHideFlags: 0
