@@ -33,11 +33,25 @@
     };
 
     var player;
+    var velX=600;
+    var velXEst=160;
+    var derecha=true;
+     const enumMovibilidad={
+         NORMAL:'normal',
+         JETPACK:'jetpack',
+         ANTIGRAVEDAD:'antigravedad',
+         JETPACKINV:'jetpackinv',
+         CATAPULTA:'catapulta',
+         BOMBA:'bomba',
+         GANCHO:'gancho',
+     };
+    var movilidadActivo=enumMovilidad.NORMAL;
     var stars;
     var platforms;
     var cursors;
     var score = 0;
     var scoreText;
+    var gravedad = 10000;
 
     var game = new Phaser.Game(config);
 
@@ -111,30 +125,70 @@
 
     function update ()
     {
+
+        if (!cursors.left.isDown && !cursors.right.isDown) 
+        {
+          if(derecha)
+          player.setVelocityX(velXEst);
+          if(!derecha)
+        player.setVelocityX(-velXEst);
+        }
+
+
         if (cursors.left.isDown)
         {
-            player.setVelocityX(-160);
-
+            player.setVelocityX(-velX);
+            derecha=false;
             player.anims.play('left', true);
         }
         else if (cursors.right.isDown)
         {
-            player.setVelocityX(160);
+            player.setVelocityX(velX);
+            derecha=true;
 
             player.anims.play('right', true);
         }
-        else
-        {
-            player.setVelocityX(0);
 
-            player.anims.play('turn');
+        //Esto no nos sirve porque al no tocar ninguna tecla se quedará quieto y queremos que "ande" al no tocar nada
+        // else
+        // {
+        //     player.setVelocityX(0);
+
+        //     player.anims.play('turn');
+        // }
+        if (Phaser.Input.Keyboard.JustDown(cursors.down)){
+            switch(movilidadActivo){
+                case enumMovibilidad.NORMAL:
+                movilidadActivo=enumMovibilidad.ANTIGRAVEDAD;
+                break;
+                case enumMovibilidad.ANTIGRAVEDAD:
+                movilidadActivo=enumMovibilidad.NORMAL;
+                break;
+                default:
+                break;
+
+            
+            }
         }
 
-        if (cursors.up.isDown && player.body.touching.down)
+        if (Phaser.Input.Keyboard.JustDown(cursors.up))// && player.body.touching.down)
         {
-            player.setVelocityY(-330);
+        
+            switch(movilidadActivo){
+                case enumMovibilidad.NORMAL:
+              player.setVelocityY(-330);
+                break;
+                case enumMovibilidad.ANTIGRAVEDAD:
+                gravedad*=-1;
+            player.body.setGravityY(gravedad);
+                break;
+                default:
+                break;
+            
+            
         }
     }
+    
 
     function collectStar (player, star)
     {
