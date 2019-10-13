@@ -21,7 +21,7 @@
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 300 },
+                gravity: { y: 500 },
                 debug: false
             }
         },
@@ -45,13 +45,18 @@
          BOMBA:'bomba',
          GANCHO:'gancho',
      };
-    var movilidadActivo=enumMovilidad.NORMAL;
+    //var movilidadActivo=enumMovilidad.NORMAL;
+    var modificador='normal';
     var stars;
     var platforms;
+    var antigravedad;
+    var normal;
     var cursors;
     var score = 0;
     var scoreText;
     var gravedad = 10000;
+    var potJetpack=0;
+    var bomba;
 
     var game = new Phaser.Game(config);
 
@@ -66,17 +71,22 @@
 
     function create ()
     {
+        //this.cameras.main,StartFollow();
         this.add.image(400, 300, 'sky');
 
         platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+                    antigravedad=this.physics.add.sprite(200,200,'bomb');
+                    normal=this.physics.add.sprite(400,400,'bomb');
 
+        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
         platforms.create(600, 400, 'ground');
         platforms.create(50, 250, 'ground');
         platforms.create(750, 220, 'ground');
 
         player = this.physics.add.sprite(100, 450, 'dude');
+        bomba = this.physics.add.sprite(100,350,'bomb');
+        //player.modif='normal';
 
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
@@ -103,6 +113,7 @@
 
         cursors = this.input.keyboard.createCursorKeys();
 
+
         stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
@@ -119,8 +130,14 @@
 
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(stars, platforms);
-
+        this.physics.add.collider(normal,platforms);
+        this.physics.add.collider(antigravedad,platforms);
+       // this.physics.add.collider(bomba,platforms);
+        
+        this.physics.add.overlap(bomba,platforms,boom,null,this);
         this.physics.add.overlap(player, stars, collectStar, null, this);
+        this.physics.add.overlap(player,normal,modifierNormal,null,this);
+        this.physics.add.overlap(player,antigravedad,modifierAntigravedad,null,this);
     }
 
     function update ()
@@ -141,7 +158,7 @@
             derecha=false;
             player.anims.play('left', true);
         }
-        else if (cursors.right.isDown)
+         else if (cursors.right.isDown)
         {
             player.setVelocityX(velX);
             derecha=true;
@@ -149,44 +166,32 @@
             player.anims.play('right', true);
         }
 
-        //Esto no nos sirve porque al no tocar ninguna tecla se quedará quieto y queremos que "ande" al no tocar nada
-        // else
-        // {
-        //     player.setVelocityX(0);
-
-        //     player.anims.play('turn');
+        //////////////////////////////////////Implementacion básica del jetpack
+        //  if(cursors.up.isDown && potJetpack<200){
+        // player.body.setGravityY(gravedad*0.6);  // pongo otra gravedad que me facilite las "fuerzas"
+        // potJetpack+=20;
+        // player.setVelocityY(-400-potJetpack); //para que cuanto más le des al jetpack menos te cueste eevarte
         // }
-        if (Phaser.Input.Keyboard.JustDown(cursors.down)){
-            switch(movilidadActivo){
-                case enumMovibilidad.NORMAL:
-                movilidadActivo=enumMovibilidad.ANTIGRAVEDAD;
-                break;
-                case enumMovibilidad.ANTIGRAVEDAD:
-                movilidadActivo=enumMovibilidad.NORMAL;
-                break;
-                default:
-                break;
+        // else{  // Si he dejado de usar el jetpack tendré una fuerza hacia arriba que me impedirá bajar rápido
 
-            
-            }
-        }
+        //     if(potJetpack>0){
+        //     potJetpack-=10;  
+        //     player.setVelocityY(player.body.velocity.y-(potJetpack%100));
+        //     }          
+        // }
 
+
+
+        /////////////////////////////////////Implementacion del salto normal
+        //player.setVelocityY(-330);
+        /////////////////////////////////////Implementacion de la antigravedad
+        //gravedad*=-1;
+        // player.body.setGravityY(gravedad);
         if (Phaser.Input.Keyboard.JustDown(cursors.up))// && player.body.touching.down)
         {
-        
-            switch(movilidadActivo){
-                case enumMovibilidad.NORMAL:
-              player.setVelocityY(-330);
-                break;
-                case enumMovibilidad.ANTIGRAVEDAD:
-                gravedad*=-1;
-            player.body.setGravityY(gravedad);
-                break;
-                default:
-                break;
-            
             
         }
+        
     }
     
 
@@ -196,6 +201,26 @@
 
         score += 10;
         scoreText.setText('Score: ' + score);
+    }
+    
+    function boom(bomba,platform){
+        if(player.x-bomba.x<50 || player.y-bomba.y<50){
+        
+        player.setVelocityY();
+        bomba.disableBody(true,true);
+        }
+
+    }
+
+    function modifierNormal(player,normal){
+        normal.disableBody(true,true);
+        player.modif=normal;
+    }
+
+    function modifierAntigravedad(player,antigravedad){
+
+        antigravedad.disableBody(true,true);
+                player.modif=antigravedad;
     }
 
 </script>
