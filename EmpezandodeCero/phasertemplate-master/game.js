@@ -1,4 +1,5 @@
 import Player from "./player.js";
+import JetPack from "./jetpack.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -6,17 +7,51 @@ export default class Game extends Phaser.Scene {
   }
   preload() {
     this.load.image('sky', 'assets/sky.png');
+    this.load.image('ground', 'assets/platform.png');
+        this.load.image('star', 'assets/star.png');
+        this.load.image('bomb', 'assets/bomb.png');
+        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     
   }
-
+  
   create() {
     this.player = new Player(this);
+    this.jetpack = new JetPack(this);
+    this.add.image(10, 10, 'sky');
+   //Creo plataformas random
+    this.platforms = this.physics.add.staticGroup();
+   this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this.platforms.create(600, 400, 'ground');
+    this.platforms.create(50, 250, 'ground');
+    this.platforms.create(750, 220, 'ground');
+    //A pesar de que creo un player a partir de sprite tengo que añadirle un sprite para renderizarlo
+    this.player.sprite=this.physics.add.sprite(100, 450, 'dude');
+    this.jetpack.sprite=this.physics.add.sprite(150,450,'star');
+    //Si quiero hacer algo con el player se lo tendre que hacer a su sprite
+    this.player.sprite.setCollideWorldBounds(true);
 
-    this.add.image(10,10,'sky');
+    this.physics.add.collider(this.player.sprite, this.platforms);
+    this.physics.add.collider(this.jetpack.sprite,this.platforms);
+    this.physics.add.overlap(this.player.sprite,this.jetpack.sprite,this.player.changeModifier,null,this)
+
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   update(time, delta) {    
-    //this.add.sprite()
-    this.player.changeG();
+    if (this.cursors.right.isDown){
+      this.player.moveRight();
+    }
+    else if(this.cursors.left.isDown){
+this.player.moveLeft();
+    }
+    else{
+      this.player.dontMove();
+    }
+
+    if(this.cursors.up.isDown){
+      this.player.moveUp();
+    }
+
+    
   }
 }
