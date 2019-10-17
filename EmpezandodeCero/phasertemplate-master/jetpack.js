@@ -9,6 +9,11 @@ export default class JetPack extends Phaser.GameObjects.Sprite{
         this.sprite = undefined;
     }
 
+changeModifier(){
+
+
+//this.sprite.disableBody(true,true);
+}
 
 
 }

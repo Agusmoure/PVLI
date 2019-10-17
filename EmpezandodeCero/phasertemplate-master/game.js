@@ -32,12 +32,20 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.player.sprite, this.platforms);
     this.physics.add.collider(this.jetpack.sprite,this.platforms);
-    this.physics.add.overlap(this.player.sprite,this.jetpack.sprite,this.player.changeModifier,null,this)
+    //Puedo hacer llamadas a varios métodos en un mismo evento overlap
+    console.log(this.player.speedY);
+  
+    
+    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifier,this.jetpack.changeModifier,null,this)
+   
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
-  update(time, delta) {    
+  update(time, delta) {   
+    
+    this.player.changeModifier(100);
+
     if (this.cursors.right.isDown){
       this.player.moveRight();
     }
@@ -54,4 +62,6 @@ this.player.moveLeft();
 
     
   }
+
+  
 }

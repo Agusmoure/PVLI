@@ -1,24 +1,22 @@
 export default class Player extends Phaser.GameObjects.Sprite{
 constructor(scene){
-    
 
     let x=100;
     let y=100;
     super(scene,x,y,'player');
 this.aire=false;
-this.speedY =50;
 this.vehicle=false;
-
 this.speedX=160;
 this.modifier='normal';
-
+this.speedY=60;
 this.sprite = undefined;
-
+//this.changeModifier();
 }
 
 changeModifier(){
-//this.modifier=newModifier;
-console.log("kurwa");
+
+    //this.speedY = 1000;
+
 }
 moveRight(){
     this.sprite.setVelocityX(this.speedX);
@@ -31,9 +29,10 @@ dontMove(){
 }
 moveUp(){
     if(this.modifier=='normal')
-    this.sprite.setVelocityY(-300);
+    this.sprite.setVelocityY(-this.speedY);
     else if(this.modifier=='jetpack')
-    this.sprite.setVelocityY(-300);
+    this.sprite.setVelocityY(-500);
+ 
 }
 changeG(){
     this.sprite.body.gravity.y();
