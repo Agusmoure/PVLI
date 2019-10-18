@@ -2,17 +2,18 @@ export default class JetPack extends Phaser.GameObjects.Sprite{
     constructor(scene){
         
     
-        let x=100;
-        let y=100;
-        super(scene,x,y,'jetpack');
-    
-        this.sprite = undefined;
+        let x=200;
+        let y=200;
+        super(scene,x,y,'star');
+        scene.add.existing(this);    
+    scene.physics.add.existing(this);      
     }
 
 changeModifier(){
 
 
-//this.sprite.disableBody(true,true);
+this.body.setVelocityY(-100);
+//this.body.disableBody(true,true);
 }
 
 
