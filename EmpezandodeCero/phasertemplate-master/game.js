@@ -17,9 +17,9 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
+    this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this);
     this.jetpack = new JetPack(this);
-    this.add.image(10, 10, 'sky').setScale(3.5);
     this.enemy = new Enemy(this,this.player);
 
    //Creo plataformas random
