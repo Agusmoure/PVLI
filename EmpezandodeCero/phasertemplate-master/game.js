@@ -1,6 +1,6 @@
 import Player from "./player.js";
 import JetPack from "./jetpack.js";
-//import Clock from "";
+import Enemy from "./enemy.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -20,6 +20,7 @@ export default class Game extends Phaser.Scene {
     this.player = new Player(this);
     this.jetpack = new JetPack(this);
     this.add.image(10, 10, 'sky').setScale(3.5);
+    this.enemy = new Enemy(this,this.player);
 
    //Creo plataformas random
     this.platforms = this.physics.add.staticGroup();
@@ -32,11 +33,13 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.jetpack,this.platforms);
+    this.physics.add.collider(this.enemy,this.platforms);
+    
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     console.log(this.player.speedY);
   
     
-    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifier,null,this.player)
+    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player)
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack)
 
 
@@ -44,7 +47,8 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {   
-    //this.player.changeModifier(100);
+    
+    this.enemy.followPlayer();
 
     if (this.cursors.right.isDown){
       this.player.moveRight();

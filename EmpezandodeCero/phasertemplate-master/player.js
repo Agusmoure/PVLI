@@ -5,7 +5,6 @@ constructor(scene){
     let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
-    
     scene.physics.add.existing(this);
     
 this.body.setCollideWorldBounds(true);
@@ -16,12 +15,22 @@ this.speedY=60;
 this.speedX=150;
 }
 
-changeModifier(newModifier){
-
-    console.log(this.modifier);
-   this.modifier='jetpack';
-   console.log(this.modifier);
+changeModifierNormal(){
+    this.modifier='normal';
 }
+changeModifierJetPack(){
+   this.modifier='jetpack';
+}
+changeModifierAntigravedad(){
+    this.modifier='antigravedad';
+ }
+ changeModifierCatapulta(){
+    this.modifier='catapulta';
+ }
+ changeModifierGancho(){
+    this.modifier='gancho';
+ }
+ 
 moveRight(){
     this.body.setVelocityX(this.speedX);
 }
