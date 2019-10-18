@@ -1,5 +1,6 @@
 import Player from "./player.js";
 import JetPack from "./jetpack.js";
+//import Clock from "";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -11,13 +12,14 @@ export default class Game extends Phaser.Scene {
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
         this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+       //var clock =new clock(this);
     
   }
   
   create() {
     this.player = new Player(this);
     this.jetpack = new JetPack(this);
-    this.add.image(10, 10, 'sky');
+    this.add.image(10, 10, 'sky').setScale(3.5);
    //Creo plataformas random
     this.platforms = this.physics.add.staticGroup();
    this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
@@ -43,8 +45,8 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {   
-    
-    this.player.changeModifier(100);
+    console.log(this.player.getModifier())
+    //this.player.changeModifier(100);
 
     if (this.cursors.right.isDown){
       this.player.moveRight();
@@ -59,7 +61,6 @@ this.player.moveLeft();
     if(this.cursors.up.isDown){
       this.player.moveUp();
     }
-
     
   }
 

@@ -13,9 +13,13 @@ this.sprite = undefined;
 //this.changeModifier();
 }
 
-changeModifier(){
+changeModifier(newModifier){
 
     //this.speedY = 1000;
+    if(this.modifier=="normal"){
+this.modifier=newModifier;
+    }
+    else this.modifier="normal";
 
 }
 moveRight(){
@@ -38,22 +42,26 @@ changeG(){
     this.sprite.body.gravity.y();
 }
 aumentSpeed(){
-    speedX *=4;
+    this.speedX *=4;
 }
 resetSpeed(){
-    speedX=160;
+    this.speedX=160;
 }
 getSpeedX(){
-    return speedX;
+    return this.speedX;
 }
 getSpeedY(){
-    return speedY;
+    return this.speedY;
 }
 setVehicle(haveVehicle){
-    vehicle=haveVehicle;
+    this.vehicle=haveVehicle;
 }
 getVehicle(){
-    return vehicle;
+    return this.vehicle;
+}
+
+getModifier(){
+    return this.modifier;
 }
 
 }
