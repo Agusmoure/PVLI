@@ -47,6 +47,10 @@ moveUp(){
     this.body.setVelocityY(-500);
  
 }
+
+caught(){
+    
+}
 changeG(){
     this.body.gravity.y();
 }
