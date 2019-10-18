@@ -8,7 +8,6 @@ constructor(scene){
     scene.physics.add.existing(this);
     
 this.body.setCollideWorldBounds(true);
-this.jump=false;
 this.vehicle=false;
 this.modifier='normal';
 this.speedY=800;
@@ -42,14 +41,14 @@ dontMove(){
 }
 moveUp(){
     if( this.body.touching.down&&this.modifier=='normal'){
-        this.jump=true;
     this.body.setVelocityY(-this.speedY);}
     else if(this.modifier==='jetpack')
     this.body.setVelocityY(-500);
  
 }
-ResetJump(){
-    this.jump=false;
+
+caught(){
+    
 }
 changeG(){
     this.body.gravity.y();

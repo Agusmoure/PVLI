@@ -28,6 +28,12 @@ export default class Game extends Phaser.Scene {
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+
+    
+    //Suelo para el alcaide
+    //this.floor = this.physics.add.staticGroup();
+    //this.physics.add.collider(this.enemy, this.floor);
+
     
     
 
@@ -39,8 +45,10 @@ export default class Game extends Phaser.Scene {
     console.log(this.player.speedY);
   
     
-    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player)
-    this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack)
+    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
+    this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
+    this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
+    
 
 
     this.cursors = this.input.keyboard.createCursorKeys();
