@@ -11,8 +11,7 @@ export default class JetPack extends Phaser.GameObjects.Sprite{
 
 changeModifier(){
 
-
-this.body.setVelocityY(-100);
+this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
 //this.body.disableBody(true,true);
 }
 
