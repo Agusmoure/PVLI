@@ -17,6 +17,7 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
+    this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this);
     this.jetpack = new JetPack(this);
@@ -71,7 +72,7 @@ export default class Game extends Phaser.Scene {
     if(this.cursors.up.isDown){
       this.player.moveUp();
     }
-    
+    this.camera.startFollow(this.player);
   }
 
   arriba(){
