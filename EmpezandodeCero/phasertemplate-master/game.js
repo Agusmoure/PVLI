@@ -14,10 +14,18 @@ export default class Game extends Phaser.Scene {
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+  //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
+   // this.load.image('patronesTilemap', 'assets/patrones.png');
     
   }
   
   create() {
+    // this.map = this.make.tilemap({ 
+    //   key: 'level1Tilemap', 
+    //   tileWidth: 32, 
+    //   tileHeight: 32 
+    // });
+    // this.map.addTilesetImage('patrones', 'patronesTilemap');
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this);
