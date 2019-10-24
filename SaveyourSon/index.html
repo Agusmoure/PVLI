@@ -1,229 +1,38 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
-    <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 9</title>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
-    <style type="text/css">
-        body {
-            margin: 0;
-        }
-    </style>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <link rel="stylesheet" href="game.css">
+    <script src="./src/phaser.min.js"></script>
+
+    <title>Save your son</title>
 </head>
+
 <body>
+    <h1>Save your son</h1>
+    <script type="module">
+        import Game from './src/game.js';
 
-<script type="text/javascript">
-
-    var config = {
-        type: Phaser.AUTO,
-        width: 800,
-        height: 600,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 500 },
-                debug: false
-            }
-        },
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
-        }
-    };
-
-    var player;
-    var velX=600;
-    var velXEst=160;
-    var derecha=true;
-     const enumMovibilidad={
-         NORMAL:'normal',
-         JETPACK:'jetpack',
-         ANTIGRAVEDAD:'antigravedad',
-         JETPACKINV:'jetpackinv',
-         CATAPULTA:'catapulta',
-         BOMBA:'bomba',
-         GANCHO:'gancho',
-     };
-    //var movilidadActivo=enumMovilidad.NORMAL;
-    var modificador='normal';
-    var stars;
-    var platforms;
-    var antigravedad;
-    var normal;
-    var cursors;
-    var score = 0;
-    var scoreText;
-    var gravedad = 10000;
-    var potJetpack=0;
-    var bomba;
-
-    var game = new Phaser.Game(config);
-
-    function preload ()
-    {
-        this.load.image('sky', 'assets/sky.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    }
-
-    function create ()
-    {
-        //this.cameras.main,StartFollow();
-        this.add.image(400, 300, 'sky');
-
-        platforms = this.physics.add.staticGroup();
-
-                    antigravedad=this.physics.add.sprite(200,200,'bomb');
-                    normal=this.physics.add.sprite(400,400,'bomb');
-
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-        platforms.create(600, 400, 'ground');
-        platforms.create(50, 250, 'ground');
-        platforms.create(750, 220, 'ground');
-
-        player = this.physics.add.sprite(100, 450, 'dude');
-        bomba = this.physics.add.sprite(100,350,'bomb');
-        //player.modif='normal';
-
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
-
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'dude', frame: 4 } ],
-            frameRate: 20
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        cursors = this.input.keyboard.createCursorKeys();
-
-
-        stars = this.physics.add.group({
-            key: 'star',
-            repeat: 11,
-            setXY: { x: 12, y: 0, stepX: 70 }
-        });
-
-        stars.children.iterate(function (child) {
-
-            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
-        });
-
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-
-        this.physics.add.collider(player, platforms);
-        this.physics.add.collider(stars, platforms);
-        this.physics.add.collider(normal,platforms);
-        this.physics.add.collider(antigravedad,platforms);
-       // this.physics.add.collider(bomba,platforms);
-        
-        this.physics.add.overlap(bomba,platforms,boom,null,this);
-        this.physics.add.overlap(player, stars, collectStar, null, this);
-        this.physics.add.overlap(player,normal,modifierNormal,null,this);
-        this.physics.add.overlap(player,antigravedad,modifierAntigravedad,null,this);
-    }
-
-    function update ()
-    {
-
-        if (!cursors.left.isDown && !cursors.right.isDown) 
-        {
-          if(derecha)
-          player.setVelocityX(velXEst);
-          if(!derecha)
-        player.setVelocityX(-velXEst);
-        }
-
-
-        if (cursors.left.isDown)
-        {
-            player.setVelocityX(-velX);
-            derecha=false;
-            player.anims.play('left', true);
-        }
-         else if (cursors.right.isDown)
-        {
-            player.setVelocityX(velX);
-            derecha=true;
-
-            player.anims.play('right', true);
-        }
-
-        //////////////////////////////////////Implementacion básica del jetpack
-        //  if(cursors.up.isDown && potJetpack<200){
-        // player.body.setGravityY(gravedad*0.6);  // pongo otra gravedad que me facilite las "fuerzas"
-        // potJetpack+=20;
-        // player.setVelocityY(-400-potJetpack); //para que cuanto más le des al jetpack menos te cueste eevarte
-        // }
-        // else{  // Si he dejado de usar el jetpack tendré una fuerza hacia arriba que me impedirá bajar rápido
-
-        //     if(potJetpack>0){
-        //     potJetpack-=10;  
-        //     player.setVelocityY(player.body.velocity.y-(potJetpack%100));
-        //     }          
-        // }
-
-
-
-        /////////////////////////////////////Implementacion del salto normal
-        //player.setVelocityY(-330);
-        /////////////////////////////////////Implementacion de la antigravedad
-        //gravedad*=-1;
-        // player.body.setGravityY(gravedad);
-        if (Phaser.Input.Keyboard.JustDown(cursors.up))// && player.body.touching.down)
-        {
-            
-        }
-        
-    }
-    
-
-    function collectStar (player, star)
-    {
-        star.disableBody(true, true);
-
-        score += 10;
-        scoreText.setText('Score: ' + score);
-    }
-    
-    function boom(bomba,platform){
-        if(player.x-bomba.x<50 || player.y-bomba.y<50){
-        
-        //player.setVelocityY();
-        bomba.disableBody(true,true);
-        }
-
-    }
-
-    function modifierNormal(player,normal){
-        normal.disableBody(true,true);
-        player.modif=normal;
-    }
-
-    function modifierAntigravedad(player,antigravedad){
-
-        antigravedad.disableBody(true,true);
-                player.modif=antigravedad;
-    }
-
-</script>
-
+        var config = {
+            type: Phaser.AUTO,
+            width: 1320,
+            height: 1080,
+            pixelArt: true,
+            input: {
+                gamepad: true
+            },
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
+            scene: [ Game ],
+            physics: { default: 'arcade', arcade: { gravity: { y: 1000 }, debug: false } }
+        };
+        new Phaser.Game(config);
+    </script>
 </body>
+
 </html>
