@@ -1,8 +1,8 @@
 export default class Enemy extends Phaser.GameObjects.Sprite{
     constructor(scene,jugador){
     
-        let x=50;
-        let y=50;
+        let x=0;
+        let y=0;
         super(scene,x,y,'dude');
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -32,5 +32,19 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         // this.body.setVelocityY((Math.abs(this.player.y-this.y))/(this.player.y-this.y)*this.speedY);
        //this.body.setVelocityX((this.player.x-this.x));
        
+    }
+    Stun(){
+        this.speedX=0;
+    }
+    Recover(){
+        this.speedX=130;
+    }
+    Update(stuned, recover){
+        this.followPlayer();
+        if(stuned)
+        this.Stun();
+        if(recover)
+        this.Recover(); 
+
     }
 }

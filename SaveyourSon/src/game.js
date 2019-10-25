@@ -6,6 +6,7 @@ import Antigravedad from "./antigravedad.js";
 export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: 'main' });
+    this.gameOver=false;
   }
   preload() {
     this.load.image('sky', '../assets/sky.png');
@@ -35,6 +36,8 @@ export default class Game extends Phaser.Scene {
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
 
    //Creo plataformas random
@@ -56,6 +59,9 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.jetpack,this.platforms);
     this.physics.add.collider(this.antigravedad,this.platforms);
     this.physics.add.collider(this.enemy,this.platforms);
+    // this.physics.add.collider(this.enemy,this.player);
+    // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
+
     
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     console.log(this.player.speedY);
@@ -65,7 +71,9 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
     this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
-    this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
+    //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
+    this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
+
     
 
 
@@ -73,17 +81,16 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {   
-    
-    this.enemy.followPlayer();
+    if(this.gameOver) return ;
+    let stuned=this.S.isDown;
+    let release=this.R.isDown;
+    this.enemy.Update(stuned,release);
 
     if (this.cursors.right.isDown){
       this.player.moveRight();
     }
     else if(this.cursors.left.isDown){
       this.player.moveLeft();
-    }
-    else{
-      this.player.dontMove();
     }
 
     if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
@@ -98,5 +105,10 @@ export default class Game extends Phaser.Scene {
   arriba(){
     this.player.changeModifier();
     this.jetpack.changeModifier();
+  }
+  CatchPlayer(){
+    this.gameOver=true;
+    this.player.dontMove();
+    this.enemy.setVelocityX(0);
   }
 }
