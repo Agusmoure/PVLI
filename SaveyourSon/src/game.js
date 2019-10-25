@@ -73,7 +73,7 @@ export default class Game extends Phaser.Scene {
   }
 
   update(time, delta) {   
-    
+    this.player.update();
     this.enemy.followPlayer();
 
     if (this.cursors.right.isDown){
@@ -82,9 +82,7 @@ export default class Game extends Phaser.Scene {
     else if(this.cursors.left.isDown){
       this.player.moveLeft();
     }
-    else{
-      this.player.dontMove();
-    }
+    
 
     if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
       this.player.moveUp();

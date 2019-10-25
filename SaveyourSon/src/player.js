@@ -12,12 +12,36 @@ this.vehicle=false;
 this.modifier='normal';
 this.modifierDisponible=true;
 this.speedY=800;
+this.maxSpeedY=800;
 this.speedX=150;
+this.defaultSpeed=75;
+this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
+this.maxFuel=1000;
 }
 
+update(){
+if(this.right)
+this.body.setVelocityX(this.defaultSpeed);
+else
+this.body.setVelocityX(-this.defaultSpeed);
 
+if( this.modifier==='jetpack' && this.fuel<this.maxFuel && Math.abs(this.body.velocity.y)<10){
+this.fuel+=10;
+console.log(this.fuel);
+}
+ if(this.modifier==='jetpack' && !this.modifierDisponible &&  this.fuel>=this.maxFuel){
+this.fuel=this.maxFuel;
+this.modifierDisponible=true;
+console.log("verdad");
+}
+//if(this.modifier==='jetpack' && !this.modifierDisponible)
+
+
+
+
+}
 //SETERS
 changeModifierNormal(){
     this.modifier='normal';
@@ -38,13 +62,16 @@ changeModifierAntigravedad(){
  
 moveRight(){
     this.body.setVelocityX(this.speedX);
+    this.right=true;
 }
 moveLeft(){
     this.body.setVelocityX(-this.speedX);
+    this.right=false;
 }
-dontMove(){
-    this.body.setVelocityX(0);
-}
+
+ dontMove(){
+     this.body.setVelocityX(0);
+ }
 moveUp(){
     if( this.body.touching.down  &&  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);}
@@ -54,42 +81,24 @@ moveUp(){
         this.fuel -=10;
         else{
         this.modifierDisponible=false;
-        //Phaser.time.events.add(Phaser.Timer.SECOND * 4, this.reloadFuel, this);
         }
     }
     else if(this.modifier === 'antigravedad' && this.modifierDisponible){
         this.gravity*=-1;
         this.modifierDisponible=false;
         this.body.setGravityY(this.gravity);
+        this.body.setVelocityY(0);
     }
  
 }
 
 keyUp(){
     if(this.modifier==='jetpack'){
-        this.modifierDisponible=true;
-        this.fuel=1000
-//         if(this.fuel>0)
-//     this.fuel=1000;
-//     else{
-// this.reloadFuel();
-//     }
+       
     }
     else if(this.modifier === 'antigravedad')
     this.modifierDisponible=true;
 }
-
-reloadFuel(){
-//     if(this.fuel<1000){
-//     this.fuel+=1;;
-//     console.log(this.fuel);
-//     this.reloadFuel();
-//     }
-//     else
-//    this.modifierDisponible=true;
-}
-
-
 
 caught(){
     
