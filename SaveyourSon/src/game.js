@@ -73,6 +73,8 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
+    this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
+
 
     
 
@@ -85,6 +87,9 @@ export default class Game extends Phaser.Scene {
     let stuned=this.S.isDown;
     let release=this.R.isDown;
     this.enemy.Update(stuned,release);
+
+    this.player.update();
+
 
     if (this.cursors.right.isDown){
       this.player.moveRight();
@@ -109,6 +114,6 @@ export default class Game extends Phaser.Scene {
   CatchPlayer(){
     this.gameOver=true;
     this.player.dontMove();
-    this.enemy.setVelocityX(0);
+    this.enemy.body.setVelocityX(0);
   }
 }
