@@ -2,6 +2,7 @@ import Player from "./player.js";
 import JetPack from "./jetpack.js";
 import Enemy from "./enemy.js";
 import Antigravedad from "./antigravedad.js";
+import Key from "./Key.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -11,7 +12,7 @@ export default class Game extends Phaser.Scene {
   preload() {
     this.load.image('sky', '../assets/sky.png');
     this.load.image('ground', '../assets/platform.png');
-
+    this.load.image('key','../assets/Key.png');
     this.load.image('star', '../assets/star.png');
     this.load.image('bomb', '../assets/bomb.png');
     this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -33,6 +34,12 @@ export default class Game extends Phaser.Scene {
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.enemy = new Enemy(this,this.player);
+    this.key= new Key(this,700,300).setScale(0.25);
+    this.key1= new Key(this,900,0).setScale(0.25);
+    this.key2= new Key(this,100,300).setScale(0.25);
+    this.key3= new Key(this,600,300).setScale(0.25);
+    this.key4= new Key(this,1000,300).setScale(0.25);
+    this.keyCount=0;
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -59,6 +66,12 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.jetpack,this.platforms);
     this.physics.add.collider(this.antigravedad,this.platforms);
     this.physics.add.collider(this.enemy,this.platforms);
+    this.physics.add.collider(this.key,this.platforms);
+    this.physics.add.collider(this.key1,this.platforms);
+    this.physics.add.collider(this.key2,this.platforms);
+    this.physics.add.collider(this.key3,this.platforms);
+    this.physics.add.collider(this.key4,this.platforms);
+
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
 
@@ -71,6 +84,18 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
     this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+    this.physics.add.overlap(this.player,this.key,this.PickKey,null,this);
+    this.physics.add.overlap(this.player,this.key1,this.PickKey,null,this);
+    this.physics.add.overlap(this.player,this.key2,this.PickKey,null,this); 
+    this.physics.add.overlap(this.player,this.key3,this.PickKey,null,this);
+    this.physics.add.overlap(this.player,this.key4,this.PickKey,null,this);
+
+    this.physics.add.overlap(this.player,this.key,this.key.PickMe,null,this.key);
+    this.physics.add.overlap(this.player,this.key1,this.key.PickMe,null,this.key1);
+    this.physics.add.overlap(this.player,this.key2,this.key.PickMe,null,this.key2);
+    this.physics.add.overlap(this.player,this.key3,this.key.PickMe,null,this.key3);
+    this.physics.add.overlap(this.player,this.key4,this.key.PickMe,null,this.key4);
+
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
@@ -84,8 +109,13 @@ export default class Game extends Phaser.Scene {
 
   update(time, delta) {   
     if(this.gameOver) return ;
+    console.log(this.keyCount);
     let stuned=this.S.isDown;
     let release=this.R.isDown;
+    if(this.keyCount>=3){
+      stuned=true;
+      this.keyCount=0;
+    }
     this.enemy.Update(stuned,release);
 
     this.player.update();
@@ -115,5 +145,8 @@ export default class Game extends Phaser.Scene {
     this.gameOver=true;
     this.player.dontMove();
     this.enemy.body.setVelocityX(0);
+  }
+  PickKey(){
+    this.keyCount=this.keyCount+1;
   }
 }
