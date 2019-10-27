@@ -3,6 +3,7 @@ import JetPack from "./jetpack.js";
 import Enemy from "./enemy.js";
 import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
+import Bomba from "./bomb.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -15,6 +16,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('key','../assets/Key.png');
     this.load.image('star', '../assets/star.png');
     this.load.image('bomb', '../assets/bomb.png');
+    this.load.image('bomba','../assets/bomba.png');
     this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
   //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
    // this.load.image('patronesTilemap', 'assets/patrones.png');
@@ -40,6 +42,7 @@ export default class Game extends Phaser.Scene {
     this.key3= new Key(this,600,300).setScale(0.25);
     this.key4= new Key(this,1000,300).setScale(0.25);
     this.keyCount=0;
+    this.bomba = new Bomba(this,400,200,this.player).setScale(0.10);
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -71,6 +74,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.key2,this.platforms);
     this.physics.add.collider(this.key3,this.platforms);
     this.physics.add.collider(this.key4,this.platforms);
+    this.physics.add.collider(this.bomba,this.platforms);
 
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
@@ -95,6 +99,9 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.key2,this.key.PickMe,null,this.key2);
     this.physics.add.overlap(this.player,this.key3,this.key.PickMe,null,this.key3);
     this.physics.add.overlap(this.player,this.key4,this.key.PickMe,null,this.key4);
+    
+    this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
+    this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
 
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
@@ -148,5 +155,15 @@ export default class Game extends Phaser.Scene {
   }
   PickKey(){
     this.keyCount=this.keyCount+1;
+  }
+
+
+  PillarBomba(){
+    this.player.changeModifierBomba(this.bomba);
+    
+  }
+  LanzarBomba(bomba,x,y){
+
+bomba.Lanzamiento(x,y,0,0);
   }
 }

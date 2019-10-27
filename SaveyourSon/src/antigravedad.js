@@ -1,4 +1,5 @@
-export default class Antigravedad extends Phaser.GameObjects.Sprite{
+import PowerUp from "./powerup.js";
+export default class Antigravedad extends PowerUp{
     constructor(scene){
         
     

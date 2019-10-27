@@ -1,4 +1,5 @@
-export default class JetPack extends Phaser.GameObjects.Sprite{
+import PowerUp from "./powerup.js";
+export default class JetPack extends PowerUp{
     constructor(scene){
         
     

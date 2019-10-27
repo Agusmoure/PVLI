@@ -1,3 +1,4 @@
+import Bomba from "./bomb.js";
 export default class Player extends Phaser.GameObjects.Sprite{
 constructor(scene){
 
@@ -19,6 +20,8 @@ this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
 this.maxFuel=1000;
+this.escena = scene;
+this.bomba = undefined;
 }
 
 update(){
@@ -36,6 +39,13 @@ this.fuel=this.maxFuel;
 this.modifierDisponible=true;
 console.log("verdad");
 }
+
+if(this.modifier === 'bomba'&& this.bomba !==undefined){
+    this.bomba.Update(this.x,this.y);
+}
+else if(this.modifier === 'bomba'&& this.bomba ===undefined){
+    this.modifier='normal';
+}
 //if(this.modifier==='jetpack' && !this.modifierDisponible)
 
 
@@ -45,18 +55,29 @@ console.log("verdad");
 //SETERS
 changeModifierNormal(){
     this.modifier='normal';
+    this.modifierDisponible=true;
 }
 changeModifierJetPack(){
    this.modifier='jetpack';
+   this.modifierDisponible=true;
 }
 changeModifierAntigravedad(){
     this.modifier='antigravedad';
+    this.modifierDisponible=true;
  }
  changeModifierCatapulta(){
     this.modifier='catapulta';
+    this.modifierDisponible=true;
  }
  changeModifierGancho(){
     this.modifier='gancho';
+    this.modifierDisponible=true;
+ }
+
+ changeModifierBomba(bomba){
+    this.modifier='bomba';
+    this.modifierDisponible=true;
+    this.bomba=bomba;
  }
 
  
@@ -88,6 +109,14 @@ moveUp(){
         this.modifierDisponible=false;
         this.body.setGravityY(this.gravity);
         this.body.setVelocityY(0);
+    }
+
+    else if(this.modifier === 'bomba' && this.modifierDisponible){
+        //this.bomba= new Bomba(this.escena,this.x,this.y,true).setScale(0.10);
+       this.bomba.Lanzamiento(this.right);
+        //this.modifier='normal';
+
+
     }
  
 }

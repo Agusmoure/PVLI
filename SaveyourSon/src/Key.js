@@ -1,4 +1,5 @@
-export default class Key extends Phaser.GameObjects.Sprite{
+import PowerUp from "./powerup.js";
+export default class Key extends PowerUp{
     constructor(scene,xInit, yInit){
         
     
@@ -8,9 +9,9 @@ export default class Key extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);    
     scene.physics.add.existing(this);      
     }
-    PickMe(/*gameManager*/){
-        //gameManager.AddKeyToActuallevel();
-        this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
-        //this.body.disableBody(true,true);
-        }    
+    // PickMe(/*gameManager*/){
+    //     //gameManager.AddKeyToActuallevel();
+    //     this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
+    //     //this.body.disableBody(true,true);
+    //     }    
 }
