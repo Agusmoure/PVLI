@@ -1,7 +1,7 @@
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
-constructor(scene,gameManager){
+constructor(scene,gameManager,levelManager){
 
     let x=100;
     let y=100;
@@ -9,6 +9,7 @@ constructor(scene,gameManager){
     scene.add.existing(this);
     scene.physics.add.existing(this);
    // this.gm=gameManager;
+   this.lvM=levelManager;
 this.body.setCollideWorldBounds(true);
 this.vehicle=false;
 this.modifier='normal';
@@ -23,7 +24,6 @@ this.gravity=2000;
 this.fuel = 1000;
 this.maxFuel=1000;
 this.escena = scene;
-this.bomba = undefined;
 }
 
 update(){
@@ -40,13 +40,6 @@ console.log(this.fuel);
 this.fuel=this.maxFuel;
 this.modifierDisponible=true;
 console.log("verdad");
-}
-
-if(this.modifier === 'bomba'&& this.bomba !==undefined){
-    this.bomba.Update(this.x,this.y);
-}
-else if(this.modifier === 'bomba'&& this.bomba ===undefined){
-    this.modifier='normal';
 }
 //if(this.modifier==='jetpack' && !this.modifierDisponible)
 
@@ -114,11 +107,8 @@ moveUp(){
     }
 
     else if(this.modifier === 'bomba' && this.modifierDisponible){
-        //this.bomba= new Bomba(this.escena,this.x,this.y,true).setScale(0.10);
-       this.bomba.Lanzamiento(this.right);
-        //this.modifier='normal';
-
-
+        this.lvM.SetBomba();
+        this.modifier = 'normal';
     }
  
 }
@@ -131,8 +121,14 @@ keyUp(){
     this.modifierDisponible=true;
 }
 
-caught(){
-    
+SetVelX(vel){
+this.body.velocity.x=vel;
+}
+SetVelY(vel){
+    this.body.velocity.y=vel;
+    }
+GetVelX(){
+    return this.body.velocity.x;
 }
 changeG(){
     this.body.gravity.y();
