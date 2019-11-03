@@ -4,11 +4,15 @@ import Enemy from "./enemy.js";
 import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
+import GameManager from "./GameManager.js";
+import Level1 from "./Level1.js";
 
 export default class Game extends Phaser.Scene {
+
   constructor() {
-    super({ key: 'main' });
+    super(/*{ key: 'main' }*/ 'game');
     this.gameOver=false;
+    this.gM= new GameManager();
   }
   preload() {
     this.load.image('sky', '../assets/sky.png');
@@ -18,24 +22,26 @@ export default class Game extends Phaser.Scene {
     this.load.image('bomb', '../assets/bomb.png');
     this.load.image('bomba','../assets/bomba.png');
     this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-  //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
-   // this.load.image('patronesTilemap', 'assets/patrones.png');
+    //Problemas1
+  //  this.load.tilemapTiledJSON('level1Tilemap', '../../PosiblesAssets/Tilesets/HallLevel.json');
+  //   this.load.image('patronesTilemap', '../assets/patrones.png');
     
   }
   
   create() {
+    //Problemas2
     // this.map = this.make.tilemap({ 
     //   key: 'level1Tilemap', 
-    //   tileWidth: 32, 
-    //   tileHeight: 32 
+    //   tileWidth: 64, 
+    //   tileHeight: 64 
     // });
-    // this.map.addTilesetImage('patrones', 'patronesTilemap');
+    //  this.map.addTilesetImage('Platformer', 'patronesTilemap');
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
-    this.player = new Player(this);
+    this.player = new Player(this, this.gM);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
-    this.enemy = new Enemy(this,this.player);
+    this.enemy = new Enemy(this,this.player,this.gM);
     this.key= new Key(this,700,300).setScale(0.25);
     this.key1= new Key(this,900,0).setScale(0.25);
     this.key2= new Key(this,100,300).setScale(0.25);
@@ -50,7 +56,7 @@ export default class Game extends Phaser.Scene {
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
 
-   //Creo plataformas random
+  //  Creo plataformas random
     this.platforms = this.physics.add.staticGroup();
    this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     this.platforms.create(600, 400, 'ground');
@@ -119,9 +125,10 @@ export default class Game extends Phaser.Scene {
     console.log(this.keyCount);
     let stuned=this.S.isDown;
     let release=this.R.isDown;
-    if(this.keyCount>=3){
-      stuned=true;
-      this.keyCount=0;
+    if(this.keyCount>=4){
+      // stuned=true;
+      // this.keyCount=0;
+      this.scene.start(new Level1());
     }
     this.enemy.Update(stuned,release);
 

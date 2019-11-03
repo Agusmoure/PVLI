@@ -1,5 +1,5 @@
 export default class Enemy extends Phaser.GameObjects.Sprite{
-    constructor(scene,jugador){
+    constructor(scene,jugador,gameManager){
     
         let x=0;
         let y=0;
@@ -11,8 +11,9 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     this.aire=false;
     this.vehicle=false;
     this.modifier='normal';
+    this.penalization=10;
     this.speedY=100;
-    this.speedX=130;
+    this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
     this.player=jugador;
     }
 

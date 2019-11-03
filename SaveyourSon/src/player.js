@@ -1,21 +1,23 @@
 import Bomba from "./bomb.js";
+import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
-constructor(scene){
+constructor(scene,gameManager){
 
     let x=100;
     let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    
+   // this.gm=gameManager;
 this.body.setCollideWorldBounds(true);
 this.vehicle=false;
 this.modifier='normal';
 this.modifierDisponible=true;
 this.speedY=800;
 this.maxSpeedY=800;
-this.speedX=150;
-this.defaultSpeed=75;
+this.speedImprovment=10;
+//this.speedX=150;
+this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
 this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
@@ -82,11 +84,11 @@ changeModifierAntigravedad(){
 
  
 moveRight(){
-    this.body.setVelocityX(this.speedX);
+    this.body.setVelocityX(2*this.defaultSpeed/*this.speedX*/);
     this.right=true;
 }
 moveLeft(){
-    this.body.setVelocityX(-this.speedX);
+    this.body.setVelocityX(-2*this.defaultSpeed/*this.speedX*/);
     this.right=false;
 }
 
