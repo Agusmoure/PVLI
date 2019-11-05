@@ -42,10 +42,11 @@ export default class Game extends Phaser.Scene {
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
-    this.lvM.player=this.player;
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.enemy = new Enemy(this,this.player,this.gM);
+    this.lvM.player=this.player;
+    this.lvM.alcaide=this.enemy;
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
@@ -56,7 +57,7 @@ export default class Game extends Phaser.Scene {
 
 
     //EXTRAS
-    this.poli=new Extra (this,this.player,this.lvM);
+    this.poli=new Extra (this,this.player,this.lvM,true);
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -140,7 +141,7 @@ export default class Game extends Phaser.Scene {
       
       this.scene.start(new Level1());
     }
-    //this.enemy.Update(stuned,release);
+    this.enemy.Update(stuned,release);
 
     this.player.update();
 

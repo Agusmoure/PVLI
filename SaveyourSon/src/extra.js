@@ -1,5 +1,5 @@
 export default class Extra extends Phaser.GameObjects.Sprite{
-    constructor(scene,objetivo,levelManager){
+    constructor(scene,objetivo,levelManager,stunear){
     
         let x=500;
         let y=100;
@@ -12,6 +12,8 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     this.active=false;
     this.timer=300;
     this.penalization=-50;
+    this.stun=stunear;
+    this.stunTime=100;
     this.tocado=false;
     this.finalizado=false;
     this.timerPenalizacion=100;
@@ -34,11 +36,13 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         else
         this.body.setVelocityX(0);
 
-        if(this.tocado && !this.finalizado){
+        if(this.tocado && !this.finalizado && !this.stun){
             this.timerPenalizacion=this.timerPenalizacion-1;
             if(this.timerPenalizacion<0){
+                if(this.police)
             this.lvM.SetPlayerX(-this.penalization);
-            console.log('   bewdujbefujbcuobºeuoifb´2ºbfejºbfóju3bfuo3bo');
+            else
+            this.lvM.RecoverAlcaide();
             this.finalizado=true;    
         }
         }
@@ -46,7 +50,16 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
     caught(){
         if(!this.tocado){
+            if(!this.stun){
+                if(this.police)
             this.lvM.SetPlayerX(this.penalization);
+            }
+            else{
+                if(this.police)
+            this.lvM.StunPlayer(this.stunTime);
+            else
+            this.lvM.StunAlcaide(this.stunTime);
+        }
             this.tocado=true;
         }
 

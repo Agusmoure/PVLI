@@ -17,7 +17,8 @@ this.modifierDisponible=true;
 this.speedY=800;
 this.maxSpeedY=800;
 this.speedImprovment=10;
-//this.speedX=150;
+this.speedX=150;
+this.stunTime=0;
 this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
 this.speedX=this.defaultSpeed*2;
 this.right = true;
@@ -28,6 +29,7 @@ this.escena = scene;
 }
 
 update(){
+    if(this.stunTime<1){
 if(this.right)
 this.body.setVelocityX(this.defaultSpeed);
 else
@@ -43,6 +45,12 @@ this.modifierDisponible=true;
 console.log("verdad");
 }
 //if(this.modifier==='jetpack' && !this.modifierDisponible)
+ }
+    else{
+        this.body.setVelocityX(0);
+    this.stunTime= this.stunTime-1;
+    console.log(this.stunTime);
+    }
 
 
 
@@ -84,10 +92,13 @@ changeModifierAntigravedad(){
 
  
 moveRight(){
+    if(this.stunTime<1)
     this.body.setVelocityX(this.speedX);
     this.right=true;
+
 }
 moveLeft(){
+    if(this.stunTime<1)
     this.body.setVelocityX(-this.speedX);
     this.right=false;
 }
@@ -96,6 +107,7 @@ moveLeft(){
      this.body.setVelocityX(0);
  }
 moveUp(){
+    if(this.stunTime<1){
     if( this.body.touching.down  &&  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);}
     else if(this.modifier==='jetpack' && this.modifierDisponible){
@@ -117,6 +129,7 @@ moveUp(){
         this.lvM.SetBomba();
         this.modifier = 'normal';
     }
+}
  
 }
 
@@ -134,6 +147,10 @@ this.speedX=this.speedX+velModifier;
 Impulse(velX){
     this.body.velocity.x=velX;
    
+ }
+ getStunned(time){
+     console.log('ikb   wñujfb2cbvfeuiñvbeºvbkki3ebcki3ºbefik3ºbecfkj3ebiº´kj3ebvcki');
+this.stunTime=time;
  }
 GetVelX(){
     return this.body.velocity.x;
