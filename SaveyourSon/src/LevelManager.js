@@ -36,6 +36,10 @@ return this.bomba;
     SetPlayerY(vel){
         this.player.SetVelY(vel);
     }
+
+    ImpulsePlayer(velX){
+        this.player.Impulse(velX);
+    }
     
     AddKey(){
         this.keys=this.keys+1;

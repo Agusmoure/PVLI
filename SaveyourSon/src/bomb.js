@@ -31,16 +31,16 @@ this.temp=this.temp+10;
 
 if(this.temp>1000){
     if(this.lvM.GetPlayerX()<this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
-    this.lvM.SetPlayerX(-500+Math.abs(this.lvM.GetPlayerX()-this.x));
+    this.lvM.ImpulsePlayer(-500+Math.abs(this.lvM.GetPlayerX()-this.x));
     else if(this.lvM.GetPlayerX()>this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
-    this.lvM.SetPlayerX(500-Math.abs(this.lvM.GetPlayerX()-this.x));
+    this.lvM.ImpulsePlayer(500-Math.abs(this.lvM.GetPlayerX()-this.x));
 this.destroy();
 }
 }
     }
     PickMe(){
         this.recogida=true;
-        console.log(this.recogida);
+       // console.log(this.recogida);
         
     }
     Lanzamiento(sentido){

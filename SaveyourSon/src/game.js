@@ -7,6 +7,7 @@ import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
 import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
+import Extra from "./extra.js";
 
 export default class Game extends Phaser.Scene {
 
@@ -53,6 +54,10 @@ export default class Game extends Phaser.Scene {
     //this.keyCount=0;
     this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
 
+
+    //EXTRAS
+    this.poli=new Extra (this,this.player,this.lvM);
+
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -84,6 +89,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.key3,this.platforms);
     this.physics.add.collider(this.key4,this.platforms);
     this.physics.add.collider(this.bomba,this.platforms);
+    this.physics.add.collider(this.poli,this.platforms);
 
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
@@ -115,6 +121,7 @@ export default class Game extends Phaser.Scene {
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
+    this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
 
 
     
@@ -133,7 +140,7 @@ export default class Game extends Phaser.Scene {
       
       this.scene.start(new Level1());
     }
-    this.enemy.Update(stuned,release);
+    //this.enemy.Update(stuned,release);
 
     this.player.update();
 
@@ -153,6 +160,7 @@ export default class Game extends Phaser.Scene {
    
     this.camera.startFollow(this.player);
     this.bomba.Update();
+    this.poli.Update();
   }
 
   arriba(){

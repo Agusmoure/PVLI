@@ -19,6 +19,7 @@ this.maxSpeedY=800;
 this.speedImprovment=10;
 //this.speedX=150;
 this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
+this.speedX=this.defaultSpeed*2;
 this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
@@ -49,27 +50,33 @@ console.log("verdad");
 }
 //SETERS
 changeModifierNormal(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='normal';
     this.modifierDisponible=true;
 }
 changeModifierJetPack(){
+    this.body.setGravityY(Math.abs(this.gravity));
    this.modifier='jetpack';
    this.modifierDisponible=true;
 }
 changeModifierAntigravedad(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='antigravedad';
     this.modifierDisponible=true;
  }
  changeModifierCatapulta(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='catapulta';
     this.modifierDisponible=true;
  }
  changeModifierGancho(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='gancho';
     this.modifierDisponible=true;
  }
 
  changeModifierBomba(bomba){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='bomba';
     this.modifierDisponible=true;
     this.bomba=bomba;
@@ -77,11 +84,11 @@ changeModifierAntigravedad(){
 
  
 moveRight(){
-    this.body.setVelocityX(2*this.defaultSpeed/*this.speedX*/);
+    this.body.setVelocityX(this.speedX);
     this.right=true;
 }
 moveLeft(){
-    this.body.setVelocityX(-2*this.defaultSpeed/*this.speedX*/);
+    this.body.setVelocityX(-this.speedX);
     this.right=false;
 }
 
@@ -121,12 +128,13 @@ keyUp(){
     this.modifierDisponible=true;
 }
 
-SetVelX(vel){
-this.body.velocity.x=vel;
+SetVelX(velModifier){
+this.speedX=this.speedX+velModifier;
 }
-SetVelY(vel){
-    this.body.velocity.y=vel;
-    }
+Impulse(velX){
+    this.body.velocity.x=velX;
+   
+ }
 GetVelX(){
     return this.body.velocity.x;
 }
