@@ -23,19 +23,20 @@ export default class Game extends Phaser.Scene {
     this.load.image('bomba','../assets/bomba.png');
     this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     //Problemas1
-  //  this.load.tilemapTiledJSON('level1Tilemap', '../../PosiblesAssets/Tilesets/HallLevel.json');
-  //   this.load.image('patronesTilemap', '../assets/patrones.png');
+   this.load.tilemapTiledJSON('level1Tilemap', '../../PosiblesAssets/Tilesets/HallLevel.json');
+    this.load.image('patronesTilemap', '../assets/patrones.png');
     
   }
   
   create() {
     //Problemas2
-    // this.map = this.make.tilemap({ 
-    //   key: 'level1Tilemap', 
-    //   tileWidth: 64, 
-    //   tileHeight: 64 
-    // });
-    //  this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    this.map = this.make.tilemap({ 
+      key: 'level1Tilemap', 
+      tileWidth: 64, 
+      tileHeight: 64 
+    });
+     this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    this.background= this.mapa("Capa de Patrones 1");
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM);
