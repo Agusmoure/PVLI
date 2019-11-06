@@ -1,36 +1,46 @@
 import PowerUp from "./powerup.js";
 export default class Bomba extends PowerUp{
-    constructor(scene,xInit, yInit,player){
+    constructor(scene,xInit, yInit,lvManager){
         
     
         let x=xInit;
         let y=yInit;
         super(scene,x,y,'bomba');
         scene.add.existing(this);    
-    scene.physics.add.existing(this);      
+    scene.physics.add.existing(this);
+    this.repulsion = 1000;      
     this.recogida=false;
     this.lanzada = false;
     this.temp =0;
+    this.lvM=lvManager;
     
     }
 
 
-    Update(x,y){
-if(this.recogida && !this.lanzada){
-this.x=x;
-this.y=y;
+    Update(){
+if(this.recogida===true && !this.lvM.LanzarBomba()){
+this.x=this.lvM.GetPlayerX();
+this.y=this.lvM.GetPlayerY();
 }
-// else if(this.lanzada){
-// this.temp=this.temp+10;
-// console.log(this.temp);
-// if(this.temp>1000){
-//     console.log('w  	kncljewn    cvjbw   ejeb    w');
-// this.destroy();
-// }
-// }
+else if(this.recogida===true && this.lvM.LanzarBomba() && !this.lanzada){
+    this.Lanzamiento(this.lvM.GetPlayerVelX());
+    this.lanzada=true;
+}
+else if(this.lanzada){
+this.temp=this.temp+10;
+
+if(this.temp>1000){
+    if(this.lvM.GetPlayerX()<this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
+    this.lvM.ImpulsePlayer(-500+Math.abs(this.lvM.GetPlayerX()-this.x));
+    else if(this.lvM.GetPlayerX()>this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
+    this.lvM.ImpulsePlayer(500-Math.abs(this.lvM.GetPlayerX()-this.x));
+this.destroy();
+}
+}
     }
     PickMe(){
         this.recogida=true;
+       // console.log(this.recogida);
         
     }
     Lanzamiento(sentido){
@@ -38,10 +48,10 @@ this.y=y;
         this.y=this.y;
         this.recogida=false;
         this.body.setVelocityY(-400);
-        if(sentido)
-        this.body.setVelocityX(300);
+        if(sentido>0)
+        this.body.setVelocityX(100);
         else
-        this.body.setVelocityX(-300);
+        this.body.setVelocityX(-100);
         this.lanzada=true;
     }
       

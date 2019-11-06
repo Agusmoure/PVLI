@@ -1,7 +1,7 @@
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
-constructor(scene,gameManager){
+constructor(scene,gameManager,levelManager){
 
     let x=100;
     let y=100;
@@ -9,6 +9,7 @@ constructor(scene,gameManager){
     scene.add.existing(this);
     scene.physics.add.existing(this);
    // this.gm=gameManager;
+   this.lvM=levelManager;
 this.body.setCollideWorldBounds(true);
 this.vehicle=false;
 this.modifier='normal';
@@ -16,17 +17,19 @@ this.modifierDisponible=true;
 this.speedY=800;
 this.maxSpeedY=800;
 this.speedImprovment=10;
-//this.speedX=150;
+this.speedX=150;
+this.stunTime=0;
 this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
+this.speedX=this.defaultSpeed*2;
 this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
 this.maxFuel=1000;
 this.escena = scene;
-this.bomba = undefined;
 }
 
 update(){
+    if(this.stunTime<1){
 if(this.right)
 this.body.setVelocityX(this.defaultSpeed);
 else
@@ -41,14 +44,13 @@ this.fuel=this.maxFuel;
 this.modifierDisponible=true;
 console.log("verdad");
 }
-
-if(this.modifier === 'bomba'&& this.bomba !==undefined){
-    this.bomba.Update(this.x,this.y);
-}
-else if(this.modifier === 'bomba'&& this.bomba ===undefined){
-    this.modifier='normal';
-}
 //if(this.modifier==='jetpack' && !this.modifierDisponible)
+ }
+    else{
+        this.body.setVelocityX(0);
+    this.stunTime= this.stunTime-1;
+    console.log(this.stunTime);
+    }
 
 
 
@@ -56,27 +58,33 @@ else if(this.modifier === 'bomba'&& this.bomba ===undefined){
 }
 //SETERS
 changeModifierNormal(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='normal';
     this.modifierDisponible=true;
 }
 changeModifierJetPack(){
+    this.body.setGravityY(Math.abs(this.gravity));
    this.modifier='jetpack';
    this.modifierDisponible=true;
 }
 changeModifierAntigravedad(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='antigravedad';
     this.modifierDisponible=true;
  }
  changeModifierCatapulta(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='catapulta';
     this.modifierDisponible=true;
  }
  changeModifierGancho(){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='gancho';
     this.modifierDisponible=true;
  }
 
  changeModifierBomba(bomba){
+    this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='bomba';
     this.modifierDisponible=true;
     this.bomba=bomba;
@@ -84,11 +92,14 @@ changeModifierAntigravedad(){
 
  
 moveRight(){
-    this.body.setVelocityX(2*this.defaultSpeed/*this.speedX*/);
+    if(this.stunTime<1)
+    this.body.setVelocityX(this.speedX);
     this.right=true;
+
 }
 moveLeft(){
-    this.body.setVelocityX(-2*this.defaultSpeed/*this.speedX*/);
+    if(this.stunTime<1)
+    this.body.setVelocityX(-this.speedX);
     this.right=false;
 }
 
@@ -96,6 +107,7 @@ moveLeft(){
      this.body.setVelocityX(0);
  }
 moveUp(){
+    if(this.stunTime<1){
     if( this.body.touching.down  &&  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);}
     else if(this.modifier==='jetpack' && this.modifierDisponible){
@@ -114,12 +126,10 @@ moveUp(){
     }
 
     else if(this.modifier === 'bomba' && this.modifierDisponible){
-        //this.bomba= new Bomba(this.escena,this.x,this.y,true).setScale(0.10);
-       this.bomba.Lanzamiento(this.right);
-        //this.modifier='normal';
-
-
+        this.lvM.SetBomba();
+        this.modifier = 'normal';
     }
+}
  
 }
 
@@ -131,8 +141,19 @@ keyUp(){
     this.modifierDisponible=true;
 }
 
-caught(){
-    
+SetVelX(velModifier){
+this.speedX=this.speedX+velModifier;
+}
+Impulse(velX){
+    this.body.velocity.x=velX;
+   
+ }
+ getStunned(time){
+     console.log('ikb   wñujfb2cbvfeuiñvbeºvbkki3ebcki3ºbefik3ºbecfkj3ebiº´kj3ebvcki');
+this.stunTime=time;
+ }
+GetVelX(){
+    return this.body.velocity.x;
 }
 changeG(){
     this.body.gravity.y();

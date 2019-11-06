@@ -12,6 +12,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     this.vehicle=false;
     this.modifier='normal';
     this.penalization=10;
+    this.stunTime=0;
     this.speedY=100;
     this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
     this.player=jugador;
@@ -19,6 +20,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
 
     followPlayer(){
 
+        if(this.stunTime<1){
         if(this.player.x<this.x)
         this.body.setVelocityX(-this.speedX);
         else
@@ -32,6 +34,12 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         // this.body.setVelocityX((Math.abs(this.player.x-this.x))/(this.player.x-this.x)*this.speedX);
         // this.body.setVelocityY((Math.abs(this.player.y-this.y))/(this.player.y-this.y)*this.speedY);
        //this.body.setVelocityX((this.player.x-this.x));
+        }
+        else{
+            this.body.setVelocityX(0);
+            this.stunTime=this.stunTime-1;
+            
+        }
        
     }
     Stun(){
@@ -39,6 +47,9 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     }
     Recover(){
         this.speedX=130;
+    }
+    getStunned(time){
+this.stunTime=time;
     }
     Update(stuned, recover){
         this.followPlayer();
