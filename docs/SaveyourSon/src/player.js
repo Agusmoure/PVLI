@@ -109,7 +109,9 @@ moveLeft(){
 moveUp(){
     if(this.stunTime<1){
     if( this.body.touching.down  &&  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
-    this.body.setVelocityY(-this.speedY);}
+    this.body.setVelocityY(-this.speedY);
+    //this.lvM.LiberarPreso(true);
+}
     else if(this.modifier==='jetpack' && this.modifierDisponible){
         this.body.setVelocityY(-100);
         if( this.fuel >0)
@@ -139,6 +141,11 @@ keyUp(){
     }
     else if(this.modifier === 'antigravedad')
     this.modifierDisponible=true;
+    
+}
+
+LiberarPresos(valor){
+this.lvM.LiberarPreso(valor);
 }
 
 SetVelX(velModifier){

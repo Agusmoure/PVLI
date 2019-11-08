@@ -18,16 +18,25 @@ export default class Game extends Phaser.Scene {
     this.lvM = new LevelManager();
   }
   preload() {
-    this.load.image('sky', '../assets/sky.png');
-    this.load.image('ground', '../assets/platform.png');
-    this.load.image('key','../assets/Key.png');
-    this.load.image('star', '../assets/star.png');
-    this.load.image('bomb', '../assets/bomb.png');
-    this.load.image('bomba','../assets/bomba.png');
-    this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    // this.load.image('sky', '../assets/sky.png');
+    // this.load.image('ground', '../assets/platform.png');
+    // this.load.image('key','../assets/Key.png');
+    // this.load.image('star', '../assets/star.png');
+    // this.load.image('bomb', '../assets/bomb.png');
+    // this.load.image('bomba','../assets/bomba.png');
+    // this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+    //Si ejecutamos desde la pagina web hay que cambiar la ruta o de lo contrario no cargará ninguna imagen
+    this.load.image('sky', '/SaveyourSon/assets/sky.png');
+    this.load.image('ground', '/SaveyourSon/assets/platform.png');
+    this.load.image('key','/SaveyourSon/assets/Key.png');
+    this.load.image('star', '/SaveyourSon/assets/star.png');
+    this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
+    this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+    this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     //Problemas1
-   this.load.tilemapTiledJSON('level1Tilemap', '../assets/prueba.json');
-    this.load.image('patronesTilemap', '../assets/patrones.png');
+   this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba.json');
+    this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
   }
   
@@ -58,7 +67,7 @@ export default class Game extends Phaser.Scene {
 
 
     //EXTRAS
-    this.poli=new Extra (this,this.player,this.lvM,true);
+    this.poli=new Extra (this,this.player,this.lvM,true,true,100,300);
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -123,6 +132,7 @@ export default class Game extends Phaser.Scene {
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
+    //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
     this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
 
 
@@ -149,7 +159,7 @@ export default class Game extends Phaser.Scene {
 
     if (this.cursors.right.isDown){
       this.player.moveRight();
-      this.scene.start('Level1');
+     // this.scene.start('Level1');
 
     }
     else if(this.cursors.left.isDown){
@@ -159,9 +169,15 @@ export default class Game extends Phaser.Scene {
     if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
       this.player.moveUp();
     
-      if(Phaser.Input.Keyboard.JustDown(this.cursors.up))
+      if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
       this.player.keyUp();
-   
+
+      if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+this.player.LiberarPresos(true);
+      }
+      else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+this.player.LiberarPresos(false);
+      }
     this.camera.startFollow(this.player);
     this.bomba.Update();
     this.poli.Update();
