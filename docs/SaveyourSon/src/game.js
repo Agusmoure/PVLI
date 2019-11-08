@@ -18,28 +18,22 @@ export default class Game extends Phaser.Scene {
     this.lvM = new LevelManager();
   }
   preload() {
-    this.load.image('sky', '../assets/sky.png');
-    this.load.image('ground', '../assets/platform.png');
-    this.load.image('key','../assets/Key.png');
-    this.load.image('star', '../assets/star.png');
-    this.load.image('bomb', '../assets/bomb.png');
-    this.load.image('bomba','../assets/bomba.png');
-    this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    //Problemas1
-   this.load.tilemapTiledJSON('level1Tilemap', '../assets/prueba.json');
+    this.load.image('sky', '/saveyourson/assets/sky.png');
+    this.load.image('ground', '/saveyourson/assets/platform.png');
+    this.load.image('key','/saveyourson/assets/Key.png');
+    this.load.image('star', '/saveyourson/assets/star.png');
+    this.load.image('bomb', '/saveyourson/assets/bomb.png');
+    this.load.image('bomba','/saveyourson/assets/bomba.png');
+    this.load.spritesheet('dude', '/saveyourson/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+   // Problemas1
+   this.load.tilemapTiledJSON('level1Tilemap', '/saveyourson/assets/prueba2.json');
     this.load.image('patronesTilemap', '../assets/patrones.png');
     
   }
   
   create() {
     //Problemas2
-    this.map = this.make.tilemap({ 
-      key: 'level1Tilemap', 
-      tileWidth: 64, 
-      tileHeight: 64 
-    });
-     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
-    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
@@ -54,6 +48,13 @@ export default class Game extends Phaser.Scene {
     this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
     this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
     //this.keyCount=0;
+    this.map = this.make.tilemap({ 
+      key: 'level1Tilemap', 
+      tileWidth: 32, 
+      tileHeight: 32 
+    });
+     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
     this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
 
 
@@ -67,11 +68,11 @@ export default class Game extends Phaser.Scene {
 
 
   //  Creo plataformas random
-    this.platforms = this.physics.add.staticGroup();
-   this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
+  //   this.platforms = this.physics.add.staticGroup();
+  //  this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  //   this.platforms.create(600, 400, 'ground');
+  //   this.platforms.create(50, 250, 'ground');
+  //   this.platforms.create(750, 220, 'ground');
 
     
     //Suelo para el alcaide
