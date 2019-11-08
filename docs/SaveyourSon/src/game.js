@@ -39,8 +39,8 @@ export default class Game extends Phaser.Scene {
       tileWidth: 32, 
       tileHeight: 32 
     });
-     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
-    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+     //let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    //this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
     console.log('pojijgoij');
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
@@ -133,7 +133,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-    this.physics.add.overlap(this.enemy,this.poli,this.poli.caught,null,this.poli);
+    this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
 
 
     
