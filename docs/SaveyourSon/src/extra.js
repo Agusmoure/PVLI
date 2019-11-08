@@ -12,7 +12,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     
     this.active=false;
     this.timer=tiempovida;               //Tiempo de vida util del extra
-    this.penalization=-20;
+    this.penalization=-100;
     this.stun=stunear;           //Si va a hacer stun o slow
     this.stunTime=tiempopenal;         //Tiempo que durara la penalizacion que realice a su objetivo  
     this.tocado=false;
