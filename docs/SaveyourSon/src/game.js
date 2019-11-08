@@ -18,22 +18,30 @@ export default class Game extends Phaser.Scene {
     this.lvM = new LevelManager();
   }
   preload() {
-    this.load.image('sky', '/saveyourson/assets/sky.png');
-    this.load.image('ground', '/saveyourson/assets/platform.png');
-    this.load.image('key','/saveyourson/assets/Key.png');
-    this.load.image('star', '/saveyourson/assets/star.png');
-    this.load.image('bomb', '/saveyourson/assets/bomb.png');
-    this.load.image('bomba','/saveyourson/assets/bomba.png');
-    this.load.spritesheet('dude', '/saveyourson/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-   // Problemas1
-   this.load.tilemapTiledJSON('level1Tilemap', '/saveyourson/assets/prueba2.json');
-    this.load.image('patronesTilemap', '../assets/patrones.png');
+
+    this.load.image('sky', '/SaveyourSon/assets/sky.png');
+    this.load.image('ground', '/SaveyourSon/assets/platform.png');
+    this.load.image('key','/SaveyourSon/assets/Key.png');
+    this.load.image('star', '/SaveyourSon/assets/star.png');
+    this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
+    this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+    this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    //Problemas1
+   this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba.json');
+    this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
   }
   
   create() {
     //Problemas2
-
+    this.map = this.add.tilemap({ 
+      key: 'level1Tilemap', 
+      tileWidth: 32, 
+      tileHeight: 32 
+    });
+     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+    console.log('pojijgoij');
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
@@ -59,7 +67,7 @@ export default class Game extends Phaser.Scene {
 
 
     //EXTRAS
-    this.poli=new Extra (this,this.player,this.lvM,true);
+    this.poli=new Extra (this,this.enemy,this.lvM,true,false,100,300);
 
     //INPUT
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -67,12 +75,12 @@ export default class Game extends Phaser.Scene {
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
 
-  //  Creo plataformas random
-  //   this.platforms = this.physics.add.staticGroup();
-  //  this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-  //   this.platforms.create(600, 400, 'ground');
-  //   this.platforms.create(50, 250, 'ground');
-  //   this.platforms.create(750, 220, 'ground');
+   //Creo plataformas random
+    this.platforms = this.physics.add.staticGroup();
+   this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this.platforms.create(600, 400, 'ground');
+    this.platforms.create(50, 250, 'ground');
+    this.platforms.create(750, 220, 'ground');
 
     
     //Suelo para el alcaide
@@ -124,7 +132,8 @@ export default class Game extends Phaser.Scene {
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
-    this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
+    //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
+    this.physics.add.overlap(this.enemy,this.poli,this.poli.caught,null,this.poli);
 
 
     
@@ -150,7 +159,7 @@ export default class Game extends Phaser.Scene {
 
     if (this.cursors.right.isDown){
       this.player.moveRight();
-      this.scene.start('Level1');
+     // this.scene.start('Level1');
 
     }
     else if(this.cursors.left.isDown){
@@ -160,9 +169,15 @@ export default class Game extends Phaser.Scene {
     if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
       this.player.moveUp();
     
-      if(Phaser.Input.Keyboard.JustDown(this.cursors.up))
+      if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
       this.player.keyUp();
-   
+
+      if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+this.player.LiberarPresos(true);
+      }
+      else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+this.player.LiberarPresos(false);
+      }
     this.camera.startFollow(this.player);
     this.bomba.Update();
     this.poli.Update();

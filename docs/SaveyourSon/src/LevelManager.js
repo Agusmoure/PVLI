@@ -4,6 +4,7 @@ export default class LevelManager{
         this.bomba=false;
         this.player=undefined;
         this.alcaide=undefined;
+        this.liberation=false;
     //    // this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
     //     //this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
     //     this.speedPenalizationBought=5;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide
@@ -49,11 +50,35 @@ this.player.getStunned(time);
         this.keys=this.keys+1;
         console.log(this.keys);
     }
+
+
+    //Penalizo al alcaide
     StunAlcaide(time){
 this.alcaide.getStunned(time);
     }
+    ChangeAlcaideSpeed(slow){
+        this.alcaide.ChangeSpeed(slow);
+    }
+
+    //Que vuelva a su estaod normal
     RecoverAlcaide(){
         this.alcaide.Recover();
     }
+
+    //Indico si es posible ser liberado
+    LiberarPreso(valor){
+this.liberation=valor;
+    }
+
+    //Si el preso puede liberarse y ademas tengo llaves suficientes le digo que puede
+    EstoyLibre(valor){
+        if(this.liberation && (this.keys-valor)>=0){
+            this.keys=this.keys-valor;
+            return (true);
+        }
+        else
+        return false;
+    }
+
    
 }

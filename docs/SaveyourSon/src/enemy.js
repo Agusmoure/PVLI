@@ -48,6 +48,9 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     Recover(){
         this.speedX=130;
     }
+    ChangeSpeed(slow){
+      this.speedX=this.speedX+slow;
+    }
     getStunned(time){
 this.stunTime=time;
     }
