@@ -39,8 +39,8 @@ return this.bomba;
         this.player.SetVelY(vel);
     }
 
-    ImpulsePlayer(velX){
-        this.player.Impulse(velX);
+    ImpulsePlayer(velX,velY){
+        this.player.Impulse(velX,velY);
     }
     StunPlayer(time){
 this.player.getStunned(time);

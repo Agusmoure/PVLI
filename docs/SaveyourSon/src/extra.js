@@ -32,7 +32,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
     Update(){
 
-        //Razones por las que empezar a perseguir
+        //////////////////////////////////////////////Movimiento del policia dependiendo de si es horizontal o verrtical////////////////////////////////////////////////
         if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance)
         this.body.setVelocityX(this.speedX);
         else  if(this.police && this.movement==='horizontal'){
@@ -53,35 +53,32 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         this.body.setVelocityY(this.speedY);
     }
 
+
+    ///////////////////////////////////////////////////Movimiento del preso que comienza si el jugador está cerca y tiene llaves/////////////////////////////////////////
          if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste))
         this.active=true;
-
-
-        //Control de que no persigo más tiempo del que puedo
-        if(this.active && this.timer>0 ){//&& Math.abs(this.objective.x-this.x)<this.distance){
+        //Se mueve si esta activo y no ha pasado demasiado tiempo
+        if(this.active && this.timer>0 ){
             this.body.setVelocityX((Math.abs(this.objective.x-this.x)/(this.objective.x-this.x))*this.speedX);
-        this.timer=this.timer-1;
+            this.timer=this.timer-1;
         }
-        // else
-        // this.body.setVelocityX(0);
 
-        //Control de que en caso de haber pillado al objetivo se le quite la penalizacion tras x segundos
+        //////////////////////////////////////////////Control de la penalizacion dependiendo de si es stun o slow y si es poli o preso////////////////////////////////////
         if(this.tocado && !this.finalizado && !this.stun){
             this.timerPenalizacion=this.timerPenalizacion-1;
             if(this.timerPenalizacion<0){
                 if(this.police)
-            this.lvM.SetPlayerX(-this.penalization);
-            else
-            this.lvM.RecoverAlcaide();
-
+                this.lvM.SetPlayerX(-this.penalization);
+                else
+                this.lvM.RecoverAlcaide();
             this.finalizado=false;
-            this.tocado = false;
-               
-        }
+            this.tocado = false;        
+            }
         }
         
     }
 
+    ///////////////////////////////////////////////////Cuando haya tocado a mi objetivo le mando la penalizacion y me pongo activo/////////////////////////////////////////
     caught(){
         if(!this.tocado){
             if(!this.stun){

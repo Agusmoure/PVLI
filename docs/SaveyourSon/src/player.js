@@ -25,26 +25,31 @@ this.right = true;
 this.gravity=2000;
 this.fuel = 1000;
 this.maxFuel=1000;
+this.impulsoX=0;
+this.impulsoY=0;
+
 this.escena = scene;
 }
 
 update(){
     if(this.stunTime<1){
 if(this.right)
-this.body.setVelocityX(this.defaultSpeed);
+this.body.setVelocityX(this.defaultSpeed+this.impulsoX);
 else
-this.body.setVelocityX(-this.defaultSpeed);
-
+this.body.setVelocityX(-this.defaultSpeed+this.impulsoX);
 if( this.modifier==='jetpack' && this.fuel<this.maxFuel && Math.abs(this.body.velocity.y)<10){
 this.fuel+=10;
-console.log(this.fuel);
 }
  if(this.modifier==='jetpack' && !this.modifierDisponible &&  this.fuel>=this.maxFuel){
 this.fuel=this.maxFuel;
 this.modifierDisponible=true;
-console.log("verdad");
 }
-//if(this.modifier==='jetpack' && !this.modifierDisponible)
+
+if(this.impulsoY>0)
+this.impulsoY=this.impulsoY-10;
+
+if(this.impulsoX>0)
+this.impulsoX=this.impulsoX-10;
  }
     else{
         this.body.setVelocityX(0);
@@ -93,13 +98,13 @@ changeModifierAntigravedad(){
  
 moveRight(){
     if(this.stunTime<1)
-    this.body.setVelocityX(this.speedX);
+    this.body.setVelocityX(this.speedX+this.impulsoX);
     this.right=true;
 
 }
 moveLeft(){
     if(this.stunTime<1)
-    this.body.setVelocityX(-this.speedX);
+    this.body.setVelocityX(-this.speedX+this.impulsoX);
     this.right=false;
 }
 
@@ -129,7 +134,7 @@ moveUp(){
 
     else if(this.modifier === 'bomba' && this.modifierDisponible){
         this.lvM.SetBomba();
-        this.modifier = 'normal';
+        this.modifier='normal';
     }
 }
  
@@ -151,8 +156,9 @@ this.lvM.LiberarPreso(valor);
 SetVelX(velModifier){
 this.speedX=this.speedX+velModifier;
 }
-Impulse(velX){
-    this.body.velocity.x=velX;
+Impulse(velX,velY){
+    this.impulsoX=velX;
+    this.impulsoY=velY;
    
  }
  getStunned(time){
