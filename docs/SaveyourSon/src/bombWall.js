@@ -7,8 +7,9 @@ export default class BombWall extends Phaser.GameObjects.Sprite{
         super(scene,x,y,'ground');
     
         scene.add.existing(this);    
-         scene.physics.add.existing(this);    
-         this.body.setGravityY(-1000);         
+        scene.physics.add.existing(this);    
+        this.body.setGravityY(-1000);    
+        this.body.setImmovable(true);      
     }
 
     Destroy(bombX,bombY){

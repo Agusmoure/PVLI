@@ -8,14 +8,14 @@ export default class MovableWall extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);    
         scene.physics.add.existing(this);    
         this.body.setGravityY(-1000);
-        this.body.setImmovable(false);
+        this.body.setImmovable(true); 
         this.body.setBounce(0);
          this.startX=xInit;
          this.finalX=xEnd;
          this.startY=yInit;
          this.finalY=yEnd;
          this.velX=100;
-         this.velY=100;
+         this.velY=0;
     }
 
     Update(){

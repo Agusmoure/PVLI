@@ -87,7 +87,7 @@ export default class Game extends Phaser.Scene {
   
 
     //Plataformas moviles
-    this.movablePlatform = new MovableWall(this,700,800,200,300);
+    this.movablePlatform = new MovableWall(this,700,800,200,200);
     
 
     //Paredes destructibles
