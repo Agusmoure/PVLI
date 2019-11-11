@@ -8,6 +8,8 @@ import GameManager from "./GameManager.js";
 import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
+import MovableWall from "./movableWall.js";
+import BombWall from "./bombWall.js";
 
 export default class Game extends Phaser.Scene {
 
@@ -77,11 +79,20 @@ export default class Game extends Phaser.Scene {
 
    //Creo plataformas random
     this.platforms = this.physics.add.staticGroup();
-   this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+    
+  
 
+    //Plataformas moviles
+    this.movablePlatform = new MovableWall(this,700,800,200,300);
+    
+
+    //Paredes destructibles
+    this.bombWall = new BombWall(this,750,700);
+    this.lvM.bombWall= this.bombWall;
     
     //Suelo para el alcaide
     //this.floor = this.physics.add.staticGroup();
@@ -101,6 +112,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.key4,this.platforms);
     this.physics.add.collider(this.bomba,this.platforms);
     this.physics.add.collider(this.poli,this.platforms);
+    this.physics.add.collider(this.movablePlatform,this.player);
+    this.physics.add.collider(this.bomba,this.bombWall);
+    this.physics.add.collider(this.player,this.bombWall);
+
 
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
@@ -181,6 +196,7 @@ this.player.LiberarPresos(false);
     this.camera.startFollow(this.player);
     this.bomba.Update();
     this.poli.Update();
+    this.movablePlatform.Update();
   }
 
   arriba(){

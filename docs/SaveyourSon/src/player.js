@@ -4,7 +4,7 @@ export default class Player extends Phaser.GameObjects.Sprite{
 constructor(scene,gameManager,levelManager){
 
     let x=100;
-    let y=100;
+    let y=150;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);

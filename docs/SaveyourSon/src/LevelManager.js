@@ -2,6 +2,7 @@ export default class LevelManager{
     constructor(){
         this.keys=0;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
         this.bomba=false;
+        this.bombWall=undefined
         this.player=undefined;
         this.alcaide=undefined;
         this.liberation=false;
@@ -42,6 +43,12 @@ return this.bomba;
     ImpulsePlayer(velX,velY){
         this.player.Impulse(velX,velY);
     }
+
+    BombExploded(posX,posY){
+
+        this.bombWall.Destroy(posX,posY);
+    }
+
     StunPlayer(time){
 this.player.getStunned(time);
     }

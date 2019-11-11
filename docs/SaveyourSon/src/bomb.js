@@ -47,6 +47,7 @@ if(this.temp>1000 && !this.boom){
     this.lvM.ImpulsePlayer(this.repulsion*(distanciaX/(Math.sqrt(Math.pow(distanciaX,2)+Math.pow(distanciaY,2)))),this.repulsion*(distanciaY/(Math.sqrt(Math.pow(distanciaY,2)+Math.pow(distanciaX,2)))) );
     this.boom=true;
 this.destroy();
+this.lvM.BombExploded(this.x,this.y);
 }
 }
     }
