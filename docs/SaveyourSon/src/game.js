@@ -29,23 +29,22 @@ export default class Game extends Phaser.Scene {
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     //Problemas1
-   this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba.json');
+   this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba1.json');
     this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
   }
   
   create() {
     //Problemas2
-    this.map = this.add.tilemap({ 
-      key: 'level1Tilemap', 
-      tileWidth: 32, 
-      tileHeight: 32 
-    });
+    // this.map = this.add.tilemap({ 
+    //   key: 'level1Tilemap', 
+    //   tileWidth: 32, 
+    //   tileHeight: 32 
+    // });
      //let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
     //this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    console.log('pojijgoij');
     this.camera = this.cameras.main
-    this.add.image(10, 10, 'sky').setScale(3.5);
+    //this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
@@ -58,10 +57,10 @@ export default class Game extends Phaser.Scene {
     this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
     this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
     //this.keyCount=0;
-    this.map = this.make.tilemap({ 
+    this.map = this.add.tilemap({ 
       key: 'level1Tilemap', 
-      tileWidth: 32, 
-      tileHeight: 32 
+      // tileWidth: 32, 
+      // tileHeight: 32 
     });
      let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
     this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
