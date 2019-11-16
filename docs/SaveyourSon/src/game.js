@@ -8,6 +8,7 @@ import GameManager from "./GameManager.js";
 import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
+import HookGun from "./HookGun.js";
 
 export default class Game extends Phaser.Scene {
 
@@ -41,7 +42,6 @@ export default class Game extends Phaser.Scene {
     });
      let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
     this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    console.log('pojijgoij');
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
@@ -55,13 +55,14 @@ export default class Game extends Phaser.Scene {
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
     this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
     this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
+    this.HookGun = new HookGun(this,this.lvM);
+
     //this.keyCount=0;
     this.map = this.make.tilemap({ 
       key: 'level1Tilemap', 
       tileWidth: 32, 
       tileHeight: 32 
     });
-     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
     this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
     this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
 
@@ -70,6 +71,7 @@ export default class Game extends Phaser.Scene {
     this.poli=new Extra (this,this.enemy,this.lvM,true,false,100,300);
 
     //INPUT
+    this.pointer = this.input.activePointer;
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -101,13 +103,13 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.key4,this.platforms);
     this.physics.add.collider(this.bomba,this.platforms);
     this.physics.add.collider(this.poli,this.platforms);
+    this.physics.add.collider(this.HookGun,this.platforms);
 
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
 
     
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
-    console.log(this.player.speedY);
   
     
     this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
@@ -128,6 +130,10 @@ export default class Game extends Phaser.Scene {
     
     this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
     this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
+    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
+    
+  //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
+
 
     //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
@@ -147,10 +153,10 @@ export default class Game extends Phaser.Scene {
    // console.log(this.keyCount);
     let stuned=this.S.isDown;
     let release=this.R.isDown;
-    if(this.keyCount>=4){
+    if(this.lvM.GetKey()>=4){
       // stuned=true;
-      
-      this.scene.start('Level1');
+      this.gM.AddSpeedImprovment(2);
+      this.scene.start('Level1',this.gM);
     }
     this.enemy.Update(stuned,release);
 
@@ -178,9 +184,14 @@ this.player.LiberarPresos(true);
       else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
 this.player.LiberarPresos(false);
       }
+
     this.camera.startFollow(this.player);
     this.bomba.Update();
     this.poli.Update();
+  if(this.pointer.isDown){
+    this.HookGun.Shoot(this.pointer.x,this.pointer.y);
+  }
+  
   }
 
   arriba(){

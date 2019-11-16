@@ -1,5 +1,5 @@
 export default class Extra extends Phaser.GameObjects.Sprite{
-    constructor(scene,objetivo,levelManager,stunear,policia,tiempopenal,tiempovida){
+    constructor(scene,direction,levelManager,stunear,policia,tiempopenal,tiempovida){
     
         let x=500;
         let y=100;
@@ -20,7 +20,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     this.timerPenalizacion=tiempopenal;  
     this.speedY=100;
     this.speedX=100;
-    this.objective=objetivo; //Cosa a la que va a perseguir al empezar a moverse
+    this.objective=direction; //Cosa a la que va a perseguir al empezar a moverse
     this.distance=100;
     this.lvM=levelManager;
     this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberados

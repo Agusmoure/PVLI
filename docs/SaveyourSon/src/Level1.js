@@ -5,12 +5,13 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Game from "./game.js"
+import Game from "./game.js";
+import LevelManager from "./LevelManager.js";
 
 export default class Level1 extends Phaser.Scene {
     constructor(gameManager){
         super('Level1')
-
+        this.lvM = new LevelManager();
     }
     preload() {
         this.load.image('sky', '../assets/sky.png');
@@ -25,7 +26,9 @@ export default class Level1 extends Phaser.Scene {
         
       }
       
-      create() {
+      create(data) {
+        this.gM=data;
+
         // this.map = this.make.tilemap({ 
         //   key: 'level1Tilemap', 
         //   tileWidth: 32, 
@@ -38,11 +41,11 @@ export default class Level1 extends Phaser.Scene {
         this.jetpack = new JetPack(this);
         this.antigravedad = new Antigravedad(this);
         this.enemy = new Enemy(this,this.player,this.gM);
-        this.key= new Key(this,700,300).setScale(0.25);
-        this.key1= new Key(this,900,0).setScale(0.25);
-        this.key2= new Key(this,100,300).setScale(0.25);
-        this.key3= new Key(this,600,300).setScale(0.25);
-        this.key4= new Key(this,1000,300).setScale(0.25);
+        this.key= new Key(this,700,300,this.lvM).setScale(0.25);
+        this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
+        this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
+        this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
+        this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
         this.keyCount=0;
         this.bomba = new Bomba(this,400,200,this.player).setScale(0.10);
     
@@ -117,8 +120,8 @@ export default class Level1 extends Phaser.Scene {
       }
     
       update(time, delta) {   
+        console.log(this.gM.GetSpeedImprovments())
         if(this.gameOver) return ;
-        console.log(this.keyCount);
         let stuned=this.S.isDown;
         let release=this.R.isDown;
         if(this.keyCount>=3){
