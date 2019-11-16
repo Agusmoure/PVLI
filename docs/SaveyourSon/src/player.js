@@ -10,7 +10,7 @@ constructor(scene,gameManager,levelManager){
     scene.physics.add.existing(this);
    // this.gm=gameManager;
    this.lvM=levelManager;
-this.body.setCollideWorldBounds(true);
+//this.body.setCollideWorldBounds(true);
 this.vehicle=false;
 this.modifier='normal';
 this.modifierDisponible=true;
