@@ -14,13 +14,13 @@ export default class Level1 extends Phaser.Scene {
         this.lvM = new LevelManager();
     }
     preload() {
-        this.load.image('sky', '../assets/sky.png');
-        this.load.image('ground', '../assets/platform.png');
-        this.load.image('key','../assets/Key.png');
-        this.load.image('star', '../assets/star.png');
-        this.load.image('bomb', '../assets/bomb.png');
-        this.load.image('bomba','../assets/bomba.png');
-        this.load.spritesheet('dude', '../assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+      this.load.image('sky', '/SaveyourSon/assets/sky.png');
+      this.load.image('ground', '/SaveyourSon/assets/platform.png');
+      this.load.image('key','/SaveyourSon/assets/Key.png');
+      this.load.image('star', '/SaveyourSon/assets/star.png');
+      this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
+      this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+      this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
       //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
        // this.load.image('patronesTilemap', 'assets/patrones.png');
         

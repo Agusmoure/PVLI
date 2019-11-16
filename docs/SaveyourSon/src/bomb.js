@@ -11,6 +11,7 @@ export default class Bomba extends PowerUp{
     this.repulsion = 1000;      
     this.recogida=false;
     this.lanzada = false;
+    this.boom=false;
     this.temp =0;
     this.lvM=lvManager;
     
@@ -18,30 +19,40 @@ export default class Bomba extends PowerUp{
 
 
     Update(){
+
+        ////////////////////////////////////Si estoy en la mano del player////////////////////////////
 if(this.recogida===true && !this.lvM.LanzarBomba()){
 this.x=this.lvM.GetPlayerX();
 this.y=this.lvM.GetPlayerY();
 }
+
+///////////////////////////////////////////Compruebo si tengo que ser lanzada/////////////////////////
 else if(this.recogida===true && this.lvM.LanzarBomba() && !this.lanzada){
     this.Lanzamiento(this.lvM.GetPlayerVelX());
     this.lanzada=true;
 }
+
+//////////////////////////////////////////Temporizador para explotar////////////////////////////////////
 else if(this.lanzada){
 this.temp=this.temp+10;
 
-if(this.temp>1000){
-    if(this.lvM.GetPlayerX()<this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
-    this.lvM.ImpulsePlayer(-500+Math.abs(this.lvM.GetPlayerX()-this.x));
+///////////////////////////////////////////El temporizador de la explosion acabo y hay que mandar el impulso al jugador///////////////////////////////////////////
+if(this.temp>1000 && !this.boom){
+    let distanciaX= Math.abs(this.lvM.GetPlayerX()-this.x);
+    let distanciaY= Math.abs(this.lvM.GetPlayerY()-this.y);
+    if(this.lvM.GetPlayerX()<this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200){
+    this.lvM.ImpulsePlayer(-this.repulsion*(distanciaX/(Math.sqrt(Math.pow(distanciaX,2)+Math.pow(distanciaY,2)))),this.repulsion*(distanciaY/(Math.sqrt(Math.pow(distanciaY,2)+Math.pow(distanciaX,2)))) );
+    }
     else if(this.lvM.GetPlayerX()>this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
-    this.lvM.ImpulsePlayer(500-Math.abs(this.lvM.GetPlayerX()-this.x));
+    this.lvM.ImpulsePlayer(this.repulsion*(distanciaX/(Math.sqrt(Math.pow(distanciaX,2)+Math.pow(distanciaY,2)))),this.repulsion*(distanciaY/(Math.sqrt(Math.pow(distanciaY,2)+Math.pow(distanciaX,2)))) );
+    this.boom=true;
 this.destroy();
+this.lvM.BombExploded(this.x,this.y);
 }
 }
     }
     PickMe(){
-        this.recogida=true;
-       // console.log(this.recogida);
-        
+        this.recogida=true;       
     }
     Lanzamiento(sentido){
         this.x=this.x;

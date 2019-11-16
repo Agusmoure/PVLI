@@ -14,7 +14,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     this.penalization=10;
     this.stunTime=0;
     this.speedY=100;
-    this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
+    this.speedX=130;//-(gameManager.GetSpeedPenalizations()*this.penalization);
     this.player=jugador;
     }
 

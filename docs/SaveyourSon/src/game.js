@@ -9,6 +9,9 @@ import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
+//import HookGunProyectile from "./HookGunProyectile.js"
+import MovableWall from "./movableWall.js";
+import BombWall from "./bombWall.js";
 
 export default class Game extends Phaser.Scene {
 
@@ -28,20 +31,21 @@ export default class Game extends Phaser.Scene {
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     //Problemas1
-   this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba.json');
-    this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
+  //  this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba1.json');
+  //   this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
   }
   
   create() {
     //Problemas2
-    this.map = this.add.tilemap({ 
-      key: 'level1Tilemap', 
-      tileWidth: 32, 
-      tileHeight: 32 
-    });
-     let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
-    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+    // this.map = this.add.tilemap({ 
+    //   key: 'level1Tilemap', 
+    //   tileWidth: 32, 
+    //   tileHeight: 32 
+    // });
+    //  let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
+    // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
@@ -58,12 +62,12 @@ export default class Game extends Phaser.Scene {
     this.HookGun = new HookGun(this,this.lvM);
 
     //this.keyCount=0;
-    this.map = this.make.tilemap({ 
-      key: 'level1Tilemap', 
-      tileWidth: 32, 
-      tileHeight: 32 
-    });
-    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+    // this.map = this.add.tilemap({ 
+    //   key: 'level1Tilemap', 
+    //   // tileWidth: 32, 
+    //   // tileHeight: 32 
+    // });
+    // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
     this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
 
 
@@ -79,11 +83,20 @@ export default class Game extends Phaser.Scene {
 
    //Creo plataformas random
     this.platforms = this.physics.add.staticGroup();
-   this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     this.platforms.create(600, 400, 'ground');
     this.platforms.create(50, 250, 'ground');
     this.platforms.create(750, 220, 'ground');
+    
+  
 
+    //Plataformas moviles
+    this.movablePlatform = new MovableWall(this,700,800,200,200);
+    
+
+    //Paredes destructibles
+    this.bombWall = new BombWall(this,750,700);
+    this.lvM.bombWall= this.bombWall;
     
     //Suelo para el alcaide
     //this.floor = this.physics.add.staticGroup();
@@ -104,6 +117,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.bomba,this.platforms);
     this.physics.add.collider(this.poli,this.platforms);
     this.physics.add.collider(this.HookGun,this.platforms);
+    this.physics.add.collider(this.movablePlatform,this.player);
+    this.physics.add.collider(this.bomba,this.bombWall);
+    this.physics.add.collider(this.player,this.bombWall);
+
 
     // this.physics.add.collider(this.enemy,this.player);
     // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
@@ -139,7 +156,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-    this.physics.add.overlap(this.enemy,this.poli,this.poli.caught,null,this.poli);
+    this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
 
 
     
@@ -189,9 +206,10 @@ this.player.LiberarPresos(false);
     this.bomba.Update();
     this.poli.Update();
   if(this.pointer.isDown){
-    this.HookGun.Shoot(this.pointer.x,this.pointer.y);
+    //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
   }
   
+    this.movablePlatform.Update();
   }
 
   arriba(){
