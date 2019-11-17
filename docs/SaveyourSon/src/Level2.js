@@ -13,10 +13,10 @@ import HookGun from "./HookGun.js";
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 
-export default class Game extends Phaser.Scene {
+export default class Level2 extends Phaser.Scene {
 
   constructor() {
-    super(/*{ key: 'main' }*/ 'game');
+    super(/*{ key: 'main' }*/ 'Level2');
     this.gameOver=false;
     this.gM= new GameManager();
     this.lvM = new LevelManager();
@@ -31,20 +31,16 @@ export default class Game extends Phaser.Scene {
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     //Problemas1
-    this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/Nivel2.json');
+    this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/Nivel2/Nivel2.json');
+    this.load.tilemapTiledJSON('level1Tilemap-2', '/SaveyourSon/assets/Nivel2/Nivel2-2.json');
+    this.load.tilemapTiledJSON('level1Tilemap-3', '/SaveyourSon/assets/Nivel2/Nivel2-3.json');
+    this.load.tilemapTiledJSON('level1Tilemap-4', '/SaveyourSon/assets/Nivel2/Nivel2-4.json');
      this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
   }
   
   create() {
-    //Problemas2
-    // this.map = this.add.tilemap({ 
-    //   key: 'level1Tilemap', 
-    //   tileWidth: 32, 
-    //   tileHeight: 32 
-    // });
-    //  let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
-    // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+    
 
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
@@ -68,12 +64,43 @@ export default class Game extends Phaser.Scene {
        tileHeight: 16 
     });
     let t = this.map.addTilesetImage('SaveyourSon', 'patronesTilemap');
-    this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
+    this.background= this.map.createStaticLayer("Parte1", t);
     this.parte2=false;
-    this.background2=this.map.createStaticLayer("Parte2", t);
     this.background.setScale(0.1);
-    this.background2.setScale(0.1);
     this.background.setCollisionBetween(0, 20000);
+
+    // this.map = this.make.tilemap({ 
+    //   key: 'level1Tilemap-2', 
+    //    tileWidth: 16, 
+    //    tileHeight: 16 
+    // });
+    // t = this.map.addTilesetImage('SaveyourSon', 'patronesTilemap');
+    // this.background2= this.map.createStaticLayer("Parte2", t);
+    // this.background2.setScale(0.1);
+    // this.background2.setCollisionBetween(0, 20000);
+
+    // this.map = this.make.tilemap({ 
+    //   key: 'level1Tilemap-3', 
+    //    tileWidth: 16, 
+    //    tileHeight: 16 
+    // });
+    // t = this.map.addTilesetImage('SaveyourSon', 'patronesTilemap');
+    // this.background3= this.map.createStaticLayer("Parte3", t);
+    // this.background3.setScale(0.1);
+    // this.background3.setCollisionBetween(0, 20000);
+
+    // this.map = this.make.tilemap({ 
+    //   key: 'level1Tilemap-4', 
+    //    tileWidth: 16, 
+    //    tileHeight: 16 
+    // });
+    // t = this.map.addTilesetImage('SaveyourSon', 'patronesTilemap');
+    // this.background3= this.map.createStaticLayer("Parte4", t);
+    // this.background3.setScale(0.1);
+    // this.background3.setCollisionBetween(0, 20000);
+
+    //this.background2=this.map.createStaticLayer("Parte2", t);
+    //this.background2.setScale(0.1);
     this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
 
 
