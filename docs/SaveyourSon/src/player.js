@@ -133,7 +133,8 @@ moveUp(){
     }
 
     else if(this.modifier === 'bomba' && this.modifierDisponible){
-        this.lvM.SetBomba();
+        this.lvM.SetBomba(this.bomba);
+        console.log(this.bomba);
         this.modifier='normal';
     }
 }

@@ -1,7 +1,7 @@
 export default class LevelManager{
     constructor(){
         this.keys=0;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
-        this.bomba=false;
+        this.bomba=undefined;
         this.bombWall=undefined
         this.player=undefined;
         this.alcaide=undefined;
@@ -14,6 +14,12 @@ export default class LevelManager{
     //     this.catapultImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la catapulta
     }
 
+    SetNumBombas(cantidad){
+        this.bomba = new Array(cantidad);
+        this.bomba[0]=false;
+        this.bomba[1]=false;
+        this.bomba[2]=false;
+    }
     GetPlayerX(){
         return this.player.body.x;
     }
@@ -26,12 +32,13 @@ return this.player.GetVelX();
     GetKey(){
         return this.keys;
     }
-    SetBomba()
+    SetBomba(num)
     {
-        this.bomba=true;
+       // console.log(num);
+        this.bomba[num]=true;
     }
-    LanzarBomba(){
-return this.bomba;
+    LanzarBomba(num){
+return this.bomba[num];
     }
     SetPlayerX(vel){
         this.player.SetVelX(vel);
