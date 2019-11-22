@@ -1,12 +1,13 @@
 export default class GameManager{
     constructor(){
-        this.keys=0;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
+        this.keys=10;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
         this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
         this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
         this.speedPenalizationBought=5;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide
         this.jetpacksImprovementsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la resistencia del jetpack
         this.bombImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la bomba
         this.catapultImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la catapulta
+        this.scenesForPlay=['game','Level1',/*'Level2',*/'Level3']
     }
     GetKey(){
         return this.keys;
@@ -31,6 +32,7 @@ export default class GameManager{
     }
     AddKeys(keysToAdd){
 this.keys+=keysToAdd;
+if(this.keys<0) this.keys=0;
     }
     GoNextScene(){
     this.scene+=1;
@@ -49,5 +51,10 @@ this.keys+=keysToAdd;
     }
     AddCatapultImprovement(catapultsImprovent){
         this.catapultImprovmentBought+=catapultsImprovent;
+    }
+    GetSuperNextScene(){
+        this.scene++;
+        console.log(this.scenesForPlay[this.scene]);
+        return this.scenesForPlay[this.scene];
     }
 }

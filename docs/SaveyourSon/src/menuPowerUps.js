@@ -2,10 +2,11 @@ export default class MenuPowerUps extends Phaser.Scene {
 
     constructor() {
       super(/*{ key: 'main' }*/ 'MenuPowerUps');
-      //this.gameOver=false;
-      //this.lvM = new LevelManager();
+    this.fuelPrice=10;
+    this.speedImprovementPrice=5;
+    this.speedPenalizationPrice=5;
+    this.releaseDtoPrsionerPrice=6;
     }
-
 
     preload() {
 
@@ -32,7 +33,9 @@ export default class MenuPowerUps extends Phaser.Scene {
         
 this.botonNivel.on('pointerdown',pointer => {
 if(!this.mouseClick){
-    this.scene.start('Level1', this.gM);
+    //this.scene.start('Level3', this.gM);
+    this.scene.start(this.gM.GetSuperNextScene(), this.gM);
+
 
 }
 this.mouseClick=true;
@@ -48,7 +51,13 @@ this.botonNivel.on('pointerup',pointer => {
 
     this.botonLLaves.on('pointerdown',pointer => {
         if(!this.mouseClick){
-            this.gM.AddSpeedImprovment(10);
+            if(this.gM.GetKey()>=this.speedImprovementPrice){
+            this.gM.AddSpeedImprovment(1);
+            console.log("before"+this.gM.GetKey()+" "+this.gM.GetSpeedImprovments());
+            this.gM.AddKeys(-this.speedImprovementPrice);
+            console.log("after"+this.gM.GetKey());
+            }
+
         }
         this.mouseClick=true;
         });

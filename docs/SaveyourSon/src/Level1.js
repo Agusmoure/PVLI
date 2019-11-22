@@ -9,7 +9,7 @@ import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 
 export default class Level1 extends Phaser.Scene {
-    constructor(gameManager){
+    constructor(){
         super('Level1')
         this.lvM = new LevelManager();
     }
@@ -23,6 +23,7 @@ export default class Level1 extends Phaser.Scene {
       this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
       //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
        // this.load.image('patronesTilemap', 'assets/patrones.png');
+       console.log("LEVEL1");
         
       }
       
@@ -127,6 +128,8 @@ export default class Level1 extends Phaser.Scene {
         if(this.keyCount>=3){
           stuned=true;
           this.keyCount=0;
+          this.scene.start('MenuPowerUps', this.gM);
+
         }
         this.enemy.Update(stuned,release);
     

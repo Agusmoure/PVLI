@@ -173,7 +173,7 @@ export default class Game extends Phaser.Scene {
     if(this.lvM.GetKey()>=4){
       // stuned=true;
       this.gM.AddSpeedImprovment(2);
-      this.scene.start('Level1',this.gM);
+      this.scene.start('MenuPowerUps',this.gM);
     }
     this.enemy.Update(stuned,release);
 
