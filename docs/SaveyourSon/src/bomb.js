@@ -1,6 +1,6 @@
 import PowerUp from "./powerup.js";
 export default class Bomba extends PowerUp{
-    constructor(scene,xInit, yInit,lvManager){
+    constructor(scene,xInit, yInit,lvManager,number){
         
     
         let x=xInit;
@@ -14,6 +14,7 @@ export default class Bomba extends PowerUp{
     this.boom=false;
     this.temp =0;
     this.lvM=lvManager;
+    this.index = number;
     
     }
 
@@ -21,13 +22,13 @@ export default class Bomba extends PowerUp{
     Update(){
 
         ////////////////////////////////////Si estoy en la mano del player////////////////////////////
-if(this.recogida===true && !this.lvM.LanzarBomba()){
+if(this.recogida===true){// && !this.lvM.LanzarBomba(this.index)){
 this.x=this.lvM.GetPlayerX();
 this.y=this.lvM.GetPlayerY();
 }
 
 ///////////////////////////////////////////Compruebo si tengo que ser lanzada/////////////////////////
-else if(this.recogida===true && this.lvM.LanzarBomba() && !this.lanzada){
+else if(this.recogida===true && this.lvM.LanzarBomba(this.index) && !this.lanzada){
     this.Lanzamiento(this.lvM.GetPlayerVelX());
     this.lanzada=true;
 }
@@ -52,7 +53,8 @@ this.lvM.BombExploded(this.x,this.y);
 }
     }
     PickMe(){
-        this.recogida=true;       
+        this.recogida=true;    
+        console.log("o1bdkñj1bd");   
     }
     Lanzamiento(sentido){
         this.x=this.x;

@@ -54,6 +54,7 @@ export default class Game extends Phaser.Scene {
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
+    this.lvM.SetNumBombas(3);
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
@@ -68,7 +69,14 @@ export default class Game extends Phaser.Scene {
     //   // tileHeight: 32 
     // });
     // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    this.bomba = new Bomba(this,400,200,this.lvM).setScale(0.10);
+    this.bomba = new Bomba(this,400,200,this.lvM,0).setScale(0.10);
+    this.bomba2 = new Bomba(this,700,200,this.lvM,1).setScale(0.10);
+   // this.bombas = new Array(2);
+    // this.bombas[0]=this.bomba;
+    // this.bombas[1] = this.bomba2;
+    this.bombas = this.physics.add.group();
+    this.bombas.add(this.bomba);
+    this.bombas.add(this.bomba2);
 
 
     //EXTRAS
@@ -114,12 +122,17 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.key2,this.platforms);
     this.physics.add.collider(this.key3,this.platforms);
     this.physics.add.collider(this.key4,this.platforms);
-    this.physics.add.collider(this.bomba,this.platforms);
+    //this.physics.add.collider(this.bomba,this.platforms);
+    //this.physics.add.collider(this.bomba2,this.platforms);
+    this.physics.add.collider(this.bombas,this.platforms);
+    
     this.physics.add.collider(this.poli,this.platforms);
     this.physics.add.collider(this.HookGun,this.platforms);
     this.physics.add.collider(this.movablePlatform,this.player);
-    this.physics.add.collider(this.bomba,this.bombWall);
-    this.physics.add.collider(this.player,this.bombWall);
+   // this.physics.add.collider(this.bomba,this.bombWall);
+
+    this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
+    //this.physics.add.overlap(this.player,this.bombas,this.player.changeModifierBomba,null,this.player);
 
 
     // this.physics.add.collider(this.enemy,this.player);
@@ -145,8 +158,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.key3,this.key.PickMe,null,this.key3);
     this.physics.add.overlap(this.player,this.key4,this.key.PickMe,null,this.key4);
     
-    this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
-    this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
+    // this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
+    // this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
+    // this.physics.add.overlap(this.player,this.bomba2,this.PillarBomba,null,this);
+    // this.physics.add.overlap(this.player,this.bomba2,this.bomba2.PickMe,null,this.bomba2);
     this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
     
   //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
@@ -203,7 +218,10 @@ this.player.LiberarPresos(false);
       }
 
     this.camera.startFollow(this.player);
-    this.bomba.Update();
+    this.bombas.children.iterate(function (child) {
+
+      child.Update();  
+  });
     this.poli.Update();
   if(this.pointer.isDown){
     //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
@@ -223,8 +241,13 @@ this.player.LiberarPresos(false);
   }
 
 
-  PillarBomba(){
-    this.player.changeModifierBomba(this.bomba);
+  PillarBomba(player,bomba){
+    
+    if(!bomba.recogida){
+     bomba.PickMe();
+     player.bomba = bomba.index;
+     console.log(bomba.index);
+    }
     
   }
   LanzarBomba(bomba,x,y){
