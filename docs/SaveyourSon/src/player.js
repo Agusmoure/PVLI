@@ -45,11 +45,20 @@ this.fuel=this.maxFuel;
 this.modifierDisponible=true;
 }
 
+if(Math.abs(this.impulsoY)>0){
 if(this.impulsoY>0)
-this.impulsoY=this.impulsoY-10;
+    this.impulsoY=this.impulsoY-10;
+    else
+    this.impulsoY=this.impulsoY+10;
+}
 
-if(this.impulsoX>0)
-this.impulsoX=this.impulsoX-10;
+if(Math.abs(this.impulsoX)>0){
+    if(this.impulsoX>0)
+    this.impulsoX=this.impulsoX-10;
+    else
+    this.impulsoX=this.impulsoX+10;
+}
+
  }
     else{
         this.body.setVelocityX(0);

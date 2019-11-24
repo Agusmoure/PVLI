@@ -22,7 +22,7 @@ export default class Bomba extends PowerUp{
     Update(){
 
         ////////////////////////////////////Si estoy en la mano del player////////////////////////////
-if(this.recogida===true){// && !this.lvM.LanzarBomba(this.index)){
+if(this.recogida===true && !this.lvM.LanzarBomba(this.index)){
 this.x=this.lvM.GetPlayerX();
 this.y=this.lvM.GetPlayerY();
 }
