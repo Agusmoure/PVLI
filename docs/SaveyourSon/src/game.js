@@ -49,7 +49,6 @@ export default class Game extends Phaser.Scene {
     this.camera = this.cameras.main
     this.add.image(10, 10, 'sky').setScale(3.5);
     this.player = new Player(this, this.gM,this.lvM);
-    this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
@@ -60,6 +59,13 @@ export default class Game extends Phaser.Scene {
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
     this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
     this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
+    this.keys = this.physics.add.group();
+    this.keys.add(this.key);
+    this.keys.add(this.key1);
+    this.keys.add(this.key2);
+    this.keys.add(this.key3);
+    this.keys.add(this.key4);
+    this.jetpack = new JetPack(this);
     this.HookGun = new HookGun(this,this.lvM);
 
     //this.keyCount=0;
@@ -71,9 +77,6 @@ export default class Game extends Phaser.Scene {
     // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
     this.bomba = new Bomba(this,400,200,this.lvM,0).setScale(0.10);
     this.bomba2 = new Bomba(this,700,200,this.lvM,1).setScale(0.10);
-   // this.bombas = new Array(2);
-    // this.bombas[0]=this.bomba;
-    // this.bombas[1] = this.bomba2;
     this.bombas = this.physics.add.group();
     this.bombas.add(this.bomba);
     this.bombas.add(this.bomba2);
@@ -81,6 +84,11 @@ export default class Game extends Phaser.Scene {
 
     //EXTRAS
     this.poli=new Extra (this,this.enemy,this.lvM,true,false,100,300);
+    this.poli2=new Extra (this,this.enemy,this.lvM,true,false,200,300);
+    this.poli2.y=400;
+    this.extrasPolis = this.physics.add.group();
+    this.extrasPolis.add(this.poli);
+    this.extrasPolis.add(this.poli2);
 
     //INPUT
     this.pointer = this.input.activePointer;
@@ -117,22 +125,18 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.jetpack,this.platforms);
     this.physics.add.collider(this.antigravedad,this.platforms);
     this.physics.add.collider(this.enemy,this.platforms);
-    this.physics.add.collider(this.key,this.platforms);
-    this.physics.add.collider(this.key1,this.platforms);
-    this.physics.add.collider(this.key2,this.platforms);
-    this.physics.add.collider(this.key3,this.platforms);
-    this.physics.add.collider(this.key4,this.platforms);
-    //this.physics.add.collider(this.bomba,this.platforms);
-    //this.physics.add.collider(this.bomba2,this.platforms);
+
+    this.physics.add.collider(this.keys,this.platforms);
+
+    
     this.physics.add.collider(this.bombas,this.platforms);
     
-    this.physics.add.collider(this.poli,this.platforms);
+    this.physics.add.collider(this.extrasPolis,this.platforms);
     this.physics.add.collider(this.HookGun,this.platforms);
     this.physics.add.collider(this.movablePlatform,this.player);
    // this.physics.add.collider(this.bomba,this.bombWall);
 
     this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
-    //this.physics.add.overlap(this.player,this.bombas,this.player.changeModifierBomba,null,this.player);
 
 
     // this.physics.add.collider(this.enemy,this.player);
@@ -146,22 +150,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
     this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
-    this.physics.add.overlap(this.player,this.key,this.key.PickKey,null,this.key);
-    this.physics.add.overlap(this.player,this.key1,this.key1.PickKey,null,this.key1);
-    this.physics.add.overlap(this.player,this.key2,this.key2.PickKey,null,this.key2); 
-    this.physics.add.overlap(this.player,this.key3,this.key3.PickKey,null,this.key3);
-    this.physics.add.overlap(this.player,this.key4,this.key4.PickKey,null,this.key4);
 
-    this.physics.add.overlap(this.player,this.key,this.key.PickMe,null,this.key);
-    this.physics.add.overlap(this.player,this.key1,this.key.PickMe,null,this.key1);
-    this.physics.add.overlap(this.player,this.key2,this.key.PickMe,null,this.key2);
-    this.physics.add.overlap(this.player,this.key3,this.key.PickMe,null,this.key3);
-    this.physics.add.overlap(this.player,this.key4,this.key.PickMe,null,this.key4);
+    this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
     
-    // this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
-    // this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
-    // this.physics.add.overlap(this.player,this.bomba2,this.PillarBomba,null,this);
-    // this.physics.add.overlap(this.player,this.bomba2,this.bomba2.PickMe,null,this.bomba2);
+
     this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
     
   //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
@@ -171,7 +163,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-    this.physics.add.overlap(this.player,this.poli,this.poli.caught,null,this.poli);
+    this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
 
 
     
@@ -220,9 +212,14 @@ this.player.LiberarPresos(false);
     this.camera.startFollow(this.player);
     this.bombas.children.iterate(function (child) {
 
+      if(child != undefined)
       child.Update();  
   });
-    this.poli.Update();
+  this.extrasPolis.children.iterate(function (child) {
+
+    if(child != undefined)
+    child.Update();  
+});
   if(this.pointer.isDown){
     //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
   }
@@ -245,13 +242,22 @@ this.player.LiberarPresos(false);
     
     if(!bomba.recogida){
      bomba.PickMe();
-     player.bomba = bomba.index;
+     player.changeModifierBomba(bomba.index);
      console.log(bomba.index);
     }
-    
   }
-  LanzarBomba(bomba,x,y){
+
+  PillarLlave(player,llave){
+    llave.PickMe();
+  }
+PoliPilla(player,poli){
+
+poli.caught();
+}
+
+    
+LanzarBomba(bomba,x,y){
 
 bomba.Lanzamiento(x,y,0,0);
-  }
 }
+  }
