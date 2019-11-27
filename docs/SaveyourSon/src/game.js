@@ -159,7 +159,6 @@ export default class Game extends Phaser.Scene {
   //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
 
 
-    //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
