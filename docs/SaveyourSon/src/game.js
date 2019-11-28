@@ -75,8 +75,8 @@ export default class Game extends Phaser.Scene {
     //   // tileHeight: 32 
     // });
     // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    this.bomba = new Bomba(this,400,200,this.lvM,0).setScale(0.10);
-    this.bomba2 = new Bomba(this,700,200,this.lvM,1).setScale(0.10);
+    this.bomba = new Bomba(this,400,200,this.lvM,0);
+    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas = this.physics.add.group();
     this.bombas.add(this.bomba);
     this.bombas.add(this.bomba2);
@@ -159,7 +159,6 @@ export default class Game extends Phaser.Scene {
   //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
 
 
-    //this.physics.add.overlap(this.player,this.enemy,this.player.caught,null,this.jetpack);
     this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu

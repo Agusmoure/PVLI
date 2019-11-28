@@ -15,6 +15,7 @@ export default class Bomba extends PowerUp{
     this.temp =0;
     this.lvM=lvManager;
     this.index = number;
+   
     
     }
 
@@ -47,25 +48,27 @@ if(this.temp>1000 && !this.boom){
     else if(this.lvM.GetPlayerX()>this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
     this.lvM.ImpulsePlayer(this.repulsion*(distanciaX/(Math.sqrt(Math.pow(distanciaX,2)+Math.pow(distanciaY,2)))),this.repulsion*(distanciaY/(Math.sqrt(Math.pow(distanciaY,2)+Math.pow(distanciaX,2)))) );
     this.boom=true;
-this.destroy();
-this.lvM.BombExploded(this.x,this.y);
+    this.lvM.BombExploded(this.x,this.y);
+    this.anims.play('explode');
+    this.on('animationcomplete',this.Explode,this);
 }
 }
+}
+PickMe(){
+    this.recogida=true;      
+}
+Lanzamiento(sentido){
+    this.x=this.x;
+    this.y=this.y;
+    this.recogida=false;
+    this.body.setVelocityY(-400);
+    if(sentido>0)
+    this.body.setVelocityX(100);
+    else
+    this.body.setVelocityX(-100);
+    this.lanzada=true;
+}
+      Explode(){         
+          this.destroy();
     }
-    PickMe(){
-        this.recogida=true;    
-        console.log("o1bdkñj1bd");   
-    }
-    Lanzamiento(sentido){
-        this.x=this.x;
-        this.y=this.y;
-        this.recogida=false;
-        this.body.setVelocityY(-400);
-        if(sentido>0)
-        this.body.setVelocityX(100);
-        else
-        this.body.setVelocityX(-100);
-        this.lanzada=true;
-    }
-      
 }

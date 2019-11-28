@@ -21,6 +21,10 @@ export default class Level1 extends Phaser.Scene {
       this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
       this.load.image('bomba','/SaveyourSon/assets/bomba.png');
       this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+      this.load.spritesheet('explosion', 
+    '/SaveyourSon/assets/explosion.png',
+        { frameWidth: 64, frameHeight: 64 }
+    );
       //  this.load.tilemapTiledJSON('level1Tilemap', 'level1.json');
        // this.load.image('patronesTilemap', 'assets/patrones.png');
        console.log("LEVEL1");
@@ -28,6 +32,12 @@ export default class Level1 extends Phaser.Scene {
       }
       
       create(data) {
+        this.anims.create({
+          key: 'explode',
+          frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
+          frameRate: 10,
+          repeat: 0
+      });s
         this.gM=data;
 
         // this.map = this.make.tilemap({ 
@@ -48,7 +58,7 @@ export default class Level1 extends Phaser.Scene {
         this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
         this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
         this.keyCount=0;
-        this.bomba = new Bomba(this,400,200,this.player).setScale(0.10);
+        this.bomba = new Bomba(this,400,200,this.player);
     
         //INPUT
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
