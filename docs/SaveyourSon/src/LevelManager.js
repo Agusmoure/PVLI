@@ -70,6 +70,7 @@ this.player.getStunned(time);
     StunAlcaide(time){
 this.alcaide.getStunned(time);
     }
+
     ChangeAlcaideSpeed(slow){
         this.alcaide.ChangeSpeed(slow);
     }
@@ -92,6 +93,11 @@ this.liberation=valor;
         }
         else
         return false;
+    }
+
+
+    GetPlayerModifier(){
+        return this.player.getModifier();
     }
 
    

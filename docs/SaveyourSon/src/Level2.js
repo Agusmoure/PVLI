@@ -29,6 +29,11 @@ export default class Level2 extends Phaser.Scene {
     this.load.image('star', '/SaveyourSon/assets/star.png');
     this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+    this.load.spritesheet('explosion', 
+    '/SaveyourSon/assets/explosion.png',
+        { frameWidth: 64, frameHeight: 64 }
+    );
+    //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
     this.load.tilemapTiledJSON('Nivel2', '/SaveyourSon/assets/Nivel2.json');
@@ -38,6 +43,12 @@ export default class Level2 extends Phaser.Scene {
   
   create() {
     
+    this.anims.create({
+      key: 'explode',
+      frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: 0
+  });
     this.map = this.make.tilemap({ 
       key: 'Nivel2', 
         tileWidth: 64, 
@@ -77,8 +88,10 @@ export default class Level2 extends Phaser.Scene {
     this.keyCount=0;
     
     //this.background2.setScale(0.1);
+  
     this.bombas = this.physics.add.group();
-    this.bomba = new Bomba(this,400,200,this.lvM,0).setScale(0.10);
+    this.bomba = new Bomba(this,400,200,this.lvM,0);
+    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas.add(this.bomba)
 
 

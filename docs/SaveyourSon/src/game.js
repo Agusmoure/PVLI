@@ -75,8 +75,8 @@ export default class Game extends Phaser.Scene {
     //   // tileHeight: 32 
     // });
     // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    this.bomba = new Bomba(this,400,200,this.lvM,0).setScale(0.10);
-    this.bomba2 = new Bomba(this,700,200,this.lvM,1).setScale(0.10);
+    this.bomba = new Bomba(this,400,200,this.lvM,0);
+    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas = this.physics.add.group();
     this.bombas.add(this.bomba);
     this.bombas.add(this.bomba2);
