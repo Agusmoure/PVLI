@@ -37,6 +37,8 @@ export default class Level2 extends Phaser.Scene {
     '/SaveyourSon/assets/explosion.png',
         { frameWidth: 64, frameHeight: 64 }
     );
+    this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:128, frameHeight:128});
     //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
@@ -58,6 +60,18 @@ export default class Level2 extends Phaser.Scene {
       frameRate: 10,
       repeat: 0
   });
+  this.anims.create({
+    key: 'alcaideRunning',
+    frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
+    frameRate: 10,
+    repeat: -1
+});
+this.anims.create({
+  key: 'playerRunning',
+  frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
+  frameRate: 10,
+  repeat: -1
+});
     this.map = this.make.tilemap({ 
       key: 'Nivel2', 
         tileWidth: 64, 
@@ -78,6 +92,8 @@ export default class Level2 extends Phaser.Scene {
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.enemy = new Enemy(this,this.player,this.gM);
+    //this.enemy.setScale(1,1).refreshBody();
+    //this.enemy.refreshBody();
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
     this.lvM.SetNumBombas(3);

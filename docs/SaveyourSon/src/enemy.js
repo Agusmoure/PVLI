@@ -7,15 +7,16 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
-    this.body.setCollideWorldBounds(true);
-    this.aire=false;
-    this.vehicle=false;
-    this.modifier='normal';
-    this.penalization=10;
-    this.stunTime=0;
-    this.speedY=100;
-    this.speedX=130;//-(gameManager.GetSpeedPenalizations()*this.penalization);
-    this.player=jugador;
+        this.body.setCollideWorldBounds(true);
+        this.aire=false;
+        this.vehicle=false;
+        this.modifier='normal';
+        this.penalization=10;
+        this.stunTime=0;
+        this.speedY=100;
+        this.speedX=130;//-(gameManager.GetSpeedPenalizations()*this.penalization);
+        this.player=jugador;
+        this.anims.play('alcaideRunning');
     }
 
     followPlayer(){

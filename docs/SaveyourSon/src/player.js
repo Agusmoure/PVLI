@@ -27,6 +27,7 @@ this.fuel = 1000;
 this.maxFuel=1000;
 this.impulsoX=0;
 this.impulsoY=0;
+this.anims.play('playerRunning');
 
 this.escena = scene;
 }
