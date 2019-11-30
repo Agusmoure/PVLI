@@ -12,6 +12,7 @@ import HookGun from "./HookGun.js";
 //import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
+import HUD from "./HUD.js";
 
 export default class Level2 extends Phaser.Scene {
 
@@ -29,6 +30,9 @@ export default class Level2 extends Phaser.Scene {
     this.load.image('star', '/SaveyourSon/assets/star.png');
     this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+    this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
+    this.load.image('hookHUD','/SaveyourSon/assets/HookGun.jpg');
+    this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
     this.load.spritesheet('explosion', 
     '/SaveyourSon/assets/explosion.png',
         { frameWidth: 64, frameHeight: 64 }
@@ -43,6 +47,11 @@ export default class Level2 extends Phaser.Scene {
   
   create() {
     
+
+    this.Hud = new HUD(this,0,0,this.lvM);
+    this.Hud.body.setGravityY(-1000);
+  this.pausado=false;
+
     this.anims.create({
       key: 'explode',
       frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
@@ -55,6 +64,8 @@ export default class Level2 extends Phaser.Scene {
         tileHeight: 64 
     });
   
+    this.pointer = this.input.activePointer;
+    
     let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
     this.background= this.map.createStaticLayer('Nivel2', t);
     this.background.x=0;
@@ -264,5 +275,18 @@ poli.caught();
   LanzarBomba(bomba,x,y){
 
 bomba.Lanzamiento(x,y,0,0);
+  }
+
+
+  Pausar(){
+    if(!this.pausado){
+    this.pausado=true;
+      this.scene.pause();
+    }
+    else{
+      console.log('kjewbkwbkeb');
+      this.pausado=false;
+    this.scene.resume('Level2');
+    }
   }
 }
