@@ -8,12 +8,12 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         
     this.body.setCollideWorldBounds(true);
-    this.police=true;
+    this.police=policia;
     this.movement='horizontal';
     this.active=false;
     this.timer=tiempovida;               //Tiempo de vida util del extra
     this.penalization=-100;
-    this.stun=false;           //Si va a hacer stun o slow
+    this.stun=stunear;           //Si va a hacer stun o slow
     this.stunTime=tiempopenal;         //Tiempo que durara la penalizacion que realice a su objetivo  
     this.tocado=false;
     this.finalizado=false;       //Bandera que indica que su funcionamiento ha terminado
@@ -22,6 +22,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
      this.originY=100;
     this.speedY=100;
     this.speedX=100;
+    this.direccion = direction;
    // this.objective=objetivo; //Cosa a la que va a perseguir al empezar a moverse
     this.distance=50;
     this.lvM=levelManager;
@@ -36,12 +37,12 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance)
         this.body.setVelocityX(this.speedX);
         else  if(this.police && this.movement==='horizontal'){
-        if(this.x>this.originX)
-        this.speedX=Math.abs(this.speedX)*-1;
-        else
-        this.speedX=Math.abs(this.speedX);
-        this.body.setVelocityX(this.speedX);
-    }
+            if(this.x>this.originX)
+            this.speedX=Math.abs(this.speedX)*-1;
+            else
+            this.speedX=Math.abs(this.speedX);
+            this.body.setVelocityX(this.speedX);
+        }
         
     if( this.police && this.movement==='vertical' && this.y<(this.originY+this.distance) && this.y>this.originY-this.distance)
         this.body.setVelocityY(this.speedY);
@@ -59,7 +60,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         this.active=true;
         //Se mueve si esta activo y no ha pasado demasiado tiempo
         if(this.active && this.timer>0 ){
-            this.body.setVelocityX((Math.abs(this.objective.x-this.x)/(this.objective.x-this.x))*this.speedX);
+            this.body.setVelocityX(this.speedX*this.direccion);//this.speedX*this.direccion);
             this.timer=this.timer-1;
         }
 

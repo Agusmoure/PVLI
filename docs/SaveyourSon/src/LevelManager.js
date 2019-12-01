@@ -6,6 +6,7 @@ export default class LevelManager{
         this.player=undefined;
         this.alcaide=undefined;
         this.liberation=false;
+        this.HUD = undefined;
     //    // this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
     //     //this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
     //     this.speedPenalizationBought=5;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide
@@ -96,8 +97,8 @@ this.liberation=valor;
     }
 
 
-    GetPlayerModifier(){
-        return this.player.getModifier();
+    SetPlayerModifier(modifier){
+        this.HUD.SetModifier(modifier);
     }
 
    
