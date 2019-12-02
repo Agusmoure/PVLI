@@ -11,12 +11,9 @@ export default class HookGun extends PowerUp{
         scene.add.existing(this);    
     scene.physics.add.existing(this);      
     }
-    PickGun(){
+    PickGun(player){
         this.picked=true;
-    }
-    Update(player){
-        this.x=this.lvM.GetPlayerX();
-        this.y=this.lvM.GetPlayerY();
-
+        player.changeModifierGancho();
+        this.PickMe();
     }
 }

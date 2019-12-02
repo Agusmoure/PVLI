@@ -100,5 +100,8 @@ this.liberation=valor;
         return this.player.getModifier();
     }
 
-   
+  TeleportPlayer(x,y){
+      this.player.body.x=x;
+      this.player.body.y=y;
+  } 
 }
