@@ -27,8 +27,9 @@ this.fuel = 1000;
 this.maxFuel=1000;
 this.impulsoX=0;
 this.impulsoY=0;
-
+this.anims.play('playerRunning');
 this.escena = scene;
+//levelManager.SetPlayerModifier('normal');
 }
 
 update(){
@@ -71,16 +72,19 @@ changeModifierNormal(){
     this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='normal';
     this.modifierDisponible=true;
+    this.lvM.SetPlayerModifier('normal');
 }
 changeModifierJetPack(){
     this.body.setGravityY(Math.abs(this.gravity));
    this.modifier='jetpack';
    this.modifierDisponible=true;
+   this.lvM.SetPlayerModifier('jetpack');
 }
 changeModifierAntigravedad(){
     this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='antigravedad';
     this.modifierDisponible=true;
+    this.lvM.SetPlayerModifier('antigravedad');
  }
  changeModifierCatapulta(){
     this.body.setGravityY(Math.abs(this.gravity));
@@ -91,6 +95,7 @@ changeModifierAntigravedad(){
     this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='gancho';
     this.modifierDisponible=true;
+    this.lvM.SetPlayerModifier('gancho');
  }
 
  changeModifierBomba(bomba){
@@ -98,6 +103,7 @@ changeModifierAntigravedad(){
     this.modifier='bomba';
     this.modifierDisponible=true;
     this.bomba=bomba;
+    this.lvM.SetPlayerModifier('bomba');
  }
 
  
@@ -120,6 +126,7 @@ moveUp(){
     if(this.stunTime<1){
     if( /*this.body.touching.down  &&*/  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);
+   
     //this.lvM.LiberarPreso(true);
 }
     else if(this.modifier==='jetpack' && this.modifierDisponible){
@@ -142,6 +149,7 @@ moveUp(){
         this.lvM.SetBomba(this.bomba);
         console.log(this.bomba);
         this.modifier='normal';
+        this.lvM.SetPlayerModifier('normal');
     }
 }
  

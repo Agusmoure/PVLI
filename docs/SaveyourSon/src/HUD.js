@@ -15,6 +15,9 @@ export default class HUD extends Phaser.GameObjects.Container{
     this.jetpackHUD = scene.add.sprite(100,100,'jetpackHUD').setScale(0.1);
     this.add(this.jetpackHUD);
 
+    this.bombaHUD = scene.add.sprite(100,100,'bomba');
+    this.add(this.bombaHUD);
+
     this.playerHUD = scene.add.sprite(100,100,'playerHUD').setScale(0.1);
     this.add(this.playerHUD);
     
@@ -67,31 +70,42 @@ this.pause = false;
         this.x= this.lvM.GetPlayerX()-500;
         this.y=this.lvM.GetPlayerY()+300;
         //this.getAt(0).x = this.getAt(0).x+1;
-        this.modifier= this.lvM.GetPlayerModifier();
-        switch(this.modifier){
-            case 'normal':
-                break;
-                case 'jetpack':
-                break;
-                case 'antigravedad':
-                break;
-                case 'gancho':
-                break;
-        }
-        if(this.modifier == 'normal')
-        for(let i=0;i<5;i++){
-            //this.getAt(i).visible = false;
-        }
-        else if(this.modifier == 'antigravedad')
-        console.log('antigravedad');
-        else if(this.modifier == 'jetpack')
-        console.log('jetpack');
-        else if(this.modifier == 'gancho')
-        console.log('gancho');
      
         this.AvanzarPlayerHUD();
     }
 
+
+    SetModifier(modifier){
+        if(modifier == 'normal'){
+            this.jetpackHUD.y=300;
+            this.hookGunHUD.y=300;
+            this.bombaHUD.y = 300;
+        }
+        
+        else if(modifier == 'antigravedad'){
+            this.jetpackHUD.y=300;
+            this.hookGunHUD.y=300;
+            this.bombaHUD.y = 300;
+        }
+        
+        else if(modifier == 'jetpack'){
+            this.jetpackHUD.y=100;
+            this.hookGunHUD.y=300;
+            this.bombaHUD.y = 300;
+        }
+       
+        else if(modifier == 'gancho'){
+            this.jetpackHUD.y=300;
+            this.hookGunHUD.y=100;
+            this.bombaHUD.y = 300;
+        }
+        else if(modifier == 'bomba'){
+            this.jetpackHUD.y=300;
+            this.hookGunHUD.y=300;
+            this.bombaHUD.y = 100;
+        }
+       
+    }
 
     AvanzarPlayerHUD(){
         this.playerHUD.x = this.playerHUD.x+1;

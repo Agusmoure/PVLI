@@ -37,6 +37,8 @@ export default class Level2 extends Phaser.Scene {
     '/SaveyourSon/assets/explosion.png',
         { frameWidth: 64, frameHeight: 64 }
     );
+    this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
     //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
@@ -58,6 +60,18 @@ export default class Level2 extends Phaser.Scene {
       frameRate: 10,
       repeat: 0
   });
+  this.anims.create({
+    key: 'alcaideRunning',
+    frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
+    frameRate: 15,
+    repeat: -1
+});
+this.anims.create({
+  key: 'playerRunning',
+  frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
+  frameRate: 15,
+  repeat: -1
+});
     this.map = this.make.tilemap({ 
       key: 'Nivel2', 
         tileWidth: 64, 
@@ -78,9 +92,12 @@ export default class Level2 extends Phaser.Scene {
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.enemy = new Enemy(this,this.player,this.gM);
+    //this.enemy.setScale(1,1).refreshBody();
+    //this.enemy.refreshBody();
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
     this.lvM.SetNumBombas(3);
+    this.lvM.HUD = this.Hud;
 
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
@@ -104,15 +121,21 @@ export default class Level2 extends Phaser.Scene {
     this.bomba = new Bomba(this,400,200,this.lvM,0);
     this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas.add(this.bomba)
+    this.bombas.add(this.bomba2);
 
 
     //EXTRAS
-    this.poli=new Extra (this,this.enemy,this.lvM,true,false,100,300);
-    this.poli2=new Extra (this,this.enemy,this.lvM,true,false,200,300);
+    this.poli=new Extra (this,this.enemy,this.lvM,true,true,100,300);
+    this.poli2=new Extra (this,this.enemy,this.lvM,true,true,200,300);
     this.poli2.x=400;
     this.extrasPolis = this.physics.add.group();
     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli2);
+    
+    this.preso = new Extra(this,-1,this.lvM,true,false,300,300);
+    this.Presos = this.physics.add.group();
+    this.Presos.add(this.preso);
+    
 
     //INPUT
     this.pointer = this.input.activePointer;
@@ -146,6 +169,8 @@ export default class Level2 extends Phaser.Scene {
     this.physics.add.collider(this.antigravedad,this.background);
     this.physics.add.collider(this.enemy,this.background);
     this.physics.add.collider(this.keys,this.background);
+    this.physics.add.collider(this.Presos,this.background);
+    
   
     this.physics.add.collider(this.bombas,this.background);
     this.physics.add.collider(this.extrasPolis,this.background);
@@ -182,6 +207,7 @@ export default class Level2 extends Phaser.Scene {
     this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+    this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
 
     
 
@@ -204,6 +230,13 @@ export default class Level2 extends Phaser.Scene {
     this.player.update();
 
 
+    if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+      this.player.LiberarPresos(true);
+            }
+            else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+      this.player.LiberarPresos(false);
+            }
+            
     if (this.cursors.right.isDown){
       this.player.moveRight();
      // this.scene.start('Level1');
@@ -238,6 +271,12 @@ this.player.LiberarPresos(false);
     if(child != undefined)
     child.Update();  
 });
+this.Presos.children.iterate(function(child){
+  if(child != undefined)
+    child.Update();  
+});
+
+
   if(this.pointer.isDown){
     //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
   }
@@ -269,7 +308,12 @@ this.player.LiberarPresos(false);
   }
 PoliPilla(player,poli){
 
+  
 poli.caught();
+}
+
+PresoPilla(enemy, preso){
+preso.caught();
 }
 
   LanzarBomba(bomba,x,y){
