@@ -1,6 +1,7 @@
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
+    ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
 
     let x=100;
@@ -66,6 +67,8 @@ if(Math.abs(this.impulsoX)>0){
     this.stunTime= this.stunTime-1;
     console.log(this.stunTime);
     }
+    if(this.body.velocity.y>=this.maxSpeedY)this.body.velocity.y=this.maxSpeedY;
+    else if(this.body.velocity.y<=-this.maxSpeedY) this.body.velocity.y=-this.maxSpeedY;
 }
 //SETERS
 changeModifierNormal(){
@@ -111,12 +114,16 @@ moveRight(){
     if(this.stunTime<1)
     this.body.setVelocityX(this.speedX+this.impulsoX);
     this.right=true;
+    this.flipX=false;
+
 
 }
 moveLeft(){
     if(this.stunTime<1)
     this.body.setVelocityX(-this.speedX+this.impulsoX);
     this.right=false;
+    this.flipX=true;
+
 }
 
  dontMove(){
