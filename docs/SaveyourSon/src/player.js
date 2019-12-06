@@ -15,8 +15,9 @@ constructor(scene,gameManager,levelManager){
 this.vehicle=false;
 this.modifier='normal';
 this.modifierDisponible=true;
-this.speedY=800;
-this.maxSpeedY=800;
+//500 es la potencia equilibrada sin el fallo de la bomba y 900 tras salir de ella
+this.speedY=500;
+this.maxSpeedY=1000;
 this.speedImprovment=10;
 this.speedX=150;
 this.stunTime=0;
@@ -30,10 +31,14 @@ this.impulsoX=0;
 this.impulsoY=0;
 this.anims.play('playerRunning');
 this.escena = scene;
+this.maxJump=2;
+this.avalibleJump=this.maxJump;
 //levelManager.SetPlayerModifier('normal');
 }
 
 update(){
+    console.log(this.modifier+"");
+
     if(this.stunTime<1){
 if(this.right)
 this.body.setVelocityX(this.defaultSpeed+this.impulsoX);
@@ -131,9 +136,9 @@ moveLeft(){
  }
 moveUp(){
     if(this.stunTime<1){
-    if( /*this.body.touching.down  &&*/  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
+    if( /*this.body.touching.down  &&*/  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);
-   
+   this.avalibleJump--;
     //this.lvM.LiberarPreso(true);
 }
     else if(this.modifier==='jetpack' && this.modifierDisponible){
@@ -216,6 +221,12 @@ getVehicle(){
 getModifier(){
     return this.modifier;
 }
+ResetJumps(){
+    //la condicion no funca
+    //Esta condición es para que solo resetee saltos en todos los casos que no sean no tocar el suelo y tocar el lado derecho o izquierdo
+    if(!(!this.body.touching.down&&(this.body.touching.right||this.body.touching.left)))
+    this.avalibleJump=this.maxJump;
 
+}
 
 }

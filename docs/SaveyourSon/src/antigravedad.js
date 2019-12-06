@@ -1,10 +1,10 @@
 import PowerUp from "./powerup.js";
 export default class Antigravedad extends PowerUp{
-    constructor(scene){
+    constructor(scene,xPos,yPos){
         
     
-        let x=300;
-        let y=200;
+        let x=xPos;
+        let y=yPos;
         super(scene,x,y,'bomb');
         scene.add.existing(this);    
     scene.physics.add.existing(this);      

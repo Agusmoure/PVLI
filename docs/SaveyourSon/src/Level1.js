@@ -77,13 +77,13 @@ export default class Level1 extends Phaser.Scene {
         let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
         this.background= this.map.createStaticLayer('Nivel1', t);
         this.background.x=0;
-        this.background.y=-1000;
+        this.background.y=-400;
         this.background.setCollisionBetween(0, 10);
     
         this.camera = this.cameras.main
         this.player = new Player(this, this.gM,this.lvM);
-        this.jetpack = new JetPack(this);
-        this.antigravedad = new Antigravedad(this);
+        this.jetpack = new JetPack(this,7000,150);
+        this.antigravedad = new Antigravedad(this,7800,150);
         this.enemy = new Enemy(this,this.player,this.gM);
         //seteamos las variables del lvM
         this.lvM.player=this.player;
@@ -102,26 +102,25 @@ export default class Level1 extends Phaser.Scene {
         this.keys.add(this.key2);
         this.keys.add(this.key3);
         this.keys.add(this.key4);
-        this.HookGun = new HookGun(this,this.lvM);
         this.keyCount=0;        
         this.bombas = this.physics.add.group();
-        this.bomba = new Bomba(this,400,200,this.lvM,0);
-        this.bomba2 = new Bomba(this,700,200,this.lvM,1);
+        this.bomba = new Bomba(this,4000,200,this.lvM,0);
+        this.bomba2 = new Bomba(this,950,200,this.lvM,1);
         this.bombas.add(this.bomba)
         this.bombas.add(this.bomba2);
     
     
         //EXTRAS
-        this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
-        this.poli2=new Extra(this,this.enemy,this.lvM,true,true,200,300);
-        this.poli2.x=400;
-        this.extrasPolis = this.physics.add.group();
-        this.extrasPolis.add(this.poli);
-        this.extrasPolis.add(this.poli2);
+        // this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
+        // this.poli2=new Extra(this,this.enemy,this.lvM,true,true,200,300);
+        // this.poli2.x=400;
+        // this.extrasPolis = this.physics.add.group();
+        // this.extrasPolis.add(this.poli);
+        // this.extrasPolis.add(this.poli2);
         
-        this.preso = new Extra(this,-1,this.lvM,true,false,300,300);
-        this.Presos = this.physics.add.group();
-        this.Presos.add(this.preso);
+        // this.preso = new Extra(this,-1,this.lvM,true,false,300,300);
+        // this.Presos = this.physics.add.group();
+        // this.Presos.add(this.preso);
         
     
         //INPUT
@@ -132,26 +131,26 @@ export default class Level1 extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
     
         //Plataformas moviles
-        this.movablePlatform = new MovableWall(this,700,800,200,200);
+       // this.movablePlatform = new MovableWall(this,700,800,200,200);
         
     
         //Paredes destructibles
-        this.bombWall = new BombWall(this,750,700);
-        this.lvM.bombWall= this.bombWall;
+        // this.bombWall = new BombWall(this,750,700);
+        // this.lvM.bombWall= this.bombWall;
         
         //Establecemos los colliders
-        this.physics.add.collider(this.player, this.background);
+        this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
         this.physics.add.collider(this.jetpack,this.background);
         this.physics.add.collider(this.antigravedad,this.background);
         this.physics.add.collider(this.enemy,this.background);
         this.physics.add.collider(this.keys,this.background);
-        this.physics.add.collider(this.Presos,this.background);
+        // this.physics.add.collider(this.Presos,this.background);
         this.physics.add.collider(this.bombas,this.background);
-        this.physics.add.collider(this.extrasPolis,this.background);
-        this.physics.add.collider(this.HookGun,this.background);
-        this.physics.add.collider(this.movablePlatform,this.player);
-        this.physics.add.collider(this.bombas,this.bombWall);
-        this.physics.add.collider(this.player,this.bombWall);
+        // this.physics.add.collider(this.extrasPolis,this.background);
+        // this.physics.add.collider(this.HookGun,this.background);
+        // this.physics.add.collider(this.movablePlatform,this.player);
+        // this.physics.add.collider(this.bombas,this.bombWall);
+        // this.physics.add.collider(this.player,this.bombWall);
         this.physics.add.collider(this.player,this.background);
         //Creamos los triggers y que pasará al meterse en dicho trigger
         //Puedo hacer llamadas a varios métodos en un mismo evento overlap
@@ -163,12 +162,12 @@ export default class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
         this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
         this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
-        this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
+        //this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
         this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
         this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
         //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-        this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
-        this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
+        // this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+        // this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
           }
     
       update(time, delta) {   
@@ -211,15 +210,44 @@ export default class Level1 extends Phaser.Scene {
         this.player.dontMove();
         this.enemy.body.setVelocityX(0);
       }
-      PickKey(){
-        this.keyCount=this.keyCount+1;
-      }
-      PillarBomba(){
-        this.player.changeModifierBomba(this.bomba);
+    
+    
+      PillarBomba(player,bomba){
         
+        if(!bomba.recogida){
+         bomba.PickMe();
+         player.changeModifierBomba(bomba.index);
+         console.log(bomba.index);
+        }
       }
+      PillarLlave(player,llave){
+        llave.PickMe();
+      }
+    PoliPilla(player,poli){
+    
+      
+    poli.caught();
+    }
+    
+    PresoPilla(enemy, preso){
+    preso.caught();
+    }
+    
       LanzarBomba(bomba,x,y){
     
     bomba.Lanzamiento(x,y,0,0);
+      }
+    
+    
+      Pausar(){
+        if(!this.pausado){
+        this.pausado=true;
+          this.scene.pause();
+        }
+        else{
+          console.log('kjewbkwbkeb');
+          this.pausado=false;
+        this.scene.resume('Level2');
+        }
       }
     }

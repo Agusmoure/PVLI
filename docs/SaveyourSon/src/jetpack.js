@@ -1,10 +1,10 @@
 import PowerUp from "./powerup.js";
 export default class JetPack extends PowerUp{
-    constructor(scene){
+    constructor(scene,xPos,yPos){
         
     
-        let x=200;
-        let y=200;
+        let x=xPos;
+        let y=yPos;
         super(scene,x,y,'star');
         scene.add.existing(this);    
     scene.physics.add.existing(this);      
