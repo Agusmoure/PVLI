@@ -20,6 +20,7 @@ export default class LevelManager{
         this.bomba[0]=false;
         this.bomba[1]=false;
         this.bomba[2]=false;
+        
     }
     GetPlayerX(){
         return this.player.body.x;
@@ -39,7 +40,8 @@ return this.player.GetVelX();
         this.bomba[num]=true;
     }
     LanzarBomba(num){
-return this.bomba[num];
+        return this.bomba[num];
+
     }
     SetPlayerX(vel){
         this.player.SetVelX(vel);

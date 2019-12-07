@@ -15,17 +15,29 @@ export default class Bomba extends PowerUp{
     this.temp =0;
     this.lvM=lvManager;
     this.index = number;
-   
+
+    const config = {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+    };
+    this.explosion = scene.sound.add('explosion',config);
     
     }
 
 
     Update(){
 
+        console.log('Soy la bomba numero ' +this.lvM.LanzarBomba(this.index));
         ////////////////////////////////////Si estoy en la mano del player////////////////////////////
 if(this.recogida===true && !this.lvM.LanzarBomba(this.index)){
 this.x=this.lvM.GetPlayerX();
 this.y=this.lvM.GetPlayerY();
+
 }
 
 ///////////////////////////////////////////Compruebo si tengo que ser lanzada/////////////////////////
@@ -50,12 +62,14 @@ if(this.temp>1000 && !this.boom){
     this.boom=true;
     this.lvM.BombExploded(this.x,this.y);
     this.anims.play('explode');
+    this.explosion.play();
     this.on('animationcomplete',this.Explode,this);
 }
 }
 }
 PickMe(){
-    this.recogida=true;      
+    this.recogida=true;    
+    console.log('me meti');  
 }
 Lanzamiento(sentido){
     this.x=this.x;

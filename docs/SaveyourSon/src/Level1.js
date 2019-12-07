@@ -39,6 +39,9 @@ export default class Level1 extends Phaser.Scene {
       this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
        this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
         
+
+       //SONIDOS
+       this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
       }
       
       create() {
@@ -90,6 +93,7 @@ export default class Level1 extends Phaser.Scene {
         this.lvM.alcaide=this.enemy;
         this.lvM.SetNumBombas(3);
         this.lvM.HUD = this.Hud;
+        this.player.changeModifierNormal();
         //Creamos los distintos objetos del mapa
         this.key= new Key(this,700,300,this.lvM).setScale(0.25);
         this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
@@ -104,8 +108,8 @@ export default class Level1 extends Phaser.Scene {
         this.keys.add(this.key4);
         this.keyCount=0;        
         this.bombas = this.physics.add.group();
-        this.bomba = new Bomba(this,4000,200,this.lvM,0);
-        this.bomba2 = new Bomba(this,950,200,this.lvM,1);
+        this.bomba = new Bomba(this,400,200,this.lvM,0);
+    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
         this.bombas.add(this.bomba)
         this.bombas.add(this.bomba2);
     
@@ -160,14 +164,17 @@ export default class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
         this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
         this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-        this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
-        this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
+        
+        
         //this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
         this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
         this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
         //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
         // this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
         // this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
+
+
+      
           }
     
       update(time, delta) {   
@@ -199,6 +206,13 @@ export default class Level1 extends Phaser.Scene {
           this.player.keyUp();
        
         this.camera.startFollow(this.player);
+
+
+        this.bombas.children.iterate(function (child) {
+
+          if(child != undefined)
+          child.Update();  
+      });
       }
     
       arriba(){
@@ -213,13 +227,15 @@ export default class Level1 extends Phaser.Scene {
     
     
       PillarBomba(player,bomba){
-        
+    
         if(!bomba.recogida){
          bomba.PickMe();
          player.changeModifierBomba(bomba.index);
          console.log(bomba.index);
         }
       }
+
+
       PillarLlave(player,llave){
         llave.PickMe();
       }

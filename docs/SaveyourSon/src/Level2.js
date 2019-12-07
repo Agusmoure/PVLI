@@ -45,6 +45,8 @@ export default class Level2 extends Phaser.Scene {
     this.load.tilemapTiledJSON('Nivel2', '/SaveyourSon/assets/Nivel2.json');
      this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
     
+
+     this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
   }
   
   create() {
