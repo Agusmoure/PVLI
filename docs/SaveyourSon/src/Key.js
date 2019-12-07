@@ -9,6 +9,7 @@ export default class Key extends PowerUp{
         scene.add.existing(this);    
     scene.physics.add.existing(this);    
     this.lvM=  levelManager;
+    
     }
     PickMe(){
         this.lvM.AddKey();

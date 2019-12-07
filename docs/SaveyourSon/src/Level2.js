@@ -39,6 +39,7 @@ export default class Level2 extends Phaser.Scene {
     );
     this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
+    this.load.spritesheet('alcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
     //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
@@ -47,6 +48,8 @@ export default class Level2 extends Phaser.Scene {
     
 
      this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
+     this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+
   }
   
   create() {
@@ -68,6 +71,14 @@ export default class Level2 extends Phaser.Scene {
     frameRate: 15,
     repeat: -1
 });
+
+this.anims.create({
+  key: 'alcaideAttacking',
+  frames: this.anims.generateFrameNumbers('alcaideAttack', { start: 0, end: 12 }),
+  frameRate: 15,
+  repeat: -1
+});
+
 this.anims.create({
   key: 'playerRunning',
   frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
@@ -100,18 +111,29 @@ this.anims.create({
     this.lvM.alcaide=this.enemy;
     this.lvM.SetNumBombas(3);
     this.lvM.HUD = this.Hud;
+    
+    this.player.changeModifierNormal();
 
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
     this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
     this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
+    this.key5= new Key(this,5700,150,this.lvM).setScale(0.25); // definitiva
+    this.key6= new Key(this,12500,500,this.lvM).setScale(0.25); // definitiva
+    this.key7= new Key(this,16000,500,this.lvM).setScale(0.25); // definitiva
+    this.key8= new Key(this,26500,150,this.lvM).setScale(0.25); // definitiva
+    this.key8= new Key(this,34600,500,this.lvM).setScale(0.25); // definitiva
     this.keys= this.physics.add.group();
     this.keys.add(this.key);
     this.keys.add(this.key1);
     this.keys.add(this.key2);
     this.keys.add(this.key3);
     this.keys.add(this.key4);
+    this.keys.add(this.key5);
+    this.keys.add(this.key6);
+    this.keys.add(this.key7);
+    this.keys.add(this.key8);
 
     this.HookGun = new HookGun(this,this.lvM);
 
@@ -157,7 +179,8 @@ this.anims.create({
 
     //Paredes destructibles
     this.bombWall = new BombWall(this,750,700);
-    this.lvM.bombWall= this.bombWall;
+    this.lvM.bombWalls= new Array();
+    this.lvM.bombWalls[0]= this.bombWall;
     
     //Suelo para el alcaide
     //this.floor = this.physics.add.staticGroup();
@@ -291,11 +314,14 @@ this.Presos.children.iterate(function(child){
     this.jetpack.changeModifier();
   }
   CatchPlayer(){
-    this.gameOver=true;
+    //this.gameOver=true;
+    this.enemy.HitPlayer();
     this.player.dontMove();
     this.enemy.body.setVelocityX(0);
   }
+  EndGame(){
 
+  }
 
   PillarBomba(player,bomba){
     

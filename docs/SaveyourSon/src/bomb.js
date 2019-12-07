@@ -31,8 +31,6 @@ export default class Bomba extends PowerUp{
 
 
     Update(){
-
-        console.log('Soy la bomba numero ' +this.lvM.LanzarBomba(this.index));
         ////////////////////////////////////Si estoy en la mano del player////////////////////////////
 if(this.recogida===true && !this.lvM.LanzarBomba(this.index)){
 this.x=this.lvM.GetPlayerX();

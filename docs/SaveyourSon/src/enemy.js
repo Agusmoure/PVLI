@@ -17,6 +17,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
         this.player=jugador;
         this.anims.play('alcaideRunning');
+        this.animPlaying=false;
     }
 
     followPlayer(){
@@ -43,6 +44,17 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         }
        
     }
+
+    HitPlayer(){
+
+        if(!this.animPlaying){
+            this.anims.play('alcaideAttacking');
+            this.animPlaying=true;
+            // this.on('animationcomplete',()=>{super.anims.stop()});
+            // this.anims.stop();
+        }
+    }
+
     Stun(){
         this.speedX=0;
     }

@@ -92,6 +92,7 @@ export default class Level1 extends Phaser.Scene {
         this.lvM.player=this.player;
         this.lvM.alcaide=this.enemy;
         this.lvM.SetNumBombas(3);
+        this.lvM.bombWalls = new Array();
         this.lvM.HUD = this.Hud;
         this.player.changeModifierNormal();
         //Creamos los distintos objetos del mapa

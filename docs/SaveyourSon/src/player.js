@@ -33,6 +33,18 @@ this.anims.play('playerRunning');
 this.escena = scene;
 this.maxJump=2;
 this.avalibleJump=this.maxJump;
+this.sonido=true;
+
+const config = {
+    mute: false,
+    volume: 1,
+    rate: 1,
+    detune: 0,
+    seek: 0,
+    loop: false,
+    delay: 0
+};
+this.PlayerHit = scene.sound.add('PlayerHit',config);
 //levelManager.SetPlayerModifier('normal');
 }
 
@@ -132,7 +144,14 @@ moveLeft(){
 }
 
  dontMove(){
+     if(this.sonido){
      this.body.setVelocityX(0);
+     this.speedX=0;
+     this.defaultSpeed=0;
+     this.PlayerHit.play();
+     this.sonido=false;
+     this.anims.stop();
+     }
  }
 moveUp(){
     if(this.stunTime<1){
