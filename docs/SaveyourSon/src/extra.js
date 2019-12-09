@@ -1,15 +1,15 @@
 export default class Extra extends Phaser.GameObjects.Sprite{
-    constructor(scene,direction,levelManager,stunear,policia,tiempopenal,tiempovida){
+    constructor(scene,oX,oY,movimiento,direction,amplitud,velocidad,levelManager,stunear,policia,tiempopenal,tiempovida){
     
-        let x=500;
-        let y=100;
+        let x=oX;
+        let y=oY;
         super(scene,x,y,'dude');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
     this.body.setCollideWorldBounds(true);
     this.police=policia;
-    this.movement='horizontal';
+    this.movement=movimiento;
     this.active=false;
     this.timer=tiempovida;               //Tiempo de vida util del extra
     this.penalization=-100;
@@ -18,13 +18,13 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     this.tocado=false;
     this.finalizado=false;       //Bandera que indica que su funcionamiento ha terminado
     this.timerPenalizacion=tiempopenal; 
-     this.originX=500;
-     this.originY=100;
-    this.speedY=100;
-    this.speedX=100;
+     this.originX=oX;
+     this.originY=oY;
+    this.speedY=velocidad;
+    this.speedX=velocidad;
     this.direccion = direction;
    // this.objective=objetivo; //Cosa a la que va a perseguir al empezar a moverse
-    this.distance=50;
+    this.distance=amplitud;
     this.lvM=levelManager;
     this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberados
 
