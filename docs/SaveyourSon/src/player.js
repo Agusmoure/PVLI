@@ -4,8 +4,13 @@ export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
 
+<<<<<<< HEAD
     let x=15900;
     let y=100;
+=======
+    let x=200;
+    let y=0;
+>>>>>>> 558ff3e9c491f716dfbc7f35901450285ac9d0f9
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
