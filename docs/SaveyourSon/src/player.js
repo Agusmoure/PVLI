@@ -4,8 +4,8 @@ export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
 
-    let x=41000;
-    let y=1900;
+    let x=15900;
+    let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -16,7 +16,7 @@ this.vehicle=false;
 this.modifier='normal';
 this.modifierDisponible=true;
 //500 es la potencia equilibrada sin el fallo de la bomba y 900 tras salir de ella
-this.speedY=500;
+this.speedY=900;
 this.maxSpeedY=1000;
 this.speedImprovment=10;
 this.speedX=150;
