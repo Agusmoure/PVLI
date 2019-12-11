@@ -13,6 +13,7 @@ import HookGun from "./HookGun.js";
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
+import HookGunProyectile from "./HookGunProyectile.js"
 
 export default class Level2 extends Phaser.Scene {
 
@@ -112,7 +113,7 @@ this.anims.create({
     this.lvM.SetNumBombas(3);
     this.lvM.HUD = this.Hud;
     
-    this.player.changeModifierNormal();
+    this.player.changeModifierGancho();
 
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
@@ -213,8 +214,10 @@ this.anims.create({
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
-
+    this.proyectil=undefined;
+    this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
+this.HookGunProyectiles= this.physics.add.group();
+this.HookGunProyectiles.add(this.HookGunProyectile);
    //Creo plataformas random
  
     
@@ -265,7 +268,8 @@ this.anims.create({
     this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
     this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-    
+    this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+
     
     this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
 
@@ -349,9 +353,20 @@ this.Presos.children.iterate(function(child){
 });
 
 
-  if(this.pointer.isDown){
-    //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
+this.input.on('pointerdown',pointer=>{
+
+  if(pointer.leftButtonDown() && this.player.modifier== 'gancho'  && (this.proyectil=== undefined || this.proyectil === null)) 
+  {
+    let varX= this.pointer.worldX-this.player.x;
+    let varY = this.pointer.worldY-this.player.y;
+    let modulo=Math.sqrt(Math.pow(varX,2)+Math.pow(varY,2));
+    this.proyectil = new HookGunProyectile(this,this.lvM, (varX/modulo),(varY/modulo),this.player.x+20,this.player.y+20);
+    this.HookGunProyectiles.add(this.proyectil);
   }
+
+});
+if(this.proyectil!==null && this.proyectil!== undefined)
+this.proyectil.Update();
   
     this.movablePlatform.Update();
   }
@@ -407,5 +422,14 @@ bomba.Lanzamiento(x,y,0,0);
       this.pausado=false;
     this.scene.resume('Level2');
     }
+  }
+
+  Enganchado(proyc,back){
+    if(proyc !==undefined)
+    console.log(proyc.x);proyc.Collision();
+  
+  }
+  NuevoProyectil(){
+    this.proyectil=null;
   }
 }

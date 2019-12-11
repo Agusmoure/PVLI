@@ -8,6 +8,7 @@ import GameManager from "./GameManager.js";
 import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
+import Extra from "./extra.js";
 
 
 export default class Level1 extends Phaser.Scene {
@@ -200,7 +201,19 @@ export default class Level1 extends Phaser.Scene {
     //     this.bombas.add(this.bomba2);
     
     
-        //EXTRAS
+    //EXTRAS
+    this.poli =new Extra (this,200,100,'vertical',0,100,200,this.lvM,true,true,100,300);
+    this.poli1 =new Extra (this,1800,800,'vertical',0,75,200,this.lvM,true,true,100,300);
+    this.poli2 =new Extra (this,2800,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
+    this.poli3 =new Extra (this,3200,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
+    this.poli4 =new Extra (this,4540,800,'horizontal',0,20,100,this.lvM,false,true,100,300);
+    this.extrasPolis = this.physics.add.group();
+    this.extrasPolis.add(this.poli);
+    this.extrasPolis.add(this.poli1);
+    this.extrasPolis.add(this.poli2);
+    this.extrasPolis.add(this.poli3);
+    this.extrasPolis.add(this.poli4);
+
         // this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
         // this.poli2=new Extra(this,this.enemy,this.lvM,true,true,200,300);
         // this.poli3=new Extra(this,this.enemy,this.lvM,true,true,500,300);
@@ -236,7 +249,6 @@ export default class Level1 extends Phaser.Scene {
         // this.poli21=new Extra(this,this.enemy,this.lvM,true,true,6700,300);
 
         // this.poli2.x=400;
-        // this.extrasPolis = this.physics.add.group();
         // this.extrasPolis.add(this.poli);
         // this.extrasPolis.add(this.poli2);
         
@@ -268,7 +280,7 @@ export default class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.keys,this.background);
         // this.physics.add.collider(this.Presos,this.background);
        // this.physics.add.collider(this.bombas,this.background);
-        // this.physics.add.collider(this.extrasPolis,this.background);
+         this.physics.add.collider(this.extrasPolis,this.background);
         // this.physics.add.collider(this.HookGun,this.background);
         // this.physics.add.collider(this.movablePlatform,this.player);
         // this.physics.add.collider(this.bombas,this.bombWall);
@@ -288,7 +300,7 @@ export default class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
         this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
         //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-        // this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+         this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
         // this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
 
 
@@ -323,6 +335,12 @@ export default class Level1 extends Phaser.Scene {
           if(Phaser.Input.Keyboard.JustDown(this.cursors.up))
           this.player.keyUp();
        
+
+          this.extrasPolis.children.iterate(function (child) {
+
+            if(child != undefined)
+            child.Update();  
+        });
         this.camera.startFollow(this.player);
 
 
