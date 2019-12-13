@@ -34,15 +34,17 @@ export default class Level1 extends Phaser.Scene {
       this.load.image('meta','/SaveyourSon/assets/Meta.png');
       this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
       this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
+      this.load.image('hitboxExtra','/SaveyourSon/assets/HitBoxExtra.png');
       this.load.spritesheet('explosion', 
       '/SaveyourSon/assets/explosion.png',
           { frameWidth: 64, frameHeight: 64 }
       );
       this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
       this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
+      this.load.spritesheet('poliVertical','/SaveyourSon/assets/PoliVertical.png',{frameWidth:64,frameHeight:64});
       //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
       this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-      this.load.spritesheet('poliWalk','/SaveyourSon/assets/ExtraAndando.png',{frameWidth:64,frameHeight:64});
+      this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
   
       this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
        this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
@@ -76,10 +78,17 @@ export default class Level1 extends Phaser.Scene {
       });
       this.anims.create({
 
-        key: 'poliWalking',
-        frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
-        frameRate: 10,
-        repeat: 0
+        key: 'poliwalking',
+        frames: this.anims.generateFrameNumbers('poliwalk', { start: 0, end: 30 }),
+        frameRate: 15,
+        repeat: -1
+      });
+      this.anims.create({
+
+        key: 'poliflying',
+        frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
+        frameRate: 5,
+        repeat: -1
       });
       this.anims.create({
         key: 'alcaideRunning',
@@ -113,6 +122,7 @@ export default class Level1 extends Phaser.Scene {
         this.jetpack = new JetPack(this,7000,150);
         this.antigravedad = new Antigravedad(this,7800,150);
         this.enemy = new Enemy(this,this.player,this.gM);
+
         this.door= new LevelChanger(this,this.gM,this.lvM,40600,200).setScale(0.5);
         //seteamos las variables del lvM
         this.lvM.player=this.player;
@@ -325,7 +335,8 @@ export default class Level1 extends Phaser.Scene {
     
     
     //EXTRAS
-    this.poli =new Extra (this,200,100,'vertical',0,100,200,this.lvM,true,true,100,300);
+    //this.poliprueba=new Extra (this,100,100,'horizontal',0,100,200,this.lvM,true,true,100,300);
+    this.poli =new Extra (this,200,500,'horizontal',0,100,200,this.lvM,true,true,100,300); //.setScale(2);
     this.poli1 =new Extra (this,1800,800,'vertical',0,75,200,this.lvM,true,true,100,300);
     this.poli2 =new Extra (this,2800,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
     this.poli3 =new Extra (this,3200,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
@@ -363,8 +374,8 @@ export default class Level1 extends Phaser.Scene {
     this.poli35 =new Extra (this,27200,400,'horizontal',0,5,0,this.lvM,false,true,100,300);
     this.poli36 =new Extra (this,27200,300,'vertical',0,5,20,this.lvM,false,true,100,300);
     this.poli37 =new Extra (this,28200,500,'vertical',0,100,100,this.lvM,false,true,100,300);
-    this.extrasPolis = this.physics.add.group();
-    this.extrasPolis.add(this.poli);
+     this.extrasPolis = this.physics.add.group();
+     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli1);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
@@ -402,6 +413,11 @@ export default class Level1 extends Phaser.Scene {
     this.extrasPolis.add(this.poli35);
     this.extrasPolis.add(this.poli36);
     this.extrasPolis.add(this.poli37);
+    this.extrasPolis.children.iterate(function (child) {
+
+      if(child != undefined)
+      child.SetAnim();  
+  });
 
 
         // this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
@@ -510,6 +526,7 @@ export default class Level1 extends Phaser.Scene {
 
         }
         this.enemy.Update(stuned,release);
+
     
         this.player.update();
     

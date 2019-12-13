@@ -72,31 +72,37 @@ export default class Level2 extends Phaser.Scene {
     this.Hud.body.setGravityY(-1000);
   this.pausado=false;
 
-    this.anims.create({
-      key: 'explode',
-      frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
-      frameRate: 10,
-      repeat: 0
-  });
   this.anims.create({
-    key: 'alcaideRunning',
-    frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
-    frameRate: 15,
-    repeat: -1
+    key: 'explode',
+    frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
+    frameRate: 10,
+    repeat: 0
 });
-
 this.anims.create({
-  key: 'alcaideAttacking',
-  frames: this.anims.generateFrameNumbers('alcaideAttack', { start: 0, end: 12 }),
+
+  key: 'poliwalking',
+  frames: this.anims.generateFrameNumbers('poliwalk', { start: 0, end: 30 }),
   frameRate: 15,
   repeat: -1
 });
-
 this.anims.create({
-  key: 'playerRunning',
-  frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
+
+  key: 'poliflying',
+  frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
+  frameRate: 5,
+  repeat: -1
+});
+this.anims.create({
+  key: 'alcaideRunning',
+  frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
   frameRate: 15,
   repeat: -1
+});
+this.anims.create({
+key: 'playerRunning',
+frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
+frameRate: 15,
+repeat: -1
 });
     this.map = this.make.tilemap({ 
       key: 'Nivel3', 
