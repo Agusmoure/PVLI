@@ -42,6 +42,7 @@ export default class Level1 extends Phaser.Scene {
       this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
       //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
       this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+      this.load.spritesheet('poliWalk','/SaveyourSon/assets/ExtraAndando.png',{frameWidth:64,frameHeight:64});
   
       this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
        this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
@@ -72,6 +73,13 @@ export default class Level1 extends Phaser.Scene {
           frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
           frameRate: 10,
           repeat: 0
+      });
+      this.anims.create({
+
+        key: 'poliWalking',
+        frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
+        frameRate: 10,
+        repeat: 0
       });
       this.anims.create({
         key: 'alcaideRunning',

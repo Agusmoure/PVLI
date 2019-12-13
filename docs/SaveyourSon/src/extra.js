@@ -27,7 +27,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     this.distance=amplitud;
     this.lvM=levelManager;
     this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberados
-
+    
     }
 
 
