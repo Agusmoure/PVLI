@@ -79,6 +79,10 @@ this.alcaide.getStunned(time);
         this.alcaide.ChangeSpeed(slow);
     }
 
+    PlayerModifierAvaliable(){
+        return this.player.modifierDisponible;
+    }
+
     //Que vuelva a su estaod normal
     RecoverAlcaide(){
         this.alcaide.Recover();
