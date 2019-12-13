@@ -13,6 +13,17 @@ constructor(scene,levelManager,xDirection,yDirection,xPosition,yPosition){
     this.escena = scene;
     scene.add.existing(this);    
 scene.physics.add.existing(this);      
+
+const config = {
+    mute: false,
+    volume: 1,
+    rate: 1,
+    detune: 0,
+    seek: 0,
+    loop: false,
+    delay: 0
+};
+this.TPSound = scene.sound.add('Gancho',config);
 }
 Update(){
     if(!this.end){
@@ -24,6 +35,7 @@ Collision(){
     console.log("OwO");
 if(!this.end){
     this.lvM.TeleportPlayer(this.body.x,this.body.y);
+    this.TPSound.play();
     this.destroy();
     this.escena.NuevoProyectil();
     this.end=true;

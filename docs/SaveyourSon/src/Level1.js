@@ -26,8 +26,12 @@ export default class Level1 extends Phaser.Scene {
       this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
       this.load.image('bomba','/SaveyourSon/assets/bomba.png');
       this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
-      this.load.image('hookHUD','/SaveyourSon/assets/HookGun.jpg');
+      this.load.image('hookHUD','/SaveyourSon/assets/HookGun.png');
       this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
+      this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
+      this.load.image('meta','/SaveyourSon/assets/Meta.png');
+      this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
+      this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
       this.load.spritesheet('explosion', 
       '/SaveyourSon/assets/explosion.png',
           { frameWidth: 64, frameHeight: 64 }
@@ -42,12 +46,22 @@ export default class Level1 extends Phaser.Scene {
         
 
        //SONIDOS
-      this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
+       this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
+       this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+       this.load.audio('Antigravedad', '/SaveyourSon/assets/Sonidos/Antigravedad.wav');
+       this.load.audio('CojerLlave', '/SaveyourSon/assets/Sonidos/KeysCortado.wav');
+       this.load.audio('Salto', '/SaveyourSon/assets/Sonidos/Salto.wav');
+       this.load.audio('PlayerTouched', '/SaveyourSon/assets/Sonidos/PlayerTouched.wav');
+       this.load.audio('AlcaideTouched', '/SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
+       this.load.audio('Jetpack', '/SaveyourSon/assets/Sonidos/Jetpack.wav');
+       this.load.audio('JetpackNoFuel', '/SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
+       this.load.audio('PickUpItem', '/SaveyourSon/assets/Sonidos/PickUpItem.wav');
+
       }
       
       create() {
         //creamos el HUD y establecemos que el juego no esta pausado
-        this.Hud = new HUD(this,0,0,this.lvM);
+        this.Hud = new HUD(this,0,0,this.lvM,39800);
         this.Hud.body.setGravityY(-1000);
       this.pausado=false;
     //Creamos las animaciones 
@@ -207,12 +221,79 @@ export default class Level1 extends Phaser.Scene {
     this.poli2 =new Extra (this,2800,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
     this.poli3 =new Extra (this,3200,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
     this.poli4 =new Extra (this,4540,800,'horizontal',0,20,100,this.lvM,false,true,100,300);
+    this.poli5 =new Extra (this,6000,825,'vertical',0,100,150,this.lvM,false,true,100,300);
+    this.poli6 =new Extra (this,6300,825,'vertical',0,100,160,this.lvM,false,true,100,300);
+    this.poli7 =new Extra (this,6600,825,'vertical',0,100,140,this.lvM,false,true,100,300);
+    this.poli8 =new Extra (this,7925,650,'vertical',0,5,50,this.lvM,false,true,100,300);
+    this.poli9 =new Extra (this,9850,780,'vertical',0,25,75,this.lvM,false,true,100,300);
+    this.poli10 =new Extra (this,12000,400,'vertical',0,100,75,this.lvM,false,true,100,300);
+    this.poli11 =new Extra (this,13000,300,'vertical',0,100,75,this.lvM,false,true,100,300);
+    this.poli12 =new Extra (this,14000,300,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli13 =new Extra (this,14500,300,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli14 =new Extra (this,15500,300,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli15 =new Extra (this,16300,300,'vertical',0,100,75,this.lvM,false,true,100,300);
+    this.poli16 =new Extra (this,20000,400,'vertical',0,75,75,this.lvM,false,true,100,300);
+    this.poli17 =new Extra (this,20000,675,'vertical',0,75,75,this.lvM,false,true,100,300);
+    this.poli18 =new Extra (this,20750,300,'vertical',0,20,75,this.lvM,false,true,100,300);
+    this.poli19 =new Extra (this,20750,820,'vertical',0,20,75,this.lvM,false,true,100,300);
+    this.poli20 =new Extra (this,24300,300,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli21 =new Extra (this,30050,500,'vertical',0,10,75,this.lvM,false,true,100,300);
+    this.poli22 =new Extra (this,30150,500,'vertical',0,10,75,this.lvM,false,true,100,300);
+    this.poli23 =new Extra (this,30250,500,'vertical',0,10,75,this.lvM,false,true,100,300);
+    this.poli24 =new Extra (this,31750,500,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli25 =new Extra (this,33600,500,'horizontal',0,100,75,this.lvM,false,true,100,300);
+    this.poli26 =new Extra (this,33600,850,'vertical',0,50,120,this.lvM,false,true,100,300);
+    this.poli27 =new Extra (this,35700,250,'vertical',0,50,120,this.lvM,false,true,100,300);
+    this.poli28 =new Extra (this,37450,750,'vertical',0,20,120,this.lvM,false,true,100,300);
+    this.poli29 =new Extra (this,38700,800,'vertical',0,20,120,this.lvM,false,true,100,300);
+    this.poli30 =new Extra (this,39200,700,'vertical',0,20,120,this.lvM,false,true,100,300);
+    this.poli31 =new Extra (this,39300,700,'vertical',0,20,120,this.lvM,false,true,100,300);
+    this.poli32 =new Extra (this,26050,700,'vertical',0,5,60,this.lvM,false,true,100,300);
+    this.poli33 =new Extra (this,26450,400,'vertical',0,5,60,this.lvM,false,true,100,300);
+    this.poli34 =new Extra (this,26850,700,'horizontal',0,5,0,this.lvM,false,true,100,300);
+    this.poli35 =new Extra (this,27200,400,'horizontal',0,5,0,this.lvM,false,true,100,300);
+    this.poli36 =new Extra (this,27200,300,'vertical',0,5,20,this.lvM,false,true,100,300);
+    this.poli37 =new Extra (this,28200,500,'vertical',0,100,100,this.lvM,false,true,100,300);
     this.extrasPolis = this.physics.add.group();
     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli1);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
     this.extrasPolis.add(this.poli4);
+    this.extrasPolis.add(this.poli5);
+    this.extrasPolis.add(this.poli6);
+    this.extrasPolis.add(this.poli7);
+    this.extrasPolis.add(this.poli8);
+    this.extrasPolis.add(this.poli9);
+    this.extrasPolis.add(this.poli10);
+    this.extrasPolis.add(this.poli11);
+    this.extrasPolis.add(this.poli12);
+    this.extrasPolis.add(this.poli13);
+    this.extrasPolis.add(this.poli14);
+    this.extrasPolis.add(this.poli15);
+    this.extrasPolis.add(this.poli16);
+    this.extrasPolis.add(this.poli17);
+    this.extrasPolis.add(this.poli18);
+    this.extrasPolis.add(this.poli19);
+    this.extrasPolis.add(this.poli20);
+    this.extrasPolis.add(this.poli21);
+    this.extrasPolis.add(this.poli22);
+    this.extrasPolis.add(this.poli23);
+    this.extrasPolis.add(this.poli24);
+    this.extrasPolis.add(this.poli25);
+    this.extrasPolis.add(this.poli26);
+    this.extrasPolis.add(this.poli27);
+    this.extrasPolis.add(this.poli28);
+    this.extrasPolis.add(this.poli29);
+    this.extrasPolis.add(this.poli30);
+    this.extrasPolis.add(this.poli31);
+    this.extrasPolis.add(this.poli32);
+    this.extrasPolis.add(this.poli33);
+    this.extrasPolis.add(this.poli34);
+    this.extrasPolis.add(this.poli35);
+    this.extrasPolis.add(this.poli36);
+    this.extrasPolis.add(this.poli37);
+
 
         // this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
         // this.poli2=new Extra(this,this.enemy,this.lvM,true,true,200,300);
@@ -332,7 +413,7 @@ export default class Level1 extends Phaser.Scene {
         if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
           this.player.moveUp();
         
-          if(Phaser.Input.Keyboard.JustDown(this.cursors.up))
+          if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
           this.player.keyUp();
        
 
@@ -342,8 +423,7 @@ export default class Level1 extends Phaser.Scene {
             child.Update();  
         });
         this.camera.startFollow(this.player);
-
-
+    
        // this.bombas.children.iterate(function (child) {
 
       //     if(child != undefined)

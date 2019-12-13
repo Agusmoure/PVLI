@@ -32,8 +32,12 @@ export default class Level2 extends Phaser.Scene {
     this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
     this.load.image('bomba','/SaveyourSon/assets/bomba.png');
     this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
-    this.load.image('hookHUD','/SaveyourSon/assets/HookGun.jpg');
+    this.load.image('hookHUD','/SaveyourSon/assets/HookGun.png');
     this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
+    this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
+    this.load.image('meta','/SaveyourSon/assets/Meta.png');
+    this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
+    this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
     this.load.spritesheet('explosion', 
     '/SaveyourSon/assets/explosion.png',
         { frameWidth: 64, frameHeight: 64 }
@@ -49,14 +53,24 @@ export default class Level2 extends Phaser.Scene {
     
 
      this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
-     this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+       this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+       this.load.audio('Antigravedad', '/SaveyourSon/assets/Sonidos/Antigravedad.wav');
+       this.load.audio('CojerLlave', '/SaveyourSon/assets/Sonidos/KeysCortado.wav');
+       this.load.audio('Salto', '/SaveyourSon/assets/Sonidos/Salto.wav');
+       this.load.audio('PlayerTouched', '/SaveyourSon/assets/Sonidos/PlayerTouched.wav');
+       this.load.audio('AlcaideTouched', '/SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
+       this.load.audio('Jetpack', '/SaveyourSon/assets/Sonidos/Jetpack.wav');
+       this.load.audio('JetpackNoFuel', '/SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
+       this.load.audio('PickUpItem', '/SaveyourSon/assets/Sonidos/PickUpItem.wav');
+       this.load.audio('Gancho', '/SaveyourSon/assets/Sonidos/Gancho.wav');
+
 
   }
   
   create() {
     
 
-    this.Hud = new HUD(this,0,0,this.lvM);
+    this.Hud = new HUD(this,0,0,this.lvM,42000);
     this.Hud.body.setGravityY(-1000);
   this.pausado=false;
 
@@ -211,6 +225,7 @@ this.anims.create({
 
     //INPUT
     this.pointer = this.input.activePointer;
+    this.pointerCursor =
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);

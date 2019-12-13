@@ -10,10 +10,20 @@ export default class Key extends PowerUp{
     scene.physics.add.existing(this);    
     this.lvM=  levelManager;
     this.gravity*=0;
-    
+    const config = {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+    };
+    this.pickMeSound = scene.sound.add('CojerLlave',config);
     }
     PickMe(){
         this.lvM.AddKey();
+        this.pickMeSound.play();
         //gameManager.AddKeyToActuallevel();
         this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
         //this.body.disableBody(true,true);

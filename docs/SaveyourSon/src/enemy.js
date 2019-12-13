@@ -18,6 +18,16 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.player=jugador;
         this.anims.play('alcaideRunning');
         this.animPlaying=false;
+        const config = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        };
+        this.touchedSound = scene.sound.add('AlcaideTouched',config);
     }
 
     followPlayer(){
@@ -57,12 +67,16 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
 
     Stun(){
         this.speedX=0;
+        this.touchedSound.play();
     }
     Recover(){
         this.speedX=130;
     }
     ChangeSpeed(slow){
+        if(slow<0)
+        this.touchedSound.play();
       this.speedX=this.speedX+slow;
+
     }
     getStunned(time){
 this.stunTime=time;
