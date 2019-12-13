@@ -1,0 +1,2 @@
+Se podria hacer un png invisible mediante el que se cambia el modifier a normal para asi no tener que controlar el delta
+en el level1 estará en la posicion 18000 +-

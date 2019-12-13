@@ -16,6 +16,5 @@ export default class Key extends PowerUp{
         this.lvM.AddKey();
         //gameManager.AddKeyToActuallevel();
         this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
-        //this.body.disableBody(true,true);
         }    
 }

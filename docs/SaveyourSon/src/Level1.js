@@ -8,6 +8,7 @@ import GameManager from "./GameManager.js";
 import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
+import LevelChanger from "./LevelChanger.js"
 
 
 export default class Level1 extends Phaser.Scene {
@@ -27,6 +28,7 @@ export default class Level1 extends Phaser.Scene {
       this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
       this.load.image('hookHUD','/SaveyourSon/assets/HookGun.jpg');
       this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
+      this.load.image('door','/SaveyourSon/assets/ExitDoor.png');
       this.load.spritesheet('explosion', 
       '/SaveyourSon/assets/explosion.png',
           { frameWidth: 64, frameHeight: 64 }
@@ -43,8 +45,8 @@ export default class Level1 extends Phaser.Scene {
        //SONIDOS
       this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
       }
-      
       create() {
+
         //creamos el HUD y establecemos que el juego no esta pausado
         this.Hud = new HUD(this,0,0,this.lvM);
         this.Hud.body.setGravityY(-1000);
@@ -88,6 +90,7 @@ export default class Level1 extends Phaser.Scene {
         this.jetpack = new JetPack(this,7000,150);
         this.antigravedad = new Antigravedad(this,7800,150);
         this.enemy = new Enemy(this,this.player,this.gM);
+        this.door= new LevelChanger(this,this.gM,this.lvM,40600,200).setScale(0.5);
         //seteamos las variables del lvM
         this.lvM.player=this.player;
         this.lvM.alcaide=this.enemy;
@@ -141,7 +144,56 @@ export default class Level1 extends Phaser.Scene {
         this.key2A= new Key(this,16100,300,this.lvM).setScale(0.25);
         this.key2B= new Key(this,16150,300,this.lvM).setScale(0.25);
         this.key2C= new Key(this,16200,300,this.lvM).setScale(0.25);
-
+        this.key2D= new Key(this,17400,300,this.lvM).setScale(0.25);
+        this.key2E= new Key(this,17500,300,this.lvM).setScale(0.25);
+        this.key2F= new Key(this,17600,300,this.lvM).setScale(0.25);
+        this.key30= new Key(this,17700,300,this.lvM).setScale(0.25);
+        this.key31= new Key(this,18670,300,this.lvM).setScale(0.25);
+        this.key32= new Key(this,18680,300,this.lvM).setScale(0.25);
+        this.key33= new Key(this,19060,300,this.lvM).setScale(0.25);
+        this.key34= new Key(this,19150,300,this.lvM).setScale(0.25);
+        this.key35= new Key(this,19700,300,this.lvM).setScale(0.25);
+        this.key36= new Key(this,19800,300,this.lvM).setScale(0.25);
+        this.key37= new Key(this,19900,300,this.lvM).setScale(0.25);
+        this.key38= new Key(this,20000,300,this.lvM).setScale(0.25);
+        this.key39= new Key(this,20100,300,this.lvM).setScale(0.25);
+        this.key3A= new Key(this,22300,500,this.lvM).setScale(0.25);
+        this.key3B= new Key(this,22400,500,this.lvM).setScale(0.25);
+        this.key3C= new Key(this,22500,500,this.lvM).setScale(0.25);
+        this.key3D= new Key(this,22600,500,this.lvM).setScale(0.25);
+        this.key3F= new Key(this,22700,500,this.lvM).setScale(0.25);
+        this.key40= new Key(this,24045,500,this.lvM).setScale(0.25);
+        this.key41= new Key(this,24145,500,this.lvM).setScale(0.25);
+        this.key42= new Key(this,24320,500,this.lvM).setScale(0.25);
+        this.key43= new Key(this,24420,500,this.lvM).setScale(0.25);
+        this.key44= new Key(this,25810,500,this.lvM).setScale(0.25);
+        this.key45= new Key(this,26050,500,this.lvM).setScale(0.25);
+        this.key46= new Key(this,26280,500,this.lvM).setScale(0.25);
+        this.key47= new Key(this,26580,500,this.lvM).setScale(0.25);
+        this.key48= new Key(this,26850,500,this.lvM).setScale(0.25);
+        this.key49= new Key(this,27055,500,this.lvM).setScale(0.25);
+        this.key4A= new Key(this,27345,500,this.lvM).setScale(0.25);
+        this.key4B= new Key(this,27600,500,this.lvM).setScale(0.25);
+        this.key4C= new Key(this,27820,500,this.lvM).setScale(0.25);
+        this.key4D= new Key(this,28600,500,this.lvM).setScale(0.25);
+        this.key4E= new Key(this,28720,100,this.lvM).setScale(0.25);
+        this.key4F= new Key(this,28820,100,this.lvM).setScale(0.25);
+        this.key50= new Key(this,28975,100,this.lvM).setScale(0.25);
+        this.key51= new Key(this,29075,100,this.lvM).setScale(0.25);
+        this.key52= new Key(this,29230,100,this.lvM).setScale(0.25);
+        this.key53= new Key(this,29330,100,this.lvM).setScale(0.25);
+        this.key54= new Key(this,29480,100,this.lvM).setScale(0.25);
+        this.key55= new Key(this,29585,100,this.lvM).setScale(0.25);
+        this.key56= new Key(this,29740,100,this.lvM).setScale(0.25);
+        this.key57= new Key(this,29840,100,this.lvM).setScale(0.25);
+        this.key58= new Key(this,32160,100,this.lvM).setScale(0.25);
+        this.key59= new Key(this,28820,100,this.lvM).setScale(0.25);
+        this.key5A= new Key(this,28820,100,this.lvM).setScale(0.25);
+        this.key5B= new Key(this,33040,100,this.lvM).setScale(0.25);
+        this.key5C= new Key(this,33130,100,this.lvM).setScale(0.25);
+        this.key5D= new Key(this,35520,100,this.lvM).setScale(0.25);
+        this.key5E= new Key(this,35720,100,this.lvM).setScale(0.25);
+        this.key5F= new Key(this,38720,100,this.lvM).setScale(0.25);
 
         this.keys= this.physics.add.group();
         this.keys.add(this.key);
@@ -189,7 +241,56 @@ export default class Level1 extends Phaser.Scene {
         this.keys.add(this.key2A);
         this.keys.add(this.key2B);
         this.keys.add(this.key2C);
-
+        this.keys.add(this.key2D);
+        this.keys.add(this.key2E);
+        this.keys.add(this.key2F);
+        this.keys.add(this.key30);
+        this.keys.add(this.key31);
+        this.keys.add(this.key32);
+        this.keys.add(this.key33);
+        this.keys.add(this.key34);
+        this.keys.add(this.key35);
+        this.keys.add(this.key36);
+        this.keys.add(this.key37);
+        this.keys.add(this.key38);
+        this.keys.add(this.key39);
+        this.keys.add(this.key3A);
+        this.keys.add(this.key3B);
+        this.keys.add(this.key3C);
+        this.keys.add(this.key3D);
+        this.keys.add(this.key3F);
+        this.keys.add(this.key40);
+        this.keys.add(this.key41);
+        this.keys.add(this.key42);
+        this.keys.add(this.key43);
+        this.keys.add(this.key44);
+        this.keys.add(this.key45);
+        this.keys.add(this.key46);
+        this.keys.add(this.key47);
+        this.keys.add(this.key48);
+        this.keys.add(this.key49);
+        this.keys.add(this.key4A);
+        this.keys.add(this.key4B);
+        this.keys.add(this.key4C);
+        this.keys.add(this.key4D);
+        this.keys.add(this.key4E);
+        this.keys.add(this.key4F);
+        this.keys.add(this.key50);
+        this.keys.add(this.key51);
+        this.keys.add(this.key52);
+        this.keys.add(this.key53);
+        this.keys.add(this.key54);
+        this.keys.add(this.key55);
+        this.keys.add(this.key56);
+        this.keys.add(this.key57);
+        this.keys.add(this.key58);
+        this.keys.add(this.key59);
+        this.keys.add(this.key5A);
+        this.keys.add(this.key5B);
+        this.keys.add(this.key5C);
+        this.keys.add(this.key5D);
+        this.keys.add(this.key5E);
+        this.keys.add(this.key5F);
 
 
         this.keyCount=0;        
@@ -263,6 +364,7 @@ export default class Level1 extends Phaser.Scene {
         //Establecemos los colliders
         this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
         this.physics.add.collider(this.jetpack,this.background);
+        this.physics.add.collider(this.door,this.background);
         this.physics.add.collider(this.antigravedad,this.background);
         this.physics.add.collider(this.enemy,this.background);
         this.physics.add.collider(this.keys,this.background);
@@ -282,6 +384,8 @@ export default class Level1 extends Phaser.Scene {
         this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
         this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
         this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
+        this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
+
         
         
         //this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
@@ -302,7 +406,6 @@ export default class Level1 extends Phaser.Scene {
         if(this.keyCount>=3){
           stuned=true;
           this.keyCount=0;
-          this.scene.start('MenuPowerUps', this.gM);
 
         }
         this.enemy.Update(stuned,release);

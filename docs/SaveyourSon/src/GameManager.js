@@ -7,7 +7,7 @@ export default class GameManager{
         this.jetpacksImprovementsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la resistencia del jetpack
         this.bombImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la bomba
         this.catapultImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la catapulta
-        this.scenesForPlay=['game','Level1',/*'Level2',*/'Level3']
+        this.scenesForPlay=['Level1','MenuPowerUps','Level2','MenuPowerUps','Level3']
     }
     GetKey(){
         return this.keys;
