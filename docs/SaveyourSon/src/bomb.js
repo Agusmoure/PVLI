@@ -58,7 +58,6 @@ if(this.temp>1000 && !this.boom){
     else if(this.lvM.GetPlayerX()>this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)
     this.lvM.ImpulsePlayer(this.repulsion*(distanciaX/(Math.sqrt(Math.pow(distanciaX,2)+Math.pow(distanciaY,2)))),this.repulsion*(distanciaY/(Math.sqrt(Math.pow(distanciaY,2)+Math.pow(distanciaX,2)))) );
     this.boom=true;
-    this.lvM.BombExploded(this.x,this.y);
     this.anims.play('explode');
     this.explosion.play();
     this.on('animationcomplete',this.Explode,this);

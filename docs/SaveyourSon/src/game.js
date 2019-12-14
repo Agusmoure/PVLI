@@ -152,7 +152,7 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
   // this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
   //this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
-
+  this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
   //this.physics.add.overlap(this.player,this.bombas,this.bombas.PickMe,null,this.bomba);
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
 

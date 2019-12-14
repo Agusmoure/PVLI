@@ -49,11 +49,8 @@ export default class Level2 extends Game {
     this.background.setCollisionBetween(0, 10);
     super.create();
     this.lvM.HUD = this.Hud;
-   // this.add.image(10, 10, 'sky').setScale(3.5);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
-    //this.enemy.setScale(1,1).refreshBody();
-    //this.enemy.refreshBody();
 
     this.lvM.SetNumBombas(3);
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
@@ -80,9 +77,6 @@ export default class Level2 extends Game {
     this.HookGun = new HookGun(this,this.lvM);
 
     this.keyCount=0;
-
-    //this.background2.setScale(0.1);
-
     this.bombas = this.physics.add.group();
     this.bomba = new Bomba(this,400,200,this.lvM,0);
     this.bomba2 = new Bomba(this,700,200,this.lvM,1);
@@ -137,11 +131,11 @@ export default class Level2 extends Game {
     this.extrasPolis.add(this.poli18);
     this.extrasPolis.add(this.poli19);
     this.extrasPolis.add(this.poli20);
-    this.extrasPolis.children.iterate(function (child) {
+  //   this.extrasPolis.children.iterate(function (child) {
 
-      if(child != undefined)
-      child.SetAnim();  
-  });
+  //     if(child != undefined)
+  //     child.SetAnim();  
+  // });
 
     this.Presos = this.physics.add.group();
     this.presosMapa = this.map.getObjectLayer('Presos');
@@ -180,7 +174,6 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
    super.Colliders();
     this.physics.add.collider(this.bombas,this.bombWall);
     this.physics.add.collider(this.player,this.bombWall);
-    this.physics.add.collider(this.player,this.background);
 
 
     // this.physics.add.collider(this.enemy,this.player);
@@ -190,7 +183,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     super.Overlaps()
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-    this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+   
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
 
 

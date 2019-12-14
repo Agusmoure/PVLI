@@ -65,10 +65,11 @@ super.create();
     this.keyCount=0;
     
     //this.background2.setScale(0.1);
+    this.lvM.SetNumBombas(3);
   
     this.bombas = this.physics.add.group();
-    this.bomba = new Bomba(this,400,200,this.lvM,0);
-    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
+    this.bomba = new Bomba(this,400,100,this.lvM,0);
+    this.bomba2 = new Bomba(this,700,100,this.lvM,1);
     this.bombas.add(this.bomba)
     this.bombas.add(this.bomba2);
 
@@ -195,10 +196,8 @@ super.create();
     
     
     super.Colliders();
-  
-    //this.physics.add.collider(this.extrasPolis,this.background);
 
-
+    super.Overlaps();
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
   }
