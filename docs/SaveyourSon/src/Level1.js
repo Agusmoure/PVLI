@@ -80,7 +80,7 @@ export default class Level1 extends Phaser.Scene {
 
         key: 'poliwalking',
         frames: this.anims.generateFrameNumbers('poliwalk', { start: 0, end: 30 }),
-        frameRate: 15,
+        frameRate: 10,
         repeat: -1
       });
       this.anims.create({

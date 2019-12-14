@@ -10,6 +10,8 @@ export default class Key extends PowerUp{
     scene.physics.add.existing(this);    
     this.lvM=  levelManager;
     this.gravity*=0;
+    this.oX = xInit;
+    this.oY = yInit;
     const config = {
         mute: false,
         volume: 1,
@@ -20,6 +22,11 @@ export default class Key extends PowerUp{
         delay: 0
     };
     this.pickMeSound = scene.sound.add('CojerLlave',config);
+    }
+    preUpdate(time, delta){
+        this.body.setVelocityY(0);
+this.x=this.oX;
+this.y = this.oY;
     }
     PickMe(){
         this.lvM.AddKey();

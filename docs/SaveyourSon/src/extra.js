@@ -8,6 +8,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         
     this.body.setCollideWorldBounds(true);
+    this.iconoLLave = scene.add.sprite(oX,oY+50,'key').setScale(0.25);
     this.police=policia;
     this.movement=movimiento;
     this.active=false;
@@ -40,6 +41,9 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     Update(){
         this.imagen.x=this.x;
         this.imagen.y=this.y;
+        this.iconoLLave.x=this.x;
+        this.iconoLLave.y = this.y-50;
+        this.iconoLLave.visible=false;
         //////////////////////////////////////////////Movimiento del policia dependiendo de si es horizontal o verrtical////////////////////////////////////////////////
         if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance)
         this.body.setVelocityX(this.speedX);
@@ -63,8 +67,17 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
 
     ///////////////////////////////////////////////////Movimiento del preso que comienza si el jugador está cerca y tiene llaves/////////////////////////////////////////
-         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste))
+         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste)){
         this.active=true;
+        this.imagen.play('playerRunning');
+         }
+        if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && !this.lvM.EstoyLibre(this.coste)){
+        this.iconoLLave.visible=true;
+        }
+        else
+        {
+
+        }
         //Se mueve si esta activo y no ha pasado demasiado tiempo
         if(this.active && this.timer>0 ){
             this.body.setVelocityX(this.speedX*this.direccion);//this.speedX*this.direccion);
@@ -117,11 +130,11 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
     SetAnim(){
         if(this.police && this.movement === 'horizontal')
-        this.imagen.play('alcaideRunning');  
+        this.imagen.play('poliwalking');  
         else if(this.police && this.movement ==='vertical')
         this.imagen.play('poliflying'); 
         else if(!this.police)
-        this.imagen.play('playerRunning'); 
+        this.imagen.play('presoIdle'); 
 
 
 

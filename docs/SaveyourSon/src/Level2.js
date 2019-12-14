@@ -43,8 +43,11 @@ export default class Level2 extends Phaser.Scene {
         { frameWidth: 64, frameHeight: 64 }
     );
     this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('presoIdle','/SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
     this.load.spritesheet('alcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
+    this.load.spritesheet('poliVertical','/SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
+    this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
     //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
     this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
@@ -88,6 +91,12 @@ this.anims.create({
   repeat: -1
 });
 this.anims.create({
+  key: 'presoIdle',
+  frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 30 }),
+  frameRate: 10,
+  repeat: -1
+});
+this.anims.create({
 
   key: 'poliflying',
   frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
@@ -110,6 +119,13 @@ repeat: -1
       key: 'Nivel2', 
         tileWidth: 64, 
         tileHeight: 64 
+    });
+    this.keys= this.physics.add.group();
+    this.llaves = this.map.getObjectLayer('LLaves');
+    
+    this.llaves.objects.forEach(object => { 
+      this.llave = new Key(this,object.x,object.y-1000,this.lvM).setScale(0.25);
+      this.keys.add(this.llave);
     });
   
     this.pointer = this.input.activePointer;
@@ -134,28 +150,6 @@ repeat: -1
     this.lvM.HUD = this.Hud;
     
     this.player.changeModifierGancho();
-
-    this.key= new Key(this,700,300,this.lvM).setScale(0.25);
-    this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
-    this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
-    this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
-    this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
-    this.key5= new Key(this,5700,150,this.lvM).setScale(0.25); // definitiva
-    this.key6= new Key(this,12500,500,this.lvM).setScale(0.25); // definitiva
-    this.key7= new Key(this,16000,500,this.lvM).setScale(0.25); // definitiva
-    this.key8= new Key(this,26500,150,this.lvM).setScale(0.25); // definitiva
-    this.key8= new Key(this,34600,500,this.lvM).setScale(0.25); // definitiva
-    this.keys= this.physics.add.group();
-    this.keys.add(this.key);
-    this.keys.add(this.key1);
-    this.keys.add(this.key2);
-    this.keys.add(this.key3);
-    this.keys.add(this.key4);
-    this.keys.add(this.key5);
-    this.keys.add(this.key6);
-    this.keys.add(this.key7);
-    this.keys.add(this.key8);
-
     this.HookGun = new HookGun(this,this.lvM);
 
     this.keyCount=0;
@@ -191,6 +185,7 @@ repeat: -1
     this.poli17= new Extra(this,35175,1800,'horizontal',0,0,0,this.lvM,true,true,200,300);
     this.poli18= new Extra(this,37075,1920,'vertical',0,25,100,this.lvM,true,true,200,300);
     this.poli19= new Extra(this,38670,1920,'horizontal',0,0,0,this.lvM,true,true,200,300);
+    this.poli20= new Extra(this,17650,1000,'horizontal',0,0,0,this.lvM,true,true,200,300);
 
 
 
@@ -214,6 +209,12 @@ repeat: -1
     this.extrasPolis.add(this.poli17);
     this.extrasPolis.add(this.poli18);
     this.extrasPolis.add(this.poli19);
+    this.extrasPolis.add(this.poli20);
+    this.extrasPolis.children.iterate(function (child) {
+
+      if(child != undefined)
+      child.SetAnim();  
+  });
 
 
 
@@ -222,11 +223,17 @@ repeat: -1
 
 
 
-
-    
-    this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
     this.Presos = this.physics.add.group();
-    this.Presos.add(this.preso);
+    this.presosMapa = this.map.getObjectLayer('Presos');
+    
+    this.presosMapa.objects.forEach(object => { 
+      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,true,false,200,200).setScale(0.25);
+      this.preso.SetAnim();
+      this.Presos.add(this.preso);
+    });
+    
+    // this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
+    // this.Presos.add(this.preso);
     
 
     //INPUT
@@ -244,8 +251,6 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     
   
 
-    //Plataformas moviles
-    this.movablePlatform = new MovableWall(this,700,800,200,200);
     
 
     //Paredes destructibles
@@ -271,7 +276,6 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     this.physics.add.collider(this.bombas,this.background);
     this.physics.add.collider(this.extrasPolis,this.background);
     this.physics.add.collider(this.HookGun,this.background);
-    this.physics.add.collider(this.movablePlatform,this.player);
     this.physics.add.collider(this.bombas,this.bombWall);
     this.physics.add.collider(this.player,this.bombWall);
     this.physics.add.collider(this.player,this.background);
@@ -389,7 +393,7 @@ this.input.on('pointerdown',pointer=>{
 if(this.proyectil!==null && this.proyectil!== undefined)
 this.proyectil.Update();
   
-    this.movablePlatform.Update();
+    
   }
 
   arriba(){
