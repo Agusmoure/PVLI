@@ -2,8 +2,8 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     constructor(scene,jugador,gameManager){
     
         let x=0;
-        let y=0;
-        super(scene,x,y,'dude');
+        let y=150;
+        super(scene,x,y,'alcaideRun');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
@@ -16,6 +16,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.speedY=100;
         this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
         this.player=jugador;
+        //this.play('alcaideRunning');
         this.anims.play('alcaideRunning');
         this.animPlaying=false;
         const config = {

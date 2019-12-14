@@ -19,10 +19,11 @@ export default class Level3 extends Game {
 
   constructor() {
     super(/*{ key: 'main' }*/  'Level3');
+    this.gM=new GameManager();
   }
   preload() {
 super.preload();
-this.load.tilemapTiledJSON('Nivel2', '/SaveyourSon/assets/Nivel3.json');
+this.load.tilemapTiledJSON('Nivel3', '/SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
   }
   
@@ -186,20 +187,7 @@ super.create();
 
 
 
-   //Creo plataformas random
- 
-    
-  
-
-    //Plataformas moviles
-    this.movablePlatform = new MovableWall(this,700,800,200,200);
-    
-
-    //Paredes destructibles
-    this.bombWall = new BombWall(this,750,700);
-    this.lvM.bombWalls= new Array();
-    this.lvM.bombWalls[0]= this.bombWall;
-    
+   //Creo plataformas ran
     //Suelo para el alcaide
     //this.floor = this.physics.add.staticGroup();
     //this.physics.add.collider(this.enemy, this.floor);
@@ -208,139 +196,14 @@ super.create();
     
     super.Colliders();
   
-    this.physics.add.collider(this.extrasPolis,this.background);
-    this.physics.add.collider(this.bombas,this.bombWall);
-    this.physics.add.collider(this.player,this.bombWall);
-    this.physics.add.collider(this.player,this.background);
+    //this.physics.add.collider(this.extrasPolis,this.background);
 
 
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
-
-    
-
-
-    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
-  update(time, delta) {   
-    if(this.gameOver) return ;
-   // console.log(this.keyCount);
-    let stuned=this.S.isDown;
-    let release=this.R.isDown;
-    if(this.lvM.GetKey()>=4){
-      // stuned=true;
-      this.gM.AddSpeedImprovment(2);
-    }
-    this.enemy.Update(stuned,release);
-
-    this.player.update();
-
-
-    if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
-      this.player.LiberarPresos(true);
-            }
-            else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
-      this.player.LiberarPresos(false);
-            }
-            
-    if (this.cursors.right.isDown){
-      this.player.moveRight();
-     // this.scene.start('Level1');
-
-    }
-    else if(this.cursors.left.isDown){
-      this.player.moveLeft();
-    }
-
-    if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
-      this.player.moveUp();
-    
-      if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
-      this.player.keyUp();
-
-      if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
-this.player.LiberarPresos(true);
-      }
-      else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
-this.player.LiberarPresos(false);
-      }
-
-    this.camera.startFollow(this.player);
-
-    this.bombas.children.iterate(function (child) {
-
-      if(child != undefined)
-      child.Update();  
-  });
-  this.extrasPolis.children.iterate(function (child) {
-
-    if(child != undefined)
-    child.Update();  
-});
-this.Presos.children.iterate(function(child){
-  if(child != undefined)
-    child.Update();  
-});
-
-
-  if(this.pointer.isDown){
-    //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
-  }
-  
-    this.movablePlatform.Update();
-  }
-
-  arriba(){
-    this.player.changeModifier();
-    this.jetpack.changeModifier();
-  }
-  CatchPlayer(){
-    //this.gameOver=true;
-    this.enemy.HitPlayer();
-    this.player.dontMove();
-    this.enemy.body.setVelocityX(0);
-  }
-  EndGame(){
-
-  }
-
-  PillarBomba(player,bomba){
-    
-    if(!bomba.recogida){
-     bomba.PickMe();
-     player.changeModifierBomba(bomba.index);
-     console.log(bomba.index);
-    }
-  }
-  PillarLlave(player,llave){
-    llave.PickMe();
-  }
-PoliPilla(player,poli){
-
-  
-poli.caught();
-}
-
-PresoPilla(enemy, preso){
-preso.caught();
-}
-
-  LanzarBomba(bomba,x,y){
-
-bomba.Lanzamiento(x,y,0,0);
-  }
-
-
-  Pausar(){
-    if(!this.pausado){
-    this.pausado=true;
-      this.scene.pause();
-    }
-    else{
-      console.log('kjewbkwbkeb');
-      this.pausado=false;
-    this.scene.resume('Level2');
-    }
+  update(time, delta) {  
+    super.update(); 
   }
 }

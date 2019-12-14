@@ -44,6 +44,9 @@ preload() {
   this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
   this.load.spritesheet('alcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('presoIdle','/SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('poliVertical','/SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
+    this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
   //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
   this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 
@@ -103,28 +106,41 @@ create(){
       frameRate: 15,
       repeat: -1
     });
+    this.anims.create({
+
+      key: 'poliflying',
+      frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'presoIdle',
+      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 30 }),
+      frameRate: 10,
+      repeat: -1
+    });
     this.pointer = this.input.activePointer;
     this.player = new Player(this, this.gM,this.lvM);
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
+    this.camera = this.cameras.main
+    this.lvM.HUD = this.Hud;
 
 
 
 }
 Colliders(){
-  this.physics.add.collider(this.player, this.background);
-  this.physics.add.collider(this.jetpack,this.background);
-  this.physics.add.collider(this.antigravedad,this.background);
-  this.physics.add.collider(this.enemy,this.background);
-  this.physics.add.collider(this.keys,this.background);
-  this.physics.add.collider(this.Presos,this.background);
-
-
+      
+  this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
+ this.physics.add.collider(this.jetpack,this.background);
+   this.physics.add.collider(this.antigravedad,this.background);
+   this.physics.add.collider(this.enemy,this.background);
+   this.physics.add.collider(this.keys,this.background);
   this.physics.add.collider(this.bombas,this.background);
-  this.physics.add.collider(this.extrasPolis,this.background);
-  this.physics.add.collider(this.HookGun,this.background);
-  this.physics.add.collider(this.movablePlatform,this.player);
+   this.physics.add.collider(this.extrasPolis,this.background);
+   this.physics.add.collider(this.HookGun,this.background);
+
 }
 Overlaps(){
   this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
@@ -134,15 +150,13 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
   this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
   this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-  this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+  // this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+  //this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
 
+  //this.physics.add.overlap(this.player,this.bombas,this.bombas.PickMe,null,this.bomba);
+   this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
 
-  this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
-
-  this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
-  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
-
-//  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
+   this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
 
 
   this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
@@ -211,6 +225,7 @@ this.player.LiberarPresos(false);
     if(child != undefined)
     child.Update();
 });
+if(this.Presos!=undefined&&this.Presos!=null)
 this.Presos.children.iterate(function(child){
   if(child != undefined)
     child.Update();
@@ -220,7 +235,6 @@ this.Presos.children.iterate(function(child){
 
 if(this.proyectil!==null && this.proyectil!== undefined)
 this.proyectil.Update();
-    
 }
 PillarBomba(player,bomba){
 

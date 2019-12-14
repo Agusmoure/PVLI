@@ -10,6 +10,7 @@ import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
 import Extra from "./extra.js";
+import HookGun from "./HookGun.js";
 
 
 export default class Level1 extends Game {
@@ -42,9 +43,9 @@ super.create()
         this.jetpack = new JetPack(this,7000,150);
         this.antigravedad = new Antigravedad(this,7800,150);
         this.door= new LevelChanger(this,this.gM,this.lvM,40600,200).setScale(0.5);
-        //this.lvM.SetNumBombas(3);
+        this.lvM.SetNumBombas(3);
         this.lvM.bombWalls = new Array();
-        this.lvM.HUD = this.Hud;
+
         this.player.changeModifierNormal();
         //Creamos los distintos objetos del mapa
         this.key= new Key(this,700,300,this.lvM).setScale(0.25);
@@ -242,15 +243,16 @@ super.create()
 
 
         this.keyCount=0;        
-    //     this.bombas = this.physics.add.group();
-    //     this.bomba = new Bomba(this,400,200,this.lvM,0);
-    // this.bomba2 = new Bomba(this,700,200,this.lvM,1);
-    //     this.bombas.add(this.bomba)
-    //     this.bombas.add(this.bomba2);
+        this.bombas = this.physics.add.group();
+        this.bomba = new Bomba(this,400,200,this.lvM,0);
+        this.bomba2 = new Bomba(this,700,200,this.lvM,1);
+        this.bombas.add(this.bomba)
+        this.bombas.add(this.bomba2);
     
     
     //EXTRAS
-    this.poli =new Extra (this,200,100,'vertical',0,100,200,this.lvM,true,true,100,300);
+    //this.poliprueba=new Extra (this,100,100,'horizontal',0,100,200,this.lvM,true,true,100,300);
+    this.poli =new Extra (this,200,500,'horizontal',0,100,200,this.lvM,true,true,100,300); //.setScale(2);
     this.poli1 =new Extra (this,1800,800,'vertical',0,75,200,this.lvM,true,true,100,300);
     this.poli2 =new Extra (this,2800,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
     this.poli3 =new Extra (this,3200,800,'horizontal',0,75,100,this.lvM,false,true,100,300);
@@ -288,8 +290,8 @@ super.create()
     this.poli35 =new Extra (this,27200,400,'horizontal',0,5,0,this.lvM,false,true,100,300);
     this.poli36 =new Extra (this,27200,300,'vertical',0,5,20,this.lvM,false,true,100,300);
     this.poli37 =new Extra (this,28200,500,'vertical',0,100,100,this.lvM,false,true,100,300);
-    this.extrasPolis = this.physics.add.group();
-    this.extrasPolis.add(this.poli);
+     this.extrasPolis = this.physics.add.group();
+     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli1);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
@@ -327,7 +329,12 @@ super.create()
     this.extrasPolis.add(this.poli35);
     this.extrasPolis.add(this.poli36);
     this.extrasPolis.add(this.poli37);
+  //   this.extrasPolis.children.iterate(function (child) {
 
+  //     if(child != undefined)
+  //     child.SetAnim();  
+  // });
+this.HookGun=new HookGun(this,this.lvM);
 
         // this.poli=new Extra(this,this.enemy,this.lvM,true,true,100,300);
         // this.poli2=new Extra(this,this.enemy,this.lvM,true,true,200,300);
@@ -375,7 +382,10 @@ super.create()
         //Plataformas moviles
        // this.movablePlatform = new MovableWall(this,700,800,200,200);
         
-    
+    super.Colliders();
+  //     this.physics.add.collider(this.extrasPolis,this.background);
+  // this.physics.add.collider(this.bombas,this.background);
+  // this.physics.add.collider(this.extrasPolis,this.background);
         //Paredes destructibles
         // this.bombWall = new BombWall(this,750,700);
         // this.lvM.bombWall= this.bombWall
@@ -389,6 +399,7 @@ super.create()
         //Creamos los triggers y que pasará al meterse en dicho trigger
         //Puedo hacer llamadas a varios métodos en un mismo evento overlap
         // this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
+        super.Overlaps();
         this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
         this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
 
@@ -406,5 +417,6 @@ super.create()
           }
     
       update(time, delta) {   
+        super.update();
       }
     }

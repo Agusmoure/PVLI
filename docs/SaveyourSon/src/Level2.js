@@ -30,13 +30,18 @@ export default class Level2 extends Game {
   }
 
   create() {
-    this.map = this.make.tilemap({
-      key: 'Nivel2',
-        tileWidth: 64,
-        tileHeight: 64
+    this.map = this.make.tilemap({ 
+      key: 'Nivel2', 
+        tileWidth: 64, 
+        tileHeight: 64 
     });
-
-
+    this.keys= this.physics.add.group();
+    this.llaves = this.map.getObjectLayer('LLaves');
+    
+    this.llaves.objects.forEach(object => { 
+      this.llave = new Key(this,object.x,object.y-1000,this.lvM).setScale(0.25);
+      this.keys.add(this.llave);
+    });
     let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
     this.background= this.map.createStaticLayer('Nivel2', t);
     this.background.x=0;
@@ -44,7 +49,6 @@ export default class Level2 extends Game {
     this.background.setCollisionBetween(0, 10);
     super.create();
     this.lvM.HUD = this.Hud;
-    this.camera = this.cameras.main
    // this.add.image(10, 10, 'sky').setScale(3.5);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
@@ -52,10 +56,6 @@ export default class Level2 extends Game {
     //this.enemy.refreshBody();
 
     this.lvM.SetNumBombas(3);
-    // this.lvM.HUD = this.Hud;
-
-    //this.player.changeModifierGancho();
-
     this.key= new Key(this,700,300,this.lvM).setScale(0.25);
     this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
     this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
@@ -112,6 +112,7 @@ export default class Level2 extends Game {
     this.poli17= new Extra(this,35175,1800,'horizontal',0,0,0,this.lvM,true,true,200,300);
     this.poli18= new Extra(this,37075,1920,'vertical',0,25,100,this.lvM,true,true,200,300);
     this.poli19= new Extra(this,38670,1920,'horizontal',0,0,0,this.lvM,true,true,200,300);
+    this.poli20= new Extra(this,17650,1000,'horizontal',0,0,0,this.lvM,true,true,200,300);
 
 
 
@@ -135,13 +136,24 @@ export default class Level2 extends Game {
     this.extrasPolis.add(this.poli17);
     this.extrasPolis.add(this.poli18);
     this.extrasPolis.add(this.poli19);
+    this.extrasPolis.add(this.poli20);
+    this.extrasPolis.children.iterate(function (child) {
 
-    this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
+      if(child != undefined)
+      child.SetAnim();  
+  });
+
     this.Presos = this.physics.add.group();
-    this.Presos.add(this.preso);
-
-
-
+    this.presosMapa = this.map.getObjectLayer('Presos');
+    
+    this.presosMapa.objects.forEach(object => { 
+      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,true,false,200,200).setScale(0.25);
+      this.preso.SetAnim();
+      this.Presos.add(this.preso);
+    });
+    
+    // this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
+    // this.Presos.add(this.preso);
     this.proyectil=undefined;
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
 this.HookGunProyectiles= this.physics.add.group();
@@ -151,9 +163,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 
 
 
-    //Plataformas moviles
-    this.movablePlatform = new MovableWall(this,700,800,200,200);
-
+    
 
     //Paredes destructibles
     this.bombWall = new BombWall(this,750,700);
@@ -190,27 +200,5 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 
   update(time, delta) {
     super.update();
-    this.movablePlatform.Update();
-  }
-
-  arriba(){
-    this.player.changeModifier();
-    this.jetpack.changeModifier();
-  }
-  LanzarBomba(bomba,x,y){
-
-bomba.Lanzamiento(x,y,0,0);
-  }
-
-
-
-
-  Enganchado(proyc,back){
-    if(proyc !==undefined)
-    console.log(proyc.x);proyc.Collision();
-
-  }
-  NuevoProyectil(){
-    this.proyectil=null;
   }
 }

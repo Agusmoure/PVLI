@@ -3,11 +3,12 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     
         let x=oX;
         let y=oY;
-        super(scene,x,y,'dude');
+        super(scene,x,y,'hitboxExtra');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
     this.body.setCollideWorldBounds(true);
+    this.iconoLLave = scene.add.sprite(oX,oY+50,'key').setScale(0.25);
     this.police=policia;
     this.movement=movimiento;
     this.active=false;
@@ -19,20 +20,30 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     this.finalizado=false;       //Bandera que indica que su funcionamiento ha terminado
     this.timerPenalizacion=tiempopenal; 
      this.originX=oX;
+     
      this.originY=oY;
-    this.speedY=velocidad;
-    this.speedX=velocidad;
-    this.direccion = direction;
-   // this.objective=objetivo; //Cosa a la que va a perseguir al empezar a moverse
-    this.distance=amplitud;
-    this.lvM=levelManager;
-    this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberados
+     this.speedY=velocidad;
+     this.speedX=velocidad;
+     this.direccion = direction;
+     // this.objective=objetivo; //Cosa a la que va a perseguir al empezar a moverse
+     this.distance=amplitud;
+     this.lvM=levelManager;
+     this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberados
+   // this.anims.play('alcaideRunning');
+    this.imagen = scene.add.sprite(oX,oY,'alcaideRun');
+    this.imagen.play('alcaideRunning');
     
+    //  this.animPlaying=true;
+     
     }
-
-
+    
+    
     Update(){
-
+        this.imagen.x=this.x;
+        this.imagen.y=this.y;
+        this.iconoLLave.x=this.x;
+        this.iconoLLave.y = this.y-50;
+        this.iconoLLave.visible=false;
         //////////////////////////////////////////////Movimiento del policia dependiendo de si es horizontal o verrtical////////////////////////////////////////////////
         if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance)
         this.body.setVelocityX(this.speedX);
@@ -56,8 +67,17 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
 
     ///////////////////////////////////////////////////Movimiento del preso que comienza si el jugador está cerca y tiene llaves/////////////////////////////////////////
-         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste))
+         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste)){
         this.active=true;
+        this.imagen.play('playerRunning');
+         }
+        if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && !this.lvM.EstoyLibre(this.coste)){
+        this.iconoLLave.visible=true;
+        }
+        else
+        {
+
+        }
         //Se mueve si esta activo y no ha pasado demasiado tiempo
         if(this.active && this.timer>0 ){
             this.body.setVelocityX(this.speedX*this.direccion);//this.speedX*this.direccion);
@@ -77,6 +97,14 @@ export default class Extra extends Phaser.GameObjects.Sprite{
             }
         }
         
+        if(this.body.velocity.x>0){
+        this.flipX=false;
+        this.imagen.flipX=false;
+        }
+        else{
+            this.imagen.flipX=true;
+        this.flipX=true;
+        }
     }
 
     ///////////////////////////////////////////////////Cuando haya tocado a mi objetivo le mando la penalizacion y me pongo activo/////////////////////////////////////////
@@ -99,4 +127,16 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         }
 
     }
+
+    SetAnim(){
+        if(this.police && this.movement === 'horizontal')
+        this.imagen.play('poliwalking');  
+        else if(this.police && this.movement ==='vertical')
+        this.imagen.play('poliflying'); 
+        else if(!this.police)
+        this.imagen.play('presoIdle'); 
+
+
+
+       }
 }
