@@ -6,7 +6,7 @@ constructor(scene,gameManager,levelManager){
 
 
     let x=100;
-    let y=0;
+    let y=-100;
 
     super(scene,x,y,'dude');
     scene.add.existing(this);

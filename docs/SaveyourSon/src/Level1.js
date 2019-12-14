@@ -5,94 +5,26 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Game from "./game.js";
+import Game from "./Game.js";
 import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
 import Extra from "./extra.js";
 
 
-export default class Level1 extends Phaser.Scene {
+export default class Level1 extends Game {
     constructor(){
         super('Level1')
         this.lvM = new LevelManager();
         this.gM=new GameManager();
     }
     preload() {
-
-      this.load.image('sky', '/SaveyourSon/assets/sky.png');
-      this.load.image('ground', '/SaveyourSon/assets/platform.png');
-      this.load.image('key','/SaveyourSon/assets/Key.png');
-      this.load.image('star', '/SaveyourSon/assets/star.png');
-      this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
-      this.load.image('bomba','/SaveyourSon/assets/bomba.png');
-      this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
-      this.load.image('hookHUD','/SaveyourSon/assets/HookGun.png');
-      this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
-      this.load.image('door','/SaveyourSon/assets/ExitDoor.png');
-      this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
-      this.load.image('meta','/SaveyourSon/assets/Meta.png');
-      this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
-      this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
-      this.load.spritesheet('explosion', 
-      '/SaveyourSon/assets/explosion.png',
-          { frameWidth: 64, frameHeight: 64 }
-      );
-      this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
-      this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
-      //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
-      this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-      this.load.spritesheet('poliWalk','/SaveyourSon/assets/ExtraAndando.png',{frameWidth:64,frameHeight:64});
-  
-      this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
-       this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
-        
-
-       //SONIDOS
-       this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
-       this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
-       this.load.audio('Antigravedad', '/SaveyourSon/assets/Sonidos/Antigravedad.wav');
-       this.load.audio('CojerLlave', '/SaveyourSon/assets/Sonidos/KeysCortado.wav');
-       this.load.audio('Salto', '/SaveyourSon/assets/Sonidos/Salto.wav');
-       this.load.audio('PlayerTouched', '/SaveyourSon/assets/Sonidos/PlayerTouched.wav');
-       this.load.audio('AlcaideTouched', '/SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
-       this.load.audio('Jetpack', '/SaveyourSon/assets/Sonidos/Jetpack.wav');
-       this.load.audio('JetpackNoFuel', '/SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
-       this.load.audio('PickUpItem', '/SaveyourSon/assets/Sonidos/PickUpItem.wav');
-
+    super.preload();
+    this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
+    this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
       }
       create() {
-
-        //creamos el HUD y establecemos que el juego no esta pausado
-        this.Hud = new HUD(this,0,0,this.lvM,39800);
-        this.Hud.body.setGravityY(-1000);
-      this.pausado=false;
-    //Creamos las animaciones 
-        this.anims.create({
-          key: 'explode',
-          frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
-          frameRate: 10,
-          repeat: 0
-      });
-      this.anims.create({
-
-        key: 'poliWalking',
-        frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
-        frameRate: 10,
-        repeat: 0
-      });
-      this.anims.create({
-        key: 'alcaideRunning',
-        frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
-        frameRate: 15,
-        repeat: -1
-    });
-    this.anims.create({
-      key: 'playerRunning',
-      frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
-      frameRate: 15,
-      repeat: -1
-    });
+super.create()
     //Creamos el Tilemap
         this.map = this.make.tilemap({ 
           key: 'Nivel1', 
@@ -100,23 +32,16 @@ export default class Level1 extends Phaser.Scene {
             tileHeight: 64 
         });
       
-        this.pointer = this.input.activePointer;
         
         let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
         this.background= this.map.createStaticLayer('Nivel1', t);
         this.background.x=0;
         this.background.y=0;
         this.background.setCollisionBetween(0, 10);
-    
-        this.camera = this.cameras.main
-        this.player = new Player(this, this.gM,this.lvM);
+    super.create();
         this.jetpack = new JetPack(this,7000,150);
         this.antigravedad = new Antigravedad(this,7800,150);
-        this.enemy = new Enemy(this,this.player,this.gM);
         this.door= new LevelChanger(this,this.gM,this.lvM,40600,200).setScale(0.5);
-        //seteamos las variables del lvM
-        this.lvM.player=this.player;
-        this.lvM.alcaide=this.enemy;
         //this.lvM.SetNumBombas(3);
         this.lvM.bombWalls = new Array();
         this.lvM.HUD = this.Hud;
@@ -447,43 +372,23 @@ export default class Level1 extends Phaser.Scene {
         // this.Presos.add(this.preso);
         
     
-        //INPUT
-        this.pointer = this.input.activePointer;
-        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        this.cursors = this.input.keyboard.createCursorKeys();
-    
         //Plataformas moviles
        // this.movablePlatform = new MovableWall(this,700,800,200,200);
         
     
         //Paredes destructibles
         // this.bombWall = new BombWall(this,750,700);
-        // this.lvM.bombWall= this.bombWall;
-        
-        //Establecemos los colliders
-        this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
-        this.physics.add.collider(this.jetpack,this.background);
-        this.physics.add.collider(this.door,this.background);
-        this.physics.add.collider(this.antigravedad,this.background);
-        this.physics.add.collider(this.enemy,this.background);
-        this.physics.add.collider(this.keys,this.background);
+        // this.lvM.bombWall= this.bombWall
         // this.physics.add.collider(this.Presos,this.background);
        // this.physics.add.collider(this.bombas,this.background);
-         this.physics.add.collider(this.extrasPolis,this.background);
         // this.physics.add.collider(this.HookGun,this.background);
         // this.physics.add.collider(this.movablePlatform,this.player);
         // this.physics.add.collider(this.bombas,this.bombWall);
         // this.physics.add.collider(this.player,this.bombWall);
-        this.physics.add.collider(this.player,this.background);
+
         //Creamos los triggers y que pasará al meterse en dicho trigger
         //Puedo hacer llamadas a varios métodos en un mismo evento overlap
         // this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
-        this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
-        this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
-        this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
-        this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
         this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
         this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
 
@@ -501,96 +406,5 @@ export default class Level1 extends Phaser.Scene {
           }
     
       update(time, delta) {   
-        if(this.gameOver) return ;
-        let stuned=this.S.isDown;
-        let release=this.R.isDown;
-        if(this.keyCount>=3){
-          stuned=true;
-          this.keyCount=0;
-
-        }
-        this.enemy.Update(stuned,release);
-    
-        this.player.update();
-    
-    
-        if (this.cursors.right.isDown){
-          this.player.moveRight();
-        }
-        else if(this.cursors.left.isDown){
-          this.player.moveLeft();
-        }
-    
-        if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
-          this.player.moveUp();
-        
-          if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
-          this.player.keyUp();
-       
-
-          this.extrasPolis.children.iterate(function (child) {
-
-            if(child != undefined)
-            child.Update();  
-        });
-        this.camera.startFollow(this.player);
-    
-       // this.bombas.children.iterate(function (child) {
-
-      //     if(child != undefined)
-      //     child.Update();  
-      // });
-      }
-    
-      arriba(){
-        this.player.changeModifier();
-        this.jetpack.changeModifier();
-      }
-      CatchPlayer(){
-        this.gameOver=true;
-        this.player.dontMove();
-        this.enemy.body.setVelocityX(0);
-      }
-    
-    
-      PillarBomba(player,bomba){
-    
-        if(!bomba.recogida){
-         bomba.PickMe();
-         player.changeModifierBomba(bomba.index);
-         console.log(bomba.index);
-        }
-      }
-
-
-      PillarLlave(player,llave){
-        llave.PickMe();
-      }
-    PoliPilla(player,poli){
-    
-      
-    poli.caught();
-    }
-    
-    PresoPilla(enemy, preso){
-    preso.caught();
-    }
-    
-      LanzarBomba(bomba,x,y){
-    
-    bomba.Lanzamiento(x,y,0,0);
-      }
-    
-    
-      Pausar(){
-        if(!this.pausado){
-        this.pausado=true;
-          this.scene.pause();
-        }
-        else{
-          console.log('kjewbkwbkeb');
-          this.pausado=false;
-        this.scene.resume('Level2');
-        }
       }
     }

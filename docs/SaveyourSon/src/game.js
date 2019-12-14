@@ -12,192 +12,184 @@ import HookGun from "./HookGun.js";
 //import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
-
+import HUD from "./HUD.js";
+import HookGunProyectile from "./HookGunProyectile.js"
 export default class Game extends Phaser.Scene {
 
-  constructor() {
-    super(/*{ key: 'main' }*/ 'game');
+  constructor(key) {
+     super(key);
     this.gameOver=false;
-    this.gM= new GameManager();
+    //this.gM= new GameManager();
     this.lvM = new LevelManager();
   }
-  preload() {
+preload() {
 
-    this.load.image('sky', '/SaveyourSon/assets/sky.png');
-    this.load.image('ground', '/SaveyourSon/assets/platform.png');
-    this.load.image('key','/SaveyourSon/assets/Key.png');
-    this.load.image('star', '/SaveyourSon/assets/star.png');
-    this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
-    this.load.image('bomba','/SaveyourSon/assets/bomba.png');
-    this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    //Problemas1
-  //  this.load.tilemapTiledJSON('level1Tilemap', '/SaveyourSon/assets/prueba1.json');
-  //   this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
-    
-  }
+  this.load.image('sky', '/SaveyourSon/assets/sky.png');
+  this.load.image('ground', '/SaveyourSon/assets/platform.png');
+  this.load.image('key','/SaveyourSon/assets/Key.png');
+  this.load.image('star', '/SaveyourSon/assets/star.png');
+  this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
+  this.load.image('bomba','/SaveyourSon/assets/bomba.png');
+  this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
+  this.load.image('hookHUD','/SaveyourSon/assets/HookGun.png');
+  this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
+  this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
+  this.load.image('meta','/SaveyourSon/assets/Meta.png');
+  this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
+  this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
+  this.load.spritesheet('explosion', 
+  '/SaveyourSon/assets/explosion.png',
+      { frameWidth: 64, frameHeight: 64 }
+  );
+  this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('alcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
+  //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
+  this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+-
   
-  create() {
-    //Problemas2
-    // this.map = this.add.tilemap({ 
-    //   key: 'level1Tilemap', 
-    //   tileWidth: 32, 
-    //   tileHeight: 32 
-    // });
-    //  let t = this.map.addTilesetImage('Platformer', 'patronesTilemap');
-    // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
 
-    this.camera = this.cameras.main
-    this.add.image(10, 10, 'sky').setScale(3.5);
-    this.player = new Player(this, this.gM,this.lvM);
-    this.antigravedad = new Antigravedad(this);
-    this.enemy = new Enemy(this,this.player,this.gM);
-    this.lvM.player=this.player;
-    this.lvM.alcaide=this.enemy;
-    this.lvM.SetNumBombas(3);
-    this.key= new Key(this,700,300,this.lvM).setScale(0.25);
-    this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
-    this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
-    this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
-    this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
-    this.keys = this.physics.add.group();
-    this.keys.add(this.key);
-    this.keys.add(this.key1);
-    this.keys.add(this.key2);
-    this.keys.add(this.key3);
-    this.keys.add(this.key4);
-    this.jetpack = new JetPack(this);
-    this.HookGun = new HookGun(this,this.lvM);
-
-    //this.keyCount=0;
-    // this.map = this.add.tilemap({ 
-    //   key: 'level1Tilemap', 
-    //   // tileWidth: 32, 
-    //   // tileHeight: 32 
-    // });
-    // this.background= this.map.createStaticLayer("Capa de Patrones 1", t);
-    this.bomba = new Bomba(this,400,200,this.lvM,0);
-    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
-    this.bombas = this.physics.add.group();
-    this.bombas.add(this.bomba);
-    this.bombas.add(this.bomba2);
+   this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
+     this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+     this.load.audio('Antigravedad', '/SaveyourSon/assets/Sonidos/Antigravedad.wav');
+     this.load.audio('CojerLlave', '/SaveyourSon/assets/Sonidos/KeysCortado.wav');
+     this.load.audio('Salto', '/SaveyourSon/assets/Sonidos/Salto.wav');
+     this.load.audio('PlayerTouched', '/SaveyourSon/assets/Sonidos/PlayerTouched.wav');
+     this.load.audio('AlcaideTouched', '/SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
+     this.load.audio('Jetpack', '/SaveyourSon/assets/Sonidos/Jetpack.wav');
+     this.load.audio('JetpackNoFuel', '/SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
+     this.load.audio('PickUpItem', '/SaveyourSon/assets/Sonidos/PickUpItem.wav');
+     this.load.audio('Gancho', '/SaveyourSon/assets/Sonidos/Gancho.wav');
 
 
-    //EXTRAS
-    this.poli=new Extra (this,this.enemy,this.lvM,true,false,100,300);
-    this.poli2=new Extra (this,this.enemy,this.lvM,true,false,200,300);
-    this.poli2.y=400;
-    this.extrasPolis = this.physics.add.group();
-    this.extrasPolis.add(this.poli);
-    this.extrasPolis.add(this.poli2);
-
+}
+create(){
     //INPUT
     this.pointer = this.input.activePointer;
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-
-
-   //Creo plataformas random
-    this.platforms = this.physics.add.staticGroup();
-    this. platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
-    
-  
-
-    //Plataformas moviles
-    this.movablePlatform = new MovableWall(this,700,800,200,200);
-    
-
-    //Paredes destructibles
-    this.bombWall = new BombWall(this,750,700);
-    this.lvM.bombWall= this.bombWall;
-    
-    //Suelo para el alcaide
-    //this.floor = this.physics.add.staticGroup();
-    //this.physics.add.collider(this.enemy, this.floor);
-
-    
-    
-
-    this.physics.add.collider(this.player, this.platforms);
-    this.physics.add.collider(this.jetpack,this.platforms);
-    this.physics.add.collider(this.antigravedad,this.platforms);
-    this.physics.add.collider(this.enemy,this.platforms);
-
-    this.physics.add.collider(this.keys,this.platforms);
-
-    
-    this.physics.add.collider(this.bombas,this.platforms);
-    
-    this.physics.add.collider(this.extrasPolis,this.platforms);
-    this.physics.add.collider(this.HookGun,this.platforms);
-    this.physics.add.collider(this.movablePlatform,this.player);
-   // this.physics.add.collider(this.bomba,this.bombWall);
-
-    this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
-
-
-    // this.physics.add.collider(this.enemy,this.player);
-    // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
-
-    
-    //Puedo hacer llamadas a varios métodos en un mismo evento overlap
-  
-    
-    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
-    this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
-    this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
-    this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
-
-    this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-    
-
-    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
-    
-  //  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
-
-
-    this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
-    this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
-    //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-    this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
-
-
-    
-
-
     this.cursors = this.input.keyboard.createCursorKeys();
+
+        //creamos el HUD y establecemos que el juego no esta pausado
+        this.Hud = new HUD(this,0,0,this.lvM,39800);
+        this.Hud.body.setGravityY(-1000);
+      this.pausado=false;
+
+    //Creamos las animaciones 
+        this.anims.create({
+          key: 'explode',
+          frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 4 }),
+          frameRate: 10,
+          repeat: 0
+      });
+      this.anims.create({
+
+        key: 'poliWalking',
+        frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
+        frameRate: 10,
+        repeat: 0
+      });
+      this.anims.create({
+        key: 'alcaideRunning',
+        frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
+        frameRate: 15,
+        repeat: -1
+    });
+    this.anims.create({
+      key: 'playerRunning',
+      frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
+      frameRate: 15,
+      repeat: -1
+    });
+    this.pointer = this.input.activePointer;
+    this.player = new Player(this, this.gM,this.lvM);
+    this.enemy = new Enemy(this,this.player,this.gM);
+    this.lvM.player=this.player;
+    this.lvM.alcaide=this.enemy;
+
+
+
+}
+Colliders(){
+  this.physics.add.collider(this.player, this.background);
+  this.physics.add.collider(this.jetpack,this.background);
+  this.physics.add.collider(this.antigravedad,this.background);
+  this.physics.add.collider(this.enemy,this.background);
+  this.physics.add.collider(this.keys,this.background);
+  this.physics.add.collider(this.Presos,this.background);
+
+
+  this.physics.add.collider(this.bombas,this.background);
+  this.physics.add.collider(this.extrasPolis,this.background);
+  this.physics.add.collider(this.HookGun,this.background);
+  this.physics.add.collider(this.movablePlatform,this.player);
+}
+Overlaps(){
+  this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
+
+  this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
+  this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
+  this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
+  this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+  this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
+  this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+
+
+  this.physics.add.overlap(this.player,this.bomba,this.PillarBomba,null,this);
+
+  this.physics.add.overlap(this.player,this.bomba,this.bomba.PickMe,null,this.bomba);
+  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
+
+//  this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
+
+
+  this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
+  this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
+}
+update(){
+  if(this.gameOver) this.EndGame() ;
+  // console.log(this.keyCount);
+   let stuned=this.S.isDown;
+   let release=this.R.isDown;
+   this.enemy.Update(stuned,release);
+
+   this.player.update();
+   if (this.cursors.right.isDown){
+    this.player.moveRight();
+   // this.scene.start('Level1');
+
+  }
+  else if(this.cursors.left.isDown){
+    this.player.moveLeft();
   }
 
-  update(time, delta) {   
-    if(this.gameOver) return ;
-   // console.log(this.keyCount);
-    let stuned=this.S.isDown;
-    let release=this.R.isDown;
-    if(this.lvM.GetKey()>=4){
-      // stuned=true;
-      this.gM.AddSpeedImprovment(2);
-      this.scene.start('MenuPowerUps',this.gM);
-    }
-    this.enemy.Update(stuned,release);
+  if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
+    this.player.moveUp();
 
-    this.player.update();
+    this.camera.startFollow(this.player);
+    this.input.on('pointerdown',pointer=>{
 
-
-    if (this.cursors.right.isDown){
-      this.player.moveRight();
-     // this.scene.start('Level1');
-
-    }
-    else if(this.cursors.left.isDown){
-      this.player.moveLeft();
-    }
-
-    if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
-      this.player.moveUp();
+      if(pointer.leftButtonDown() && this.player.modifier== 'gancho'  && (this.proyectil=== undefined || this.proyectil === null))
+      {
+        let varX= this.pointer.worldX-this.player.x;
+        let varY = this.pointer.worldY-this.player.y;
+        let modulo=Math.sqrt(Math.pow(varX,2)+Math.pow(varY,2));
+        this.proyectil = new HookGunProyectile(this,this.lvM, (varX/modulo),(varY/modulo),this.player.x+20,this.player.y+20);
+        this.HookGunProyectiles.add(this.proyectil);
+      }
     
+    });
+    if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+      this.player.LiberarPresos(true);
+            }
+            else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+      this.player.LiberarPresos(false);
+            }
+
+   
+
       if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
       this.player.keyUp();
 
@@ -208,55 +200,65 @@ this.player.LiberarPresos(true);
 this.player.LiberarPresos(false);
       }
 
-    this.camera.startFollow(this.player);
+
     this.bombas.children.iterate(function (child) {
 
       if(child != undefined)
-      child.Update();  
+      child.Update();
   });
   this.extrasPolis.children.iterate(function (child) {
 
     if(child != undefined)
-    child.Update();  
+    child.Update();
 });
-  if(this.pointer.isDown){
-    //this.HookGunProyectile.Shoot(this.pointer.x,this.pointer.y);
+this.Presos.children.iterate(function(child){
+  if(child != undefined)
+    child.Update();
+});
+
+
+
+if(this.proyectil!==null && this.proyectil!== undefined)
+this.proyectil.Update();
+    
+}
+PillarBomba(player,bomba){
+
+  if(!bomba.recogida){
+   bomba.PickMe();
+   player.changeModifierBomba(bomba.index);
+   console.log(bomba.index);
+  }
+}
+PillarLlave(player,llave){
+  llave.PickMe();
+}
+PoliPilla(player,poli){
+  poli.caught();
   }
   
-    this.movablePlatform.Update();
-  }
-
-  arriba(){
-    this.player.changeModifier();
-    this.jetpack.changeModifier();
+  PresoPilla(enemy, preso){
+  preso.caught();
   }
   CatchPlayer(){
     this.gameOver=true;
+    this.enemy.HitPlayer();
     this.player.dontMove();
     this.enemy.body.setVelocityX(0);
   }
+  EndGame(){
+    this.scene.start('MenuPowerUps',this.gM);
 
-
-  PillarBomba(player,bomba){
-    
-    if(!bomba.recogida){
-     bomba.PickMe();
-     player.changeModifierBomba(bomba.index);
-     console.log(bomba.index);
+  }
+  Pausar(){
+    if(!this.pausado){
+    this.pausado=true;
+      this.scene.pause();
+    }
+    else{
+      console.log('kjewbkwbkeb');
+      this.pausado=false;
+    this.scene.resume('Level2');
     }
   }
-
-  PillarLlave(player,llave){
-    llave.PickMe();
-  }
-PoliPilla(player,poli){
-
-poli.caught();
 }
-
-    
-LanzarBomba(bomba,x,y){
-
-bomba.Lanzamiento(x,y,0,0);
-}
-  }
