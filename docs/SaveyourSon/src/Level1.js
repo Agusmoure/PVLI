@@ -66,13 +66,13 @@ super.create()
         this.presosSlow = this.map.getObjectLayer('PresosSlow');
     
         this.presosSlow.objects.forEach(object => { 
-          this.presosSlow = new Extra(this,object.x,object.y,'',-1,15,25,this.lvM,false,false,200,3);
+          this.presosSlow = new Extra(this,object.x,object.y,'',-1,100,50,this.lvM,false,false,200,3);
           this.Presos.add(this.presosSlow);
         });
         this.presosStun = this.map.getObjectLayer('PresosStun');
     
         this.presosStun.objects.forEach(object => { 
-          this.presosStun = new Extra(this,object.x,object.y,'',-1,15,25,this.lvM,true,false,200,3);
+          this.presosStun = new Extra(this,object.x,object.y,'',-1,100,50,this.lvM,true,false,200,3);
           this.Presos.add(this.presosStun);
         });
         this.Presos.children.iterate(function (child) {

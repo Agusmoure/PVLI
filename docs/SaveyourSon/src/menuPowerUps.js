@@ -15,6 +15,8 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.load.image('botonCompra','./SaveyourSon/assets/boton_Compra_verde.png');
         this.load.image('botonMejora','./SaveyourSon/assets/Mejoras_Verde.png');
         this.load.image('arrow','./SaveyourSon/assets/Arrow.png')
+        this.load.image('FondoLlaveHUD','./SaveyourSon/assets/FondoLlaveHUD.png');
+        this.load.image('Llave','./SaveyourSon/assets/Key.png');
        // this.load.image('nextLevel','');
         this.load.bitmapFont('font', './SaveyourSon/assets/carrier_command.png', './SaveyourSon/assets/carrier_command.xml');      
 
@@ -23,8 +25,15 @@ export default class MenuPowerUps extends Phaser.Scene {
 
     create(data) {
         this.gM=data;
+        
         this.mouseClick=false;
         this.add.image(10, 10, 'sky').setScale(3.5);
+        this.add.image(100,100,'FondoLlaveHUD').setScale(3);
+        this.add.image(100,90,'Llave').setScale(1);
+        this.textoLLaves= this.add.text(95,135,'0');
+        this.textoLLaves.setAlign('center');
+        this.textoLLaves.setFont('Arial Black');
+        this.textoLLaves.setFontSize(40);
         this.Mejora = this.add.sprite(470,300,'botonMejora');
         this.Mejora.setScale(0.25);
         this.buttonSpeedImprovement = this.add.sprite(850,296,'botonCompra').setInteractive();
@@ -49,8 +58,8 @@ export default class MenuPowerUps extends Phaser.Scene {
     }
 
 
-    update(time, delta) {
-
+    preupdate(time, delta) {
+        this.textoLLaves.setText(this.gM.keys);
         
 this.arrow.on('pointerdown',pointer => {
 if(!this.mouseClick){

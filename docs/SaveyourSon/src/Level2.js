@@ -67,7 +67,7 @@ create() {
 
 
     //EXTRAS
-    this.poli=new Extra (this,500,100,'horizontal',0,50,100,this.lvM,true,true,100,300);
+    //this.poli=new Extra (this,500,100,'horizontal',0,50,100,this.lvM,true,true,100,300);
     this.poli2=new Extra (this,800,100,'vertical',0,50,100,this.lvM,true,true,200,300);
     this.poli3= new Extra(this,2800,300,'vertical',0,50,100,this.lvM,true,true,200,300);
     this.poli4= new Extra(this,2800,610,'vertical',0,50,100,this.lvM,true,true,200,300);
@@ -91,7 +91,7 @@ create() {
     this.poli20= new Extra(this,17650,1000,'horizontal',0,0,0,this.lvM,true,true,200,300);
 
 
-    this.extrasPolis.add(this.poli);
+    //this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
     this.extrasPolis.add(this.poli4);
@@ -111,22 +111,22 @@ create() {
     this.extrasPolis.add(this.poli18);
     this.extrasPolis.add(this.poli19);
     this.extrasPolis.add(this.poli20);
-  //   this.extrasPolis.children.iterate(function (child) {
+    this.extrasPolis.children.iterate(function (child) {
 
-  //     if(child != undefined)
-  //     child.SetAnim();  
-  // });
+      if(child != undefined)
+      child.SetAnim();  
+  });
 
     this.presosMapa = this.map.getObjectLayer('PresosStun');
     this.presosMapa.objects.forEach(object => { 
-      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,true,false,200,200);
+      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,200,this.lvM,true,false,200,200);
       this.preso.SetAnim();
       this.Presos.add(this.preso);
     });
     
     this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
     this.presosSlowMapa.objects.forEach(object => { 
-      this.presoslow = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,false,false,200,200);
+      this.presoslow = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,200,this.lvM,false,false,200,200);
       this.presoslow.SetAnim();
       this.Presos.add(this.presoslow);
     });
