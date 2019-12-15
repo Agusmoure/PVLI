@@ -36,7 +36,8 @@ preload() {
   this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
   this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
   this.load.image('meta','/SaveyourSon/assets/Meta.png');
-  this.load.image('interfazModifier','/SaveyourSon/assets/InterfazModifier.png');
+  this.load.image('interfazModifier','/SaveyourSon/assets/FondoModifierHUD.png');
+  this.load.image('interfazFondoLlave','/SaveyourSon/assets/FondoLlaveHUD.png');
   this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
   this.load.spritesheet('explosion', 
   '/SaveyourSon/assets/explosion.png',
@@ -78,7 +79,11 @@ create(){
     this.cursors = this.input.keyboard.createCursorKeys();
 
         //creamos el HUD y establecemos que el juego no esta pausado
-        this.Hud = new HUD(this,0,0,this.lvM,39800);
+        this.textoLLaves= this.add.text(100,100,'HOLA');
+this.textoLLaves.setAlign('center');
+this.textoLLaves.setFont('Arial Black');
+this.textoLLaves.setFontSize(40);
+        this.Hud = new HUD(this,0,0,this.lvM,39800,this.textoLLaves);
         this.Hud.body.setGravityY(-1000);
       this.pausado=false;
 
@@ -199,6 +204,7 @@ update(){
     this.player.moveUp();
 
     this.camera.startFollow(this.player);
+    this.camera.setFollowOffset(-100, 225);
     this.input.on('pointerdown',pointer=>{
 
       if(pointer.leftButtonDown() && this.player.modifier== 'gancho'  && (this.proyectil=== undefined || this.proyectil === null))

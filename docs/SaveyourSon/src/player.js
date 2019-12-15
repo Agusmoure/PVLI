@@ -213,14 +213,14 @@ moveUp(){
         this.lvM.SetBomba(this.bomba);
         console.log(this.bomba);
         this.modifier=this.modifierAUX;
-        this.lvM.SetPlayerModifier('normal');
+        this.lvM.SetPlayerModifier(this.modifierAUX);
     }
 }
  
 }
 
 keyUp(){
-    if(this.modifier==='jetpack' ){
+    if(this.modifier==='jetpack' || this.modifier === 'bomba' ){
        this.jetpackSound.stop();
        this.animPlaying=false;
        this.play('playerRunning');
