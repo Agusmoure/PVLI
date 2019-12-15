@@ -1,5 +1,5 @@
 import LevelManager from './LevelManager.js'
-import Player from './Player.js'
+import Player from './player.js'
 import HookGun from './HookGun.js'
 import HookGunProyectile from './HookGunProyectile.js'
 import GameManager from './GameManager.js'
