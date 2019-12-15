@@ -27,7 +27,7 @@ preload() {
   this.load.image('sky', '/SaveyourSon/assets/sky.png');
   this.load.image('bombWall', '/SaveyourSon/assets/BombWall.png');
   this.load.image('ground', '/SaveyourSon/assets/platform.png');
-  this.load.image('key','docs/SaveyourSon/assets/Key.png');
+  this.load.image('key','/SaveyourSon/assets/Key.png');
   this.load.image('star', '/SaveyourSon/assets/star.png');
   this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
   this.load.image('bomba','/SaveyourSon/assets/bomba.png');
@@ -40,7 +40,6 @@ preload() {
   this.load.image('interfazFondoLlave','/SaveyourSon/assets/FondoLlaveHUD.png');
   this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
   this.load.image('miraPuntero','/SaveyourSon/assets/miraPuntero.png');
-  this.load.image('fondo','/SaveyourSon/assets/BG.png');
   this.load.spritesheet('explosion', 
   '/SaveyourSon/assets/explosion.png',
       { frameWidth: 64, frameHeight: 64 }
@@ -74,7 +73,6 @@ preload() {
 
 }
 create(){
- 
     //INPUT
     this.pointer = this.input.activePointer;
     this.miraSniper = this.add.sprite(0,0,'miraPuntero');
@@ -278,8 +276,6 @@ this.Presos.children.iterate(function(child){
 
 if(this.proyectil!==null && this.proyectil!== undefined)
 this.proyectil.Update();
-
-
 }
 PillarBomba(player,bomba){
 

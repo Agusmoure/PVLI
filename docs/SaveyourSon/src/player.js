@@ -3,7 +3,7 @@ import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
-    let x=2000;
+    let x=40050;
     let y=150;
     super(scene,x,y,'dude');
     scene.add.existing(this);
@@ -21,7 +21,7 @@ this.maxSpeedY=1000;
 this.speedImprovment=10;
 this.speedX=150;
 this.stunTime=0;
-this.defaultSpeed=175+(gameManager.GetSpeedImprovments()*this.speedImprovment);
+this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
 this.speedX=this.defaultSpeed*2;
 this.right = true;
 this.gravity=2000;
@@ -93,7 +93,7 @@ if(Math.abs(this.impulsoX)>0){
     console.log(this.stunTime);
     }
     if(this.body.velocity.y>=this.maxSpeedY)this.body.velocity.y=this.maxSpeedY;
-    //else if(this.body.velocity.y<=-this.maxSpeedY) this.body.velocity.y=-this.maxSpeedY;
+    else if(this.body.velocity.y<=-this.maxSpeedY) this.body.velocity.y=-this.maxSpeedY;
 }
 //SETERS
 changeModifierNormal(){
@@ -177,7 +177,7 @@ moveUp(){
     //this.lvM.LiberarPreso(true);
 }
     else if(this.modifier==='jetpack' && this.modifierDisponible){
-        this.body.setVelocityY(-300);
+        this.body.setVelocityY(-100);
         if( this.fuel >0){
             if(!this.animPlaying)
             this.play('playerFlying');
