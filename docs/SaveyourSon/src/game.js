@@ -39,6 +39,7 @@ preload() {
   this.load.image('interfazModifier','/SaveyourSon/assets/FondoModifierHUD.png');
   this.load.image('interfazFondoLlave','/SaveyourSon/assets/FondoLlaveHUD.png');
   this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
+  this.load.image('miraPuntero','/SaveyourSon/assets/miraPuntero.png');
   this.load.spritesheet('explosion', 
   '/SaveyourSon/assets/explosion.png',
       { frameWidth: 64, frameHeight: 64 }
@@ -51,6 +52,7 @@ preload() {
     this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('AlcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('playerJetpack', '/SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('portalAnimation', '/SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
   //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
   this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 -
@@ -73,6 +75,7 @@ preload() {
 create(){
     //INPUT
     this.pointer = this.input.activePointer;
+    this.miraSniper = this.add.sprite(0,0,'miraPuntero');
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -99,7 +102,7 @@ this.textoLLaves.setFontSize(40);
         key: 'poliWalking',
         frames: this.anims.generateFrameNumbers('poliwalk', { start: 0, end: 30 }),
         frameRate: 10,
-        repeat: 0
+        repeat: -1
       });
       this.anims.create({
 
@@ -114,6 +117,12 @@ this.textoLLaves.setFontSize(40);
         frameRate: 15,
         repeat: -1
     });
+    this.anims.create({
+      key: 'portalAnimation',
+      frames: this.anims.generateFrameNumbers('portalAnimation', { start: 0, end: 7 }),
+      frameRate: 15,
+      repeat: 0
+  });
     this.anims.create({
       key: 'alcaideAttacking',
       frames: this.anims.generateFrameNumbers('AlcaideAttack', { start: 0, end: 14 }),
@@ -141,12 +150,18 @@ this.textoLLaves.setFontSize(40);
     });
     this.pointer = this.input.activePointer;
     this.player = new Player(this, this.gM,this.lvM);
-   
+    this.HookGun = new HookGun(this,this.lvM);
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
     this.camera = this.cameras.main
     this.lvM.HUD = this.Hud;
+    this.HookGunProyectiles= this.physics.add.group();
+    this.bombas = this.physics.add.group();
+    this.extrasPolis = this.physics.add.group();
+    this.keys= this.physics.add.group();
+    this.Presos = this.physics.add.group();
+    
 
 
 
@@ -160,6 +175,7 @@ Colliders(){
    this.physics.add.collider(this.keys,this.background);
   this.physics.add.collider(this.bombas,this.background);
    this.physics.add.collider(this.extrasPolis,this.background);
+   this.physics.add.collider(this.Presos,this.background);
    this.physics.add.collider(this.HookGun,this.background);
 
 }
@@ -171,7 +187,9 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
   this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
   this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-  // this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+  this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+
+   this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
   //this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
 
   //this.physics.add.overlap(this.player,this.bombas,this.bombas.PickMe,null,this.bomba);
@@ -191,6 +209,7 @@ update(){
    this.enemy.Update(stuned,release);
 
    this.player.update();
+   
    if (this.cursors.right.isDown){
     this.player.moveRight();
    // this.scene.start('Level1');
@@ -205,9 +224,13 @@ update(){
 
     this.camera.startFollow(this.player);
     this.camera.setFollowOffset(-100, 225);
+    if(this.player.modifier== 'gancho'){
+      this.miraSniper.visible=true;
+      this.miraSniper.x=this.pointer.worldX;
+      this.miraSniper.y=this.pointer.worldY;
     this.input.on('pointerdown',pointer=>{
 
-      if(pointer.leftButtonDown() && this.player.modifier== 'gancho'  && (this.proyectil=== undefined || this.proyectil === null))
+      if(pointer.leftButtonDown() && (this.proyectil=== undefined || this.proyectil === null))
       {
         let varX= this.pointer.worldX-this.player.x;
         let varY = this.pointer.worldY-this.player.y;
@@ -217,6 +240,10 @@ update(){
       }
     
     });
+  }
+  else{
+    this.miraSniper.visible=false;
+  }
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
       this.player.LiberarPresos(true);
             }
@@ -274,6 +301,7 @@ PoliPilla(player,poli){
   }
   
   PresoPilla(enemy, preso){
+    if(preso.active)
   preso.caught();
   }
   CatchPlayer(){
@@ -296,5 +324,14 @@ PoliPilla(player,poli){
       this.pausado=false;
     this.scene.resume('Level2');
     }
+  }
+
+  Enganchado(proyc,back){
+    if(proyc !==undefined)
+    console.log(proyc.x);proyc.Collision();
+  
+  }
+  NuevoProyectil(){
+    this.proyectil=null;
   }
 }

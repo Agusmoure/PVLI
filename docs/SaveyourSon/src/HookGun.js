@@ -3,7 +3,7 @@ export default class HookGun extends PowerUp{
     constructor(scene,levelManager){
         let x=700;
         let y=200;
-        super(scene,x,y,'HookGun');
+        super(scene,x,y,'portalAnimation');
         this.picked=false;
         this.lvM=levelManager;
         this.xSpeed=0;

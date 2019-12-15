@@ -9,7 +9,6 @@ import Game from "./Game.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
-//import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
@@ -27,64 +26,37 @@ export default class Level2 extends Game {
   super.preload();
   this.load.tilemapTiledJSON('Nivel2', '/SaveyourSon/assets/Nivel2.json');
   this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
-  }
+}
 
-  create() {
-    this.map = this.make.tilemap({ 
-      key: 'Nivel2', 
-        tileWidth: 64, 
-        tileHeight: 64 
-    });
-    this.keys= this.physics.add.group();
+create() {
+  this.map = this.make.tilemap({ 
+    key: 'Nivel2', 
+      tileWidth: 64, 
+      tileHeight: 64 
+  }); 
+  let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
+  this.background= this.map.createStaticLayer('Nivel2', t);
+  this.background.x=0;
+  this.background.y=-1000;
+  this.background.setCollisionBetween(0, 10);
+  super.create();
+
     this.llaves = this.map.getObjectLayer('LLaves');
-    
     this.llaves.objects.forEach(object => { 
       this.llave = new Key(this,object.x,object.y-1000,this.lvM).setScale(0.25);
       this.keys.add(this.llave);
     });
-    let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
-    this.background= this.map.createStaticLayer('Nivel2', t);
-    this.background.x=0;
-    this.background.y=-1000;
-    this.background.setCollisionBetween(0, 10);
-    super.create();
     this.player.changeModifierJetPack();
     this.lvM.HUD = this.Hud;
-   // this.add.image(10, 10, 'sky').setScale(3.5);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
-    //this.enemy.setScale(1,1).refreshBody();
-    //this.enemy.refreshBody();
 
     this.lvM.SetNumBombas(3);
-    this.key= new Key(this,700,300,this.lvM).setScale(0.25);
-    this.key1= new Key(this,900,0,this.lvM).setScale(0.25);
-    this.key2= new Key(this,100,300,this.lvM).setScale(0.25);
-    this.key3= new Key(this,600,300,this.lvM).setScale(0.25);
-    this.key4= new Key(this,1000,300,this.lvM).setScale(0.25);
-    this.key5= new Key(this,5700,150,this.lvM).setScale(0.25); // definitiva
-    this.key6= new Key(this,12500,500,this.lvM).setScale(0.25); // definitiva
-    this.key7= new Key(this,16000,500,this.lvM).setScale(0.25); // definitiva
-    this.key8= new Key(this,26500,150,this.lvM).setScale(0.25); // definitiva
-    this.key8= new Key(this,34600,500,this.lvM).setScale(0.25); // definitiva
-    this.keys= this.physics.add.group();
-    this.keys.add(this.key);
-    this.keys.add(this.key1);
-    this.keys.add(this.key2);
-    this.keys.add(this.key3);
-    this.keys.add(this.key4);
-    this.keys.add(this.key5);
-    this.keys.add(this.key6);
-    this.keys.add(this.key7);
-    this.keys.add(this.key8);
 
     this.HookGun = new HookGun(this,this.lvM);
 
     this.keyCount=0;
 
-    //this.background2.setScale(0.1);
-
-    this.bombas = this.physics.add.group();
     this.bomba = new Bomba(this,400,200,this.lvM,0);
     this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas.add(this.bomba)
@@ -116,8 +88,6 @@ export default class Level2 extends Game {
     this.poli20= new Extra(this,17650,1000,'horizontal',0,0,0,this.lvM,true,true,200,300);
 
 
-
-    this.extrasPolis = this.physics.add.group();
     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
@@ -144,32 +114,26 @@ export default class Level2 extends Game {
       child.SetAnim();  
   });
 
-    this.Presos = this.physics.add.group();
-    this.presosMapa = this.map.getObjectLayer('Presos');
-    
+    this.presosMapa = this.map.getObjectLayer('PresosStun');
     this.presosMapa.objects.forEach(object => { 
-      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,true,false,200,200).setScale(0.25);
+      this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,true,false,200,200);
       this.preso.SetAnim();
       this.Presos.add(this.preso);
     });
     
-    // this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
-    // this.Presos.add(this.preso);
+    this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
+    this.presosSlowMapa.objects.forEach(object => { 
+      this.presoslow = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,100,this.lvM,false,false,200,200);
+      this.presoslow.SetAnim();
+      this.Presos.add(this.presoslow);
+    });
     this.proyectil=undefined;
+  
+
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
-this.HookGunProyectiles= this.physics.add.group();
 this.HookGunProyectiles.add(this.HookGunProyectile);
    //Creo plataformas random
-
-
-
-
-    
-
     //Paredes destructibles
-    this.bombWall = new BombWall(this,750,700);
-    this.lvM.bombWalls= new Array();
-    this.lvM.bombWalls[0]= this.bombWall;
 
     //Suelo para el alcaide
     //this.floor = this.physics.add.staticGroup();
@@ -179,14 +143,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 
 
    super.Colliders();
-    this.physics.add.collider(this.bombas,this.bombWall);
-    this.physics.add.collider(this.player,this.bombWall);
-    this.physics.add.collider(this.player,this.background);
-
-
-    // this.physics.add.collider(this.enemy,this.player);
-    // this.physics.add.collider(this.enemy,this.player,this.CatchPlayer,null,this.enemy);
-
+    
 
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     super.Overlaps()

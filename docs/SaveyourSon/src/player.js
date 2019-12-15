@@ -173,7 +173,7 @@ moveLeft(){
  }
 moveUp(){
     if(this.stunTime<1){
-    if( /*this.body.touching.down  &&*/  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
+    if( /*this.body.touching.down  &&*/  (this.modifier=='normal'||this.modifier === 'gancho') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);
    this.avalibleJump--;
    this.saltoSound.play();

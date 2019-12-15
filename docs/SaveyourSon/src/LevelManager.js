@@ -54,11 +54,7 @@ return this.player.GetVelX();
         this.player.Impulse(velX,velY);
     }
 
-    BombExploded(posX,posY){
 
-        for(let i=0;i<this.bombWalls.length;i++)
-        this.bombWalls[i].Destroy(posX,posY);
-    }
 
     StunPlayer(time){
 this.player.getStunned(time);

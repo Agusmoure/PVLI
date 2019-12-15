@@ -74,10 +74,6 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && !this.lvM.EstoyLibre(this.coste)){
         this.iconoLLave.visible=true;
         }
-        else
-        {
-
-        }
         //Se mueve si esta activo y no ha pasado demasiado tiempo
         if(this.active && this.timer>0 ){
             this.body.setVelocityX(this.speedX*this.direccion);//this.speedX*this.direccion);

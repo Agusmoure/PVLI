@@ -143,8 +143,6 @@ super.create()
         this.key5D= new Key(this,35520,100,this.lvM).setScale(0.25);
         this.key5E= new Key(this,35720,100,this.lvM).setScale(0.25);
         this.key5F= new Key(this,38720,100,this.lvM).setScale(0.25);
-
-        this.keys= this.physics.add.group();
         this.keys.add(this.key);
         this.keys.add(this.key1);
         this.keys.add(this.key2);
@@ -243,7 +241,6 @@ super.create()
 
 
         this.keyCount=0;        
-        this.bombas = this.physics.add.group();
         this.bomba = new Bomba(this,400,200,this.lvM,0);
         this.bomba2 = new Bomba(this,700,200,this.lvM,1);
         this.bombas.add(this.bomba)
@@ -290,7 +287,6 @@ super.create()
     this.poli35 =new Extra (this,27200,400,'horizontal',0,5,0,this.lvM,false,true,100,300);
     this.poli36 =new Extra (this,27200,300,'vertical',0,5,20,this.lvM,false,true,100,300);
     this.poli37 =new Extra (this,28200,500,'vertical',0,100,100,this.lvM,false,true,100,300);
-     this.extrasPolis = this.physics.add.group();
      this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli1);
     this.extrasPolis.add(this.poli2);
@@ -400,16 +396,10 @@ this.HookGun=new HookGun(this,this.lvM);
         //Puedo hacer llamadas a varios métodos en un mismo evento overlap
         // this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
         super.Overlaps();
-        this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
-        this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
-
-        
+        this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);    
         
         //this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
-        this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
-        this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
         //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-         this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
         // this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
 
 
