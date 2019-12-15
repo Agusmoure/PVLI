@@ -5,11 +5,9 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
-//import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";

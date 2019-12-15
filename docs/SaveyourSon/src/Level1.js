@@ -5,7 +5,7 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Game from "./Game.js";
+import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"

@@ -9,11 +9,11 @@ import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
-//import HookGunProyectile from "./HookGunProyectile.js"
+import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
-import Game from "./Game.js"
+import Game from "./game.js"
 
 export default class Level3 extends Game {
 
