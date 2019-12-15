@@ -5,7 +5,7 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Game from "./Game.js";
+import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
@@ -29,6 +29,10 @@ export default class Level2 extends Game {
 }
 
 create() {
+  this.bg = this.add.tileSprite(0,0,1320,1080,'fondo');
+  this.bg.setOrigin(0,0);
+  this.bg.setScrollFactor(0);
+
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
       tileWidth: 64, 
@@ -153,5 +157,6 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 
   update(time, delta) {
     super.update();
+    this.bg.tilePositionX = this.camera.scrollX*.3;
   }
 }

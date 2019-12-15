@@ -5,7 +5,7 @@ import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
-import Game from "./Game.js";
+import Game from "./game.js";
 import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
@@ -27,6 +27,9 @@ export default class Level1 extends Game {
     this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
       }
     create() {
+      this.bg = this.add.tileSprite(0,0,1320,1080,'fondo');
+      this.bg.setOrigin(0,0);
+      this.bg.setScrollFactor(0);
 super.create()
     //Creamos el Tilemap
         this.map = this.make.tilemap({ 
@@ -175,5 +178,6 @@ this.HookGun=new HookGun(this,this.lvM);
     
       update(time, delta) {   
         super.update();
+        this.bg.tilePositionX = this.camera.scrollX*.3;
       }
     }
