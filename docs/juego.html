@@ -34,7 +34,9 @@
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
+
             scene: [Level2,Level1,MenuPowerUps,Level3,MenuPrincipal],
+
             physics: { default: 'arcade', arcade: { gravity: { y: 1000 }, debug: false } }
         };
         new Phaser.Game(config);
