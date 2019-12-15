@@ -38,6 +38,7 @@ preload() {
   this.load.image('interfazFondoLlave','./SaveyourSon/assets/FondoLlaveHUD.png');
   this.load.image('iconoPlayer','./SaveyourSon/assets/IconoPlayer.png');
   this.load.image('miraPuntero','./SaveyourSon/assets/miraPuntero.png');
+  this.load.image('hitboxExtra','./SaveyourSon/assets/HitBoxExtra.png');
   this.load.spritesheet('explosion', 
   './SaveyourSon/assets/explosion.png',
       { frameWidth: 64, frameHeight: 64 }
@@ -126,6 +127,12 @@ this.textoLLaves.setFontSize(40);
       repeat: -1
     });
     this.anims.create({
+      key: 'playerFlying',
+      frames: this.anims.generateFrameNumbers('playerJetpack', { start: 0, end: 14 }),
+      frameRate: 15,
+      repeat: -1
+    });
+    this.anims.create({
 
       key: 'poliflying',
       frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
@@ -161,7 +168,7 @@ Colliders(){
   this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
  this.physics.add.collider(this.jetpack,this.background);
    this.physics.add.collider(this.antigravedad,this.background);
-   this.physics.add.collider(this.enemy,this.background);
+   //this.physics.add.collider(this.enemy,this.background);
    this.physics.add.collider(this.keys,this.background);
   this.physics.add.collider(this.bombas,this.background);
    this.physics.add.collider(this.extrasPolis,this.background);

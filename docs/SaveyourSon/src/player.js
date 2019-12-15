@@ -19,9 +19,9 @@ this.modifierDisponible=true;
 this.speedY=900;
 this.maxSpeedY=1000;
 this.speedImprovment=10;
-this.speedX=150;
+this.speedX=400;
 this.stunTime=0;
-this.defaultSpeed=75+(gameManager.GetSpeedImprovments()*this.speedImprovment);
+this.defaultSpeed=100+(gameManager.GetSpeedImprovments()*this.speedImprovment);
 this.speedX=this.defaultSpeed*2;
 this.right = true;
 this.gravity=2000;
@@ -177,7 +177,7 @@ moveUp(){
     //this.lvM.LiberarPreso(true);
 }
     else if(this.modifier==='jetpack' && this.modifierDisponible){
-        this.body.setVelocityY(-100);
+        this.body.setVelocityY(-250);
         if( this.fuel >0){
             if(!this.animPlaying)
             this.play('playerFlying');

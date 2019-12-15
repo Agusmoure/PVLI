@@ -7,14 +7,15 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
-        this.body.setCollideWorldBounds(true);
+        //this.body.setCollideWorldBounds(true);
         this.aire=false;
         this.vehicle=false;
         this.modifier='normal';
         this.penalization=10;
         this.stunTime=0;
         this.speedY=100;
-        this.speedX=130-(gameManager.GetSpeedPenalizations()*this.penalization);
+        this.gM=gameManager;
+        this.speedX=250-(gameManager.GetSpeedPenalizations()*this.penalization);
         this.player=jugador;
         //this.play('alcaideRunning');
         this.anims.play('alcaideRunning');
@@ -50,6 +51,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         }
         else{
             this.body.setVelocityX(0);
+            this.body.setVelocityY(0);
             this.stunTime=this.stunTime-1;
             
         }
@@ -71,7 +73,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.touchedSound.play();
     }
     Recover(){
-        this.speedX=130;
+        this.speedX=250-(this.gM.GetSpeedPenalizations()*this.penalization);
     }
     ChangeSpeed(slow){
         if(slow<0)
