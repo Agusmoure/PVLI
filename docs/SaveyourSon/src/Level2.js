@@ -13,6 +13,8 @@ import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import HookGunProyectile from "./HookGunProyectile.js"
+import fondo from "./fondo.js"
+
 
 export default class Level2 extends Game {
 
@@ -24,11 +26,13 @@ export default class Level2 extends Game {
   }
   preload() {
   super.preload();
+  this.load.image('fondo','./SaveyourSon/assets/Level2.jpg')
   this.load.tilemapTiledJSON('Nivel2', './SaveyourSon/assets/Nivel2.json');
   this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 }
 
 create() {
+  this.fondo=new fondo(this).setScale(0.2);
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
       tileWidth: 64, 
@@ -152,6 +156,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
   }
 
   update(time, delta) {
+    this.fondo.Update(this.player);
     super.update();
   }
 }

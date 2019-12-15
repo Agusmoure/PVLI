@@ -14,6 +14,8 @@ import MovableWall from "./movableWall.js";
 import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import Game from "./game.js"
+import fondo from "./fondo.js"
+
 
 export default class Level3 extends Game {
 
@@ -23,12 +25,15 @@ export default class Level3 extends Game {
   }
   preload() {
 super.preload();
+this.load.image('fondo','./SaveyourSon/assets/Level3.jpg')
+
 this.load.tilemapTiledJSON('Nivel3', './SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
   
   create() {
-super.create();
+    this.fondo=new fondo(this)/*.setScale(0.2)*/;
+
     this.map = this.make.tilemap({ 
       key: 'Nivel3', 
         tileWidth: 64, 
@@ -40,6 +45,8 @@ super.create();
     this.background.x=0;
     this.background.y=-1000;
     this.background.setCollisionBetween(0, 10);
+    super.create();
+
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
     this.lvM.SetNumBombas(3);
@@ -203,6 +210,7 @@ super.create();
   }
 
   update(time, delta) {  
+    this.fondo.Update(this.player);
     super.update(); 
   }
 }

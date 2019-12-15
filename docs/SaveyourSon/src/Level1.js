@@ -11,6 +11,7 @@ import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
+import fondo from "./fondo.js"
 
 
 export default class Level1 extends Game {
@@ -22,11 +23,12 @@ export default class Level1 extends Game {
     preload() {
     super.preload();
     this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
-
+      this.load.image('fondo','./SaveyourSon/assets/Level1.jpg');
     this.load.tilemapTiledJSON('Nivel1', './SaveyourSon/assets/Nivel1.json');
     this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       }
     create() {
+      this.fondo=new fondo(this).setScale(1.7);
 super.create()
     //Creamos el Tilemap
         this.map = this.make.tilemap({ 
@@ -175,5 +177,6 @@ this.HookGun=new HookGun(this,this.lvM);
     
       update(time, delta) {   
         super.update();
+        this.fondo.Update(this.player);
       }
     }
