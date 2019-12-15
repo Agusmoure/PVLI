@@ -119,7 +119,6 @@ super.create()
     this.poli35 =new Extra (this,27200,400,'horizontal',0,5,0,this.lvM,false,true,100,300);
     this.poli36 =new Extra (this,27200,300,'vertical',0,5,20,this.lvM,false,true,100,300);
     this.poli37 =new Extra (this,28200,500,'vertical',0,100,100,this.lvM,false,true,100,300);
-     this.extrasPolis = this.physics.add.group();
      this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli1);
     this.extrasPolis.add(this.poli2);

@@ -1,3 +1,4 @@
+
 export default class MenuPowerUps extends Phaser.Scene {
 
     constructor() {
@@ -79,11 +80,43 @@ this.Mejora.on('pointerup',pointer => {
         this.mouseClick=true;
         });
         
-        this.buttonSpeedImprovement.on('pointerup',pointer => {
+    this.buttonSpeedImprovement.on('pointerup',pointer => {
             this.mouseClick=false;
             });
+
+
+     this.buttonSpeedPenalization.on('pointerdown',pointer => {
+                if(!this.mouseClick){
+                    if(this.gM.GetKey()>=this.speedPenalizationPrice){
+                    this.gM. AddSpeedPenalization(1);
+                    console.log("before"+this.gM.GetKey()+" "+this.gM.GetSpeedPenalizations());
+                    this.gM.AddKeys(-this.speedPenalizationPrice);
+                    console.log("after"+this.gM.GetKey());
+                    }
         
-        
+                }
+                this.mouseClick=true;
+                });
+                
+    this.buttonSpeedPenalization.on('pointerup',pointer => {
+                    this.mouseClick=false;
+                    });
+                    this.buttonfuel.on('pointerdown',pointer => {
+                        if(!this.mouseClick){
+                            if(this.gM.GetKey()>=this.fuelPrice){
+                            this.gM. AddJetPackImprovment(1);
+                            console.log("before"+this.gM.GetKey()+" "+this.gM.GetJetpackImprovements());
+                            this.gM.AddKeys(-this.fuelPrice);
+                            console.log("after"+this.gM.GetKey());
+                            }
+                
+                        }
+                        this.mouseClick=true;
+                        });
+                        
+            this.buttonfuel.on('pointerup',pointer => {
+                            this.mouseClick=false;
+                            });
+                
+                }
         }
-    
-}

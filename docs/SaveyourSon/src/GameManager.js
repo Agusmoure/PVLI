@@ -1,6 +1,6 @@
 export default class GameManager{
     constructor(){
-        this.keys=10;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
+        this.keys=1000;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
         this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
         this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
         this.speedPenalizationBought=5;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide

@@ -1,31 +1,45 @@
 
 export default class HUD extends Phaser.GameObjects.Container{
-    constructor(scene,xInit, yInit,levelManager, end){
+    constructor(scene,xInit, yInit,levelManager, end, texto){
         
     
         let x=xInit;
         let y=yInit;
         super(scene,x,y);
-        scene.add.existing(this);    
-    scene.physics.add.existing(this);    
-    this.lvM=levelManager;
-    this.modifier='normal';
-    this.escena = scene;
-    this.largoEscena= end;
+        scene.add.existing(this);   
+        
+        scene.physics.add.existing(this);    
+        this.lvM=levelManager;
+        this.modifier='normal';
+        this.escena = scene;
+        this.largoEscena= end;
+        this.fondoLLaveHUD = scene.add.sprite(0,-700,'interfazFondoLlave').setScale(3);
+        this.add(this.fondoLLaveHUD);
+        this.iconoLlave = scene.add.sprite(0,-720,'key');
+        this.add(this.iconoLlave);
 
-    this.avaliableModifierHUD = scene.add.sprite(100,100,'modifierNoDisponible').setScale(0.2);
-    this.add(this.avaliableModifierHUD);
-    this.jetpackHUD = scene.add.sprite(100,100,'jetpackHUD').setScale(0.2);
-    this.add(this.jetpackHUD);
+        this.textoLlaves = texto;
+        this.add(this.textoLlaves);
+        this.textoLlaves.x=-5;
+        this.textoLlaves.y=-665;
+        
+            this.ContornoModifier = scene.add.sprite(0,100,'interfazModifier').setScale(3);
+            this.add(this.ContornoModifier);
 
-    this.bombaHUD = scene.add.sprite(100,100,'bomba');
-    this.add(this.bombaHUD);
-
-    this.playerHUD = scene.add.sprite(200,100,'iconoPlayer').setScale(0.3);
-    this.add(this.playerHUD);
-    
-    this.hookGunHUD = scene.add.sprite(100,100,'hookHUD').setScale(0.2);
-    this.add(this.hookGunHUD);
+        this.jetpackHUD = scene.add.sprite(0,100,'jetpackHUD').setScale(0.2);
+        this.add(this.jetpackHUD);
+        
+        this.bombaHUD = scene.add.sprite(0,100,'bomba');
+        this.add(this.bombaHUD);
+        
+        this.playerHUD = scene.add.sprite(200,100,'iconoPlayer').setScale(0.3);
+        this.add(this.playerHUD);
+        
+        this.hookGunHUD = scene.add.sprite(0,100,'hookHUD').setScale(0.2);
+        this.add(this.hookGunHUD);
+        
+        this.avaliableModifierHUD = scene.add.sprite(0,100,'modifierNoDisponible').setScale(0.2);
+        this.add(this.avaliableModifierHUD);
 
     this.muteHUD = scene.add.sprite(1100,-750,'playerHUD').setScale(0.1);
     this.muteHUD.setInteractive();
@@ -35,11 +49,8 @@ export default class HUD extends Phaser.GameObjects.Container{
     this.pauseHUD.setInteractive();
     this.add(this.pauseHUD);
 
-    this.metaHUD = scene.add.sprite(100,100,'meta').setScale(0.1);
+    this.metaHUD = scene.add.sprite(1000,100,'meta').setScale(0.1);
     this.add(this.metaHUD);
-
-    this.ContornoModifier = scene.add.sprite(100,100,'interfazModifier').setScale(0.3);
-    this.add(this.ContornoModifier);
 
 
 this.mouseClick=false;
@@ -77,8 +88,8 @@ this.pause = false;
                         });
 
 
-        this.x= this.lvM.GetPlayerX()-500;
-        this.y=this.lvM.GetPlayerY()+300;
+        this.x= this.lvM.GetPlayerX()-500+100;//El 500 es para que se situe con respecto al player y el + 100 debido al offset de la camara
+        this.y=this.lvM.GetPlayerY()+300-225; // Igual que con la posicion x
         //this.getAt(0).x = this.getAt(0).x+1;
      
         if(!this.lvM.PlayerModifierAvaliable())
@@ -86,6 +97,7 @@ this.pause = false;
         else
         this.avaliableModifierHUD.y=300;
 
+        this.textoLlaves.setText(this.lvM.keys);
         this.AvanzarPlayerHUD();
     }
 

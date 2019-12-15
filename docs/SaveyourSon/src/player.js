@@ -30,6 +30,7 @@ this.maxFuel=1000;
 this.impulsoX=0;
 this.impulsoY=0;
 this.anims.play('playerRunning');
+this.animPlaying =false;
 this.escena = scene;
 this.maxJump=2;
 this.avalibleJump=this.maxJump;
@@ -169,7 +170,7 @@ moveLeft(){
  }
 moveUp(){
     if(this.stunTime<1){
-    if( /*this.body.touching.down  &&*/  this.modifier=='normal' &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
+    if( /*this.body.touching.down  &&*/  (this.modifier=='normal'||this.modifier === 'gancho') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);
    this.avalibleJump--;
    this.saltoSound.play();
@@ -178,6 +179,8 @@ moveUp(){
     else if(this.modifier==='jetpack' && this.modifierDisponible){
         this.body.setVelocityY(-100);
         if( this.fuel >0){
+            if(!this.animPlaying)
+            this.play('playerFlying');
         this.fuel -=10;
         if(!this.jetpackSound.isPlaying)
         this.jetpackSound.play()
@@ -207,15 +210,17 @@ moveUp(){
         this.lvM.SetBomba(this.bomba);
         console.log(this.bomba);
         this.modifier=this.modifierAUX;
-        this.lvM.SetPlayerModifier('normal');
+        this.lvM.SetPlayerModifier(this.modifierAUX);
     }
 }
  
 }
 
 keyUp(){
-    if(this.modifier==='jetpack' ){
+    if(this.modifier==='jetpack' || this.modifier === 'bomba' ){
        this.jetpackSound.stop();
+       this.animPlaying=false;
+       this.play('playerRunning');
     }
     else if(this.modifier === 'antigravedad')
     this.modifierDisponible=true;
