@@ -10,7 +10,7 @@ export default class MenuPrincipal extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('botonPlay', '/SaveyourSon/assets/MenuPrincipal/BotonPlay.png');
+        this.load.image('botonPlay', './SaveyourSon/assets/MenuPrincipal/BotonPlay.png');
     }
 
     create(data) {

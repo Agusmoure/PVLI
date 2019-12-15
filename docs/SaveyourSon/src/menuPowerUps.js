@@ -11,12 +11,12 @@ export default class MenuPowerUps extends Phaser.Scene {
 
     preload() {
 
-        this.load.image('sky', '/SaveyourSon/assets/sky.png');
-        this.load.image('botonCompra','/SaveyourSon/assets/boton_Compra_verde.png');
-        this.load.image('botonMejora','/SaveyourSon/assets/Mejoras_Verde.png');
-        this.load.image('arrow','/SaveyourSon/assets/Arrow.png')
+        this.load.image('sky', './SaveyourSon/assets/sky.png');
+        this.load.image('botonCompra','./SaveyourSon/assets/boton_Compra_verde.png');
+        this.load.image('botonMejora','./SaveyourSon/assets/Mejoras_Verde.png');
+        this.load.image('arrow','./SaveyourSon/assets/Arrow.png')
        // this.load.image('nextLevel','');
-        this.load.bitmapFont('font', '/SaveyourSon/assets/carrier_command.png', '/SaveyourSon/assets/carrier_command.xml');      
+        this.load.bitmapFont('font', './SaveyourSon/assets/carrier_command.png', './SaveyourSon/assets/carrier_command.xml');      
 
 
     }
