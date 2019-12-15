@@ -13,6 +13,7 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.load.image('sky', '/SaveyourSon/assets/sky.png');
         this.load.image('botonCompra','/SaveyourSon/assets/boton_Compra_verde.png');
         this.load.image('botonMejora','/SaveyourSon/assets/Mejoras_Verde.png');
+        this.load.image('arrow','/SaveyourSon/assets/Arrow.png')
        // this.load.image('nextLevel','');
         this.load.bitmapFont('font', '/SaveyourSon/assets/carrier_command.png', '/SaveyourSon/assets/carrier_command.xml');      
 
@@ -31,6 +32,8 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.Mejora2.setScale(0.25);
         this.buttonSpeedPenalization = this.add.sprite(850,496,'botonCompra').setInteractive();
         this.buttonSpeedPenalization.setScale(0.115);
+        this.arrow = this.add.sprite(1200,950,'arrow').setInteractive();
+        this.arrow.setScale(2);
         this.Mejora3 = this.add.sprite(470,700,'botonMejora');
         this.Mejora3.setScale(0.25);
         this.buttonfuel= this.add.sprite(850,696,'botonCompra').setInteractive();
@@ -41,7 +44,6 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.add.bitmapText(290, 285, 'font', 'mas velocidad').setScale(0.5);
         this.add.bitmapText(290, 485, 'font', 'Alcaide mas\n\n   lento').setScale(0.5);
         this.add.bitmapText(290, 685, 'font', 'Mejora Jetpack').setScale(0.5);
-       // this.nextLevel = this.add.sprite(850,296,'nextLevel').setInteractive();
 
     }
 
@@ -49,12 +51,9 @@ export default class MenuPowerUps extends Phaser.Scene {
     update(time, delta) {
 
         
-this.Mejora.on('pointerdown',pointer => {
+this.arrow.on('pointerdown',pointer => {
 if(!this.mouseClick){
-    //this.scene.start('Level3', this.gM);
     this.scene.start(this.gM.GetSuperNextScene(), this.gM);
-
-
 }
 this.mouseClick=true;
 });

@@ -87,9 +87,9 @@ this.liberation=valor;
     }
 
     //Si el preso puede liberarse y ademas tengo llaves suficientes le digo que puede
-    EstoyLibre(valor){
-        if(this.liberation && (this.keys-valor)>=0){
-            this.keys=this.keys-valor;
+    EstoyLibre(costeLiberar){
+        if(this.liberation && (this.keys-costeLiberar)>=0){
+            this.keys=this.keys-costeLiberar;
             return (true);
         }
         else

@@ -67,21 +67,16 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
 
     ///////////////////////////////////////////////////Movimiento del preso que comienza si el jugador está cerca y tiene llaves/////////////////////////////////////////
-         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && this.lvM.EstoyLibre(this.coste)){
+         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance &&!this.active && this.lvM.EstoyLibre(this.coste)){
         this.active=true;
         this.imagen.play('playerRunning');
          }
-        if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance && !this.lvM.EstoyLibre(this.coste)){
+        if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance &&!this.active && !this.lvM.EstoyLibre(this.coste)){
         this.iconoLLave.visible=true;
         }
-        else
-        {
-
-        }
         //Se mueve si esta activo y no ha pasado demasiado tiempo
-        if(this.active && this.timer>0 ){
+        if(this.active ){
             this.body.setVelocityX(this.speedX*this.direccion);//this.speedX*this.direccion);
-            this.timer=this.timer-1;
         }
 
         //////////////////////////////////////////////Control de la penalizacion dependiendo de si es stun o slow y si es poli o preso////////////////////////////////////

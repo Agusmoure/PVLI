@@ -92,7 +92,7 @@ create(){
         key: 'poliWalking',
         frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
         frameRate: 10,
-        repeat: 0
+        repeat: -1
       });
       this.anims.create({
         key: 'alcaideRunning',
@@ -126,6 +126,8 @@ create(){
     this.lvM.alcaide=this.enemy;
     this.camera = this.cameras.main
     this.lvM.HUD = this.Hud;
+    this.keys= this.physics.add.group();
+    this.Presos=this.physics.add.group();
 
 
 
@@ -140,6 +142,8 @@ Colliders(){
   this.physics.add.collider(this.bombas,this.background);
    this.physics.add.collider(this.extrasPolis,this.background);
    this.physics.add.collider(this.HookGun,this.background);
+   this.physics.add.collider(this.Presos,this.background);
+
 
 }
 Overlaps(){
@@ -155,10 +159,7 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
   //this.physics.add.overlap(this.player,this.bombas,this.bombas.PickMe,null,this.bomba);
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
-
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
-
-
   this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
   this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
 }
@@ -252,6 +253,7 @@ PoliPilla(player,poli){
   }
   
   PresoPilla(enemy, preso){
+    if(preso.active)
   preso.caught();
   }
   CatchPlayer(){

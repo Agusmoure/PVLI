@@ -1,7 +1,7 @@
 import PowerUp from "./powerup.js";
 export default class HookGun extends PowerUp{
     constructor(scene,levelManager){
-        let x=700;
+        let x=-5000;
         let y=200;
         super(scene,x,y,'HookGun');
         this.picked=false;
