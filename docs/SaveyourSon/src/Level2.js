@@ -48,6 +48,7 @@ export default class Level2 extends Game {
     this.background.y=-1000;
     this.background.setCollisionBetween(0, 10);
     super.create();
+    this.player.changeModifierJetPack();
     this.lvM.HUD = this.Hud;
    // this.add.image(10, 10, 'sky').setScale(3.5);
     this.jetpack = new JetPack(this);
@@ -192,10 +193,6 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
-
-
-
-
   }
 
   update(time, delta) {

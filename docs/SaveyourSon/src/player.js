@@ -33,6 +33,7 @@ this.maxFuel=1000;
 this.impulsoX=0;
 this.impulsoY=0;
 this.anims.play('playerRunning');
+this.animPlaying =false;
 this.escena = scene;
 this.maxJump=2;
 this.avalibleJump=this.maxJump;
@@ -181,6 +182,8 @@ moveUp(){
     else if(this.modifier==='jetpack' && this.modifierDisponible){
         this.body.setVelocityY(-100);
         if( this.fuel >0){
+            if(!this.animPlaying)
+            this.play('playerFlying');
         this.fuel -=10;
         if(!this.jetpackSound.isPlaying)
         this.jetpackSound.play()
@@ -219,6 +222,8 @@ moveUp(){
 keyUp(){
     if(this.modifier==='jetpack' ){
        this.jetpackSound.stop();
+       this.animPlaying=false;
+       this.play('playerRunning');
     }
     else if(this.modifier === 'antigravedad')
     this.modifierDisponible=true;

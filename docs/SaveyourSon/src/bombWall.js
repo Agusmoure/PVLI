@@ -4,7 +4,7 @@ export default class BombWall extends Phaser.GameObjects.Sprite{
     
         let x=posX;
         let y=posY;
-        super(scene,x,y,'ground');
+        super(scene,x,y,'bombWall');
     
         scene.add.existing(this);    
         scene.physics.add.existing(this);    

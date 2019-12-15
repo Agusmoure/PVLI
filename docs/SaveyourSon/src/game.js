@@ -25,6 +25,7 @@ export default class Game extends Phaser.Scene {
 preload() {
 
   this.load.image('sky', '/SaveyourSon/assets/sky.png');
+  this.load.image('bombWall', '/SaveyourSon/assets/BombWall.png');
   this.load.image('ground', '/SaveyourSon/assets/platform.png');
   this.load.image('key','/SaveyourSon/assets/Key.png');
   this.load.image('star', '/SaveyourSon/assets/star.png');
@@ -47,9 +48,10 @@ preload() {
   this.load.spritesheet('presoIdle','/SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('poliVertical','/SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
     this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('AlcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('playerJetpack', '/SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
   //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
   this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-
 -
   
 
@@ -90,9 +92,16 @@ create(){
       this.anims.create({
 
         key: 'poliWalking',
-        frames: this.anims.generateFrameNumbers('poliWalk', { start: 0, end: 30 }),
+        frames: this.anims.generateFrameNumbers('poliwalk', { start: 0, end: 30 }),
         frameRate: 10,
         repeat: 0
+      });
+      this.anims.create({
+
+        key: 'playerFlying',
+        frames: this.anims.generateFrameNumbers('playerJetpack', { start: 0, end: 3 }),
+        frameRate: 3,
+        repeat: -1
       });
       this.anims.create({
         key: 'alcaideRunning',
@@ -100,6 +109,12 @@ create(){
         frameRate: 15,
         repeat: -1
     });
+    this.anims.create({
+      key: 'alcaideAttacking',
+      frames: this.anims.generateFrameNumbers('AlcaideAttack', { start: 0, end: 14 }),
+      frameRate: 15,
+      repeat: -1
+  });
     this.anims.create({
       key: 'playerRunning',
       frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
@@ -121,6 +136,7 @@ create(){
     });
     this.pointer = this.input.activePointer;
     this.player = new Player(this, this.gM,this.lvM);
+   
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;

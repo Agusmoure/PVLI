@@ -130,7 +130,7 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
     SetAnim(){
         if(this.police && this.movement === 'horizontal')
-        this.imagen.play('poliwalking');  
+        this.imagen.play('poliWalking');  
         else if(this.police && this.movement ==='vertical')
         this.imagen.play('poliflying'); 
         else if(!this.police)
