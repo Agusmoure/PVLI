@@ -16,9 +16,9 @@ export default class OwO extends Phaser.Scene {
   }
   preload() {
 
-    this.load.image('sky', '/SaveyourSon/assets/sky.png');
-    this.load.image('ground', '/SaveyourSon/assets/platform.png');
-    this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('sky', './SaveyourSon/assets/sky.png');
+    this.load.image('ground', './SaveyourSon/assets/platform.png');
+    this.load.spritesheet('dude', './SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     
   }
   

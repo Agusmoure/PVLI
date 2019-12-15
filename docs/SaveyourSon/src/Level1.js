@@ -21,10 +21,10 @@ export default class Level1 extends Game {
     }
     preload() {
     super.preload();
-    this.load.image('door','/SaveyourSon/assets/ExitDoor.png');
+    this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
 
-    this.load.tilemapTiledJSON('Nivel1', '/SaveyourSon/assets/Nivel1.json');
-    this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
+    this.load.tilemapTiledJSON('Nivel1', './SaveyourSon/assets/Nivel1.json');
+    this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       }
     create() {
 super.create()

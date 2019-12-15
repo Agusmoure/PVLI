@@ -22,51 +22,50 @@ export default class Game extends Phaser.Scene {
   }
 preload() {
 
-  this.load.image('sky', '/SaveyourSon/assets/sky.png');
-  this.load.image('bombWall', '/SaveyourSon/assets/BombWall.png');
-  this.load.image('ground', '/SaveyourSon/assets/platform.png');
-  this.load.image('key','/SaveyourSon/assets/Key.png');
-  this.load.image('star', '/SaveyourSon/assets/star.png');
-  this.load.image('bomb', '/SaveyourSon/assets/bomb.png');
-  this.load.image('bomba','/SaveyourSon/assets/bomba.png');
-  this.load.image('jetpackHUD','/SaveyourSon/assets/jetpack.png');
-  this.load.image('hookHUD','/SaveyourSon/assets/HookGun.png');
-  this.load.image('playerHUD','/SaveyourSon/assets/botonNivel.png');
-  this.load.image('modifierNoDisponible','/SaveyourSon/assets/ModifierNoDisponible.png');
-  this.load.image('meta','/SaveyourSon/assets/Meta.png');
-  this.load.image('interfazModifier','/SaveyourSon/assets/FondoModifierHUD.png');
-  this.load.image('interfazFondoLlave','/SaveyourSon/assets/FondoLlaveHUD.png');
-  this.load.image('iconoPlayer','/SaveyourSon/assets/IconoPlayer.png');
-  this.load.image('miraPuntero','/SaveyourSon/assets/miraPuntero.png');
+  this.load.image('sky', './SaveyourSon/assets/sky.png');
+  this.load.image('bombWall', './SaveyourSon/assets/BombWall.png');
+  this.load.image('ground', './SaveyourSon/assets/platform.png');
+  this.load.image('key','./SaveyourSon/assets/Key.png');
+  this.load.image('star', './SaveyourSon/assets/star.png');
+  this.load.image('bomb', './SaveyourSon/assets/bomb.png');
+  this.load.image('bomba','./SaveyourSon/assets/bomba.png');
+  this.load.image('jetpackHUD','./SaveyourSon/assets/jetpack.png');
+  this.load.image('hookHUD','./SaveyourSon/assets/HookGun.png');
+  this.load.image('playerHUD','./SaveyourSon/assets/botonNivel.png');
+  this.load.image('modifierNoDisponible','./SaveyourSon/assets/ModifierNoDisponible.png');
+  this.load.image('meta','./SaveyourSon/assets/Meta.png');
+  this.load.image('interfazModifier','./SaveyourSon/assets/FondoModifierHUD.png');
+  this.load.image('interfazFondoLlave','./SaveyourSon/assets/FondoLlaveHUD.png');
+  this.load.image('iconoPlayer','./SaveyourSon/assets/IconoPlayer.png');
+  this.load.image('miraPuntero','./SaveyourSon/assets/miraPuntero.png');
   this.load.spritesheet('explosion', 
-  '/SaveyourSon/assets/explosion.png',
+  './SaveyourSon/assets/explosion.png',
       { frameWidth: 64, frameHeight: 64 }
   );
-  this.load.spritesheet('alcaideRun','/SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
-  this.load.spritesheet('playerRun','/SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
-  this.load.spritesheet('alcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
-  this.load.spritesheet('presoIdle','/SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
-  this.load.spritesheet('poliVertical','/SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
-    this.load.spritesheet('poliwalk','/SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
-    this.load.spritesheet('AlcaideAttack','/SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
-    this.load.spritesheet('playerJetpack', '/SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('portalAnimation', '/SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
-  //this.load.image('explosion','/SaveyourSon/assets/explosion.png');
-  this.load.spritesheet('dude', '/SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+  this.load.spritesheet('alcaideRun','./SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('playerRun','./SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('alcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('presoIdle','./SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('poliVertical','./SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
+    this.load.spritesheet('poliwalk','./SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('AlcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('playerJetpack', './SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('portalAnimation', './SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet('dude', './SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 -
   
 
-   this.load.audio('explosion','/SaveyourSon/assets/Sonidos/Explosion.wav');
-     this.load.audio('PlayerHit','/SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
-     this.load.audio('Antigravedad', '/SaveyourSon/assets/Sonidos/Antigravedad.wav');
-     this.load.audio('CojerLlave', '/SaveyourSon/assets/Sonidos/KeysCortado.wav');
-     this.load.audio('Salto', '/SaveyourSon/assets/Sonidos/Salto.wav');
-     this.load.audio('PlayerTouched', '/SaveyourSon/assets/Sonidos/PlayerTouched.wav');
-     this.load.audio('AlcaideTouched', '/SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
-     this.load.audio('Jetpack', '/SaveyourSon/assets/Sonidos/Jetpack.wav');
-     this.load.audio('JetpackNoFuel', '/SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
-     this.load.audio('PickUpItem', '/SaveyourSon/assets/Sonidos/PickUpItem.wav');
-     this.load.audio('Gancho', '/SaveyourSon/assets/Sonidos/Gancho.wav');
+   this.load.audio('explosion','./SaveyourSon/assets/Sonidos/Explosion.wav');
+     this.load.audio('PlayerHit','./SaveyourSon/assets/Sonidos/PlayerAlSerPillado.wav');
+     this.load.audio('Antigravedad', './SaveyourSon/assets/Sonidos/Antigravedad.wav');
+     this.load.audio('CojerLlave', './SaveyourSon/assets/Sonidos/KeysCortado.wav');
+     this.load.audio('Salto', './SaveyourSon/assets/Sonidos/Salto.wav');
+     this.load.audio('PlayerTouched', './SaveyourSon/assets/Sonidos/PlayerTouched.wav');
+     this.load.audio('AlcaideTouched', './SaveyourSon/assets/Sonidos/AlcaideTouched.wav');
+     this.load.audio('Jetpack', './SaveyourSon/assets/Sonidos/Jetpack.wav');
+     this.load.audio('JetpackNoFuel', './SaveyourSon/assets/Sonidos/JetpackNoFuel.wav');
+     this.load.audio('PickUpItem', './SaveyourSon/assets/Sonidos/PickUpItem.wav');
+     this.load.audio('Gancho', './SaveyourSon/assets/Sonidos/Gancho.wav');
 
 
 }

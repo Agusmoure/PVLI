@@ -24,8 +24,8 @@ export default class Level2 extends Game {
   }
   preload() {
   super.preload();
-  this.load.tilemapTiledJSON('Nivel2', '/SaveyourSon/assets/Nivel2.json');
-  this.load.image('patronesTilemap', '/SaveyourSon/assets/patrones.png');
+  this.load.tilemapTiledJSON('Nivel2', './SaveyourSon/assets/Nivel2.json');
+  this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 }
 
 create() {
