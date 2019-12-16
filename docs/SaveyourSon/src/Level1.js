@@ -45,7 +45,7 @@ super.create()
         this.background.setCollisionBetween(0, 10);
     super.create();
         this.jetpack = new JetPack(this,7000,150);
-        this.antigravedad = new Antigravedad(this,7800,150);
+        this.antigravedad = new Antigravedad(this,18000,150);
         this.door= new LevelChanger(this,this.gM,this.lvM,40600,100).setScale(0.5);
         this.lvM.SetNumBombas(3);
 
@@ -72,13 +72,13 @@ this.bombitas.objects.forEach(object => {
         this.presosSlow = this.map.getObjectLayer('PresosSlow');
     
         this.presosSlow.objects.forEach(object => { 
-          this.presosSlow = new Extra(this,object.x,object.y,'',-1,100,50,this.lvM,false,false,200,3);
+          this.presosSlow = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,false,false,200,3);
           this.Presos.add(this.presosSlow);
         });
         this.presosStun = this.map.getObjectLayer('PresosStun');
     
         this.presosStun.objects.forEach(object => { 
-          this.presosStun = new Extra(this,object.x,object.y,'',-1,100,50,this.lvM,true,false,200,3);
+          this.presosStun = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,true,false,200,3);
           this.Presos.add(this.presosStun);
         });
         this.Presos.children.iterate(function (child) {
@@ -169,6 +169,7 @@ this.bombitas.objects.forEach(object => {
 
       if(child != undefined)
       child.SetAnim();  
+    
   });
 this.HookGun=new HookGun(this,this.lvM);
         

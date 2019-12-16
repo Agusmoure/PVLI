@@ -63,6 +63,12 @@ this.player.getStunned(time);
     }
 
 
+
+    bombExplosion(bombX,bombY){
+        if((Math.abs(this.alcaide.x)-Math.abs(bombX))<200 && (Math.abs(this.alcaide.y)-Math.abs(bombY))<200)
+        this.alcaide.getStunned(100);
+
+    }
     //Penalizo al alcaide
     StunAlcaide(time){
 this.alcaide.getStunned(time);

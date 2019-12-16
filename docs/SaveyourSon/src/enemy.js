@@ -1,7 +1,7 @@
 export default class Enemy extends Phaser.GameObjects.Sprite{
     constructor(scene,jugador,gameManager){
     
-        let x=0;
+        let x=50;
         let y=150;
         super(scene,x,y,'alcaideRun');
         scene.add.existing(this);
