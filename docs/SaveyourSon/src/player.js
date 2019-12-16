@@ -3,8 +3,8 @@ import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
-    let x=500;
-    let y=150;
+    let x=1000;
+    let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -16,7 +16,7 @@ this.modifier='normal';
 this.modifierAUX='normal';
 this.modifierDisponible=true;
 //500 es la potencia equilibrada sin el fallo de la bomba y 900 tras salir de ella
-this.speedY=900;
+this.speedY=950;
 this.maxSpeedY=1000;
 this.speedImprovment=10;
 this.speedX=400;
@@ -168,15 +168,9 @@ moveLeft(){
      this.anims.stop();
      }
  }
-moveUp(){
-    if(this.stunTime<1){
-    if( /*this.body.touching.down  &&*/  (this.modifier=='normal'||this.modifier === 'gancho') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
-    this.body.setVelocityY(-this.speedY);
-   this.avalibleJump--;
-   this.saltoSound.play();
-    //this.lvM.LiberarPreso(true);
-}
-    else if(this.modifier==='jetpack' && this.modifierDisponible){
+ useGadget(){
+     if(this.stunTime<1){
+    if(this.modifier==='jetpack' && this.modifierDisponible){
         this.body.setVelocityY(-250);
         if( this.fuel >0){
             if(!this.animPlaying)
@@ -212,6 +206,59 @@ moveUp(){
         this.modifier=this.modifierAUX;
         this.lvM.SetPlayerModifier(this.modifierAUX);
     }
+}
+ }
+moveUp(){
+    if(this.stunTime<1){
+    if( /*this.body.touching.down  &&*/  (this.modifier==='normal') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
+    this.body.setVelocityY(-this.speedY);
+   this.avalibleJump--;
+   this.saltoSound.play();
+    //this.lvM.LiberarPreso(true);
+    
+}
+else if(/*this.body.touching.down  &&*/  (this.modifier!=='normal') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){
+    this.body.setVelocityY(-this.speedY);
+   this.avalibleJump--;
+   this.saltoSound.play();
+}
+
+    // else if(this.modifier==='jetpack' && this.modifierDisponible){
+    //     this.body.setVelocityY(-250);
+    //     if( this.fuel >0){
+    //         if(!this.animPlaying)
+    //         this.play('playerFlying');
+    //     this.fuel -=10;
+    //     if(!this.jetpackSound.isPlaying)
+    //     this.jetpackSound.play()
+    //     }
+    //     else{
+    //         if(this.jetpackSound.isPlaying)
+    //         this.jetpackSound.stop();
+    //     this.modifierDisponible=false;
+    //     }
+    //     console.log(this.fuel);
+    // }
+    // else  if(this.modifier==='jetpack' && !this.modifierDisponible && !this.noFuel.isPlaying)
+    // this.noFuel.play();
+    // else if(this.modifier === 'antigravedad' && this.modifierDisponible){
+    //     if(this.flipY)
+    //     this.flipY=false;
+    //     else
+    //     this.flipY=true;
+    //     this.gravity*=-1;
+    //     this.modifierDisponible=false;
+    //     this.body.setGravityY(this.gravity);
+    //     this.body.setVelocityY(0);
+    //     this.AntigravedadSound.play();
+    // }
+
+    // else if(this.modifier === 'bomba' && this.modifierDisponible){
+    //     this.lvM.SetBomba(this.bomba);
+    //     console.log(this.bomba);
+    //     this.modifier=this.modifierAUX;
+    //     this.lvM.SetPlayerModifier(this.modifierAUX);
+    // }
 }
  
 }

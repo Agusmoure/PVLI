@@ -51,7 +51,7 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.antigravedad = new Antigravedad(this);
     this.lvM.SetNumBombas(3);
     
-    this.player.changeModifierNormal();
+    this.player.changeModifierJetPack();
 
 
     this.key= new Key(this,53200,400,this.lvM).setScale(0.25); //Definitiva
@@ -187,6 +187,12 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.extrasPolis.add(this.poli42);
     this.extrasPolis.add(this.poli43);
     this.extrasPolis.add(this.poli44);
+    this.extrasPolis.children.iterate(function (child) {
+
+      if(child != undefined)
+      child.SetAnim();  
+    
+  });
     
     this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
     this.Presos = this.physics.add.group();

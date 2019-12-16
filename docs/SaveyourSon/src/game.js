@@ -76,8 +76,12 @@ create(){
     this.miraSniper = this.add.sprite(0,0,'miraPuntero');
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.E = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.W =this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.A=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.D =this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    //.cursors = this.input.keyboard.createCursorKeys();
 
         //creamos el HUD y establecemos que el juego no esta pausado
         this.textoLLaves= this.add.text(100,100,'HOLA');
@@ -187,6 +191,7 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
   this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
   this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
+  this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
 
    this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
   //this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
@@ -206,17 +211,19 @@ update(){
 
    this.player.update();
    
-   if (this.cursors.right.isDown){
+   if (this.D.isDown){
     this.player.moveRight();
    // this.scene.start('Level1');
 
   }
-  else if(this.cursors.left.isDown){
+  else if(this.A.isDown){
     this.player.moveLeft();
   }
 
-  if(this.cursors.up.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
+  if(this.W.isDown)//Phaser.Input.Keyboard.JustDown(this.spacebar)){
     this.player.moveUp();
+    if(this.spacebar.isDown)
+    this.player.useGadget();
 
     this.camera.startFollow(this.player);
     this.camera.setFollowOffset(-100, 225);
@@ -240,16 +247,16 @@ update(){
   else{
     this.miraSniper.visible=false;
   }
-    if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
+    if(Phaser.Input.Keyboard.JustDown(this.E)){
       this.player.LiberarPresos(true);
             }
-            else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
+            else if(Phaser.Input.Keyboard.JustUp(this.E)){
       this.player.LiberarPresos(false);
             }
 
    
 
-      if(Phaser.Input.Keyboard.JustUp(this.cursors.up))
+      if(Phaser.Input.Keyboard.JustUp( this.W ) || Phaser.Input.Keyboard.JustUp( this.spacebar ))
       this.player.keyUp();
 
       if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
