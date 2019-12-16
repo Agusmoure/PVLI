@@ -62,13 +62,15 @@ super.create()
         this.bomba2 = new Bomba(this,700,1000,this.lvM,1);
         this.bombas.add(this.bomba)
         this.bombas.add(this.bomba2);
+        this.contador=0;
 this.bombitas=this.map.getObjectLayer('Bombas');
 this.bombitas.objects.forEach(object => { 
-  let x=0;
-  this.bombita = new Bomba(this,object.x,object.y,this.lvM,x);
-  x++;
+ 
+  this.bombita = new Bomba(this,object.x,object.y,this.lvM,this.contador);
+  this.contador++;
   this.bombas.add(this.bombita);
 });
+this.lvM.SetNumBombas(this.contador);
         this.presosSlow = this.map.getObjectLayer('PresosSlow');
     
         this.presosSlow.objects.forEach(object => { 

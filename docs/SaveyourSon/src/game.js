@@ -57,6 +57,9 @@ preload() {
   this.load.spritesheet('AlcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('playerJetpack', './SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet('portalAnimation', './SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet('presoStun', './SaveyourSon/assets/Prisionerstun.png', { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet('presoSlow', './SaveyourSon/assets/PrisionerSlowRunLeft.png', { frameWidth: 64, frameHeight: 64 });
+
   this.load.spritesheet('dude', './SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 -
   
@@ -183,7 +186,32 @@ create(){
     //Preso quieto
     this.anims.create({
       key: 'presoIdle',
-      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 30 }),
+      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'presoIdleStun',
+      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'presoIdleSlow',
+      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'presoRunStun',
+      frames: this.anims.generateFrameNumbers('presoStun', { start: 0, end: 15 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'presoRunSlow',
+      frames: this.anims.generateFrameNumbers('presoSlow', { start: 0, end: 15 }),
       frameRate: 10,
       repeat: -1
     });
@@ -282,10 +310,10 @@ update(){
     this.miraSniper.visible=false;
   }
 
-    if(Phaser.Input.Keyboard.JustDown(this.E))
+    if(this.E.isDown)
       this.player.LiberarPresos(true);
      
-     else if(Phaser.Input.Keyboard.JustUp(this.E))
+     else if(!this.E.isDown)
       this.player.LiberarPresos(false);
       
 
@@ -358,7 +386,7 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
 
   EndGame(){
-    this.scene.start('HasPerdido');
+    this.scene.start('HasPerdido',this.gM);
   }
 
   Pausar(){

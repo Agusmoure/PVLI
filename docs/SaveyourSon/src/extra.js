@@ -70,7 +70,10 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     ///////////////////////////////////////////////////Movimiento del preso que comienza si el jugador está cerca y tiene llaves/////////////////////////////////////////
          if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance &&!this.active && this.lvM.EstoyLibre(this.coste)){
         this.active=true;
-        this.imagen.play('playerRunning');
+        if(this.stun)
+            this.imagen.play('presoRunStun');
+            else
+            this.imagen.play('presoRunSlow');
          }
         if(!this.police && Math.abs(this.lvM.GetPlayerX()-this.x)<this.distance &&!this.active && !this.lvM.EstoyLibre(this.coste)){
         this.iconoLLave.visible=true;
@@ -141,6 +144,12 @@ export default class Extra extends Phaser.GameObjects.Sprite{
             this.imagen.play('poliflyingslow');
         }
         else if(!this.police)
-        this.imagen.play('presoIdle'); 
+        {
+            if(this.stun)
+            this.imagen.play('presoIdleStun');
+            else
+            this.imagen.play('presoIdleSlow');
+       // this.imagen.play('presoIdle'); 
+        }
        }
 }
