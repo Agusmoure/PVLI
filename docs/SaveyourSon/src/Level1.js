@@ -28,7 +28,7 @@ export default class Level1 extends Game {
     this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       }
     create() {
-      this.fondo=new fondo(this).setScale(1.7);
+      this.fondo=new fondo(this,'fondo').setScale(1.7);
 super.create()
     //Creamos el Tilemap
         this.map = this.make.tilemap({ 
@@ -62,7 +62,13 @@ super.create()
         this.bomba2 = new Bomba(this,700,1000,this.lvM,1);
         this.bombas.add(this.bomba)
         this.bombas.add(this.bomba2);
-
+this.bombitas=this.map.getObjectLayer('Bombas');
+this.bombitas.objects.forEach(object => { 
+  let x=0;
+  this.bombita = new Bomba(this,object.x,object.y,this.lvM,x);
+  x++;
+  this.bombas.add(this.bombita);
+});
         this.presosSlow = this.map.getObjectLayer('PresosSlow');
     
         this.presosSlow.objects.forEach(object => { 

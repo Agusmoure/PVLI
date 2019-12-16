@@ -21,18 +21,19 @@ export default class Level3 extends Game {
 
   constructor() {
     super(/*{ key: 'main' }*/  'Level3');
-    this.gM=new GameManager();
+    //this.gM=new GameManager();
   }
   preload() {
 super.preload();
-this.load.image('fondo','./SaveyourSon/assets/Level3.jpg')
+this.load.image('fondo3','./SaveyourSon/assets/Level3.jpg')
 
 this.load.tilemapTiledJSON('Nivel3', './SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
   
-  create() {
-    this.fondo=new fondo(this)/*.setScale(0.2)*/;
+  create(data) {
+    this.gM=data;
+    this.fondo=new fondo(this,'fondo3')/*.setScale(0.2)*/;
 
     this.map = this.make.tilemap({ 
       key: 'Nivel3', 

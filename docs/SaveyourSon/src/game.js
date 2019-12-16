@@ -358,9 +358,8 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
 
   EndGame(){
-    this.scene.start('MenuPowerUps',this.gM);
+    this.scene.start('HasPerdido');
   }
-
 
   Pausar(){
     if(!this.pausado){
