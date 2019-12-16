@@ -26,14 +26,14 @@ export default class Level2 extends Game {
   }
   preload() {
   super.preload();
-  this.load.image('fondo2','./SaveyourSon/assets/Level2.jpg')
+  // this.load.image('fondo2','./SaveyourSon/assets/Level2.jpg');
   this.load.tilemapTiledJSON('Nivel2', './SaveyourSon/assets/Nivel2.json');
   this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 }
 
 create(data) {
   this.gM=data;
-  this.fondo=new fondo(this,'fondo2').setScale(1.5);
+  // this.fondo=new fondo(this,'fondo2').setScale(1.5);
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
       tileWidth: 64, 

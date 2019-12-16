@@ -17,7 +17,6 @@ import fondo from "./fondo.js"
 export default class Level1 extends Game {
     constructor(){
         super('Level1')
-        this.lvM = new LevelManager();
         this.gM=new GameManager();
     }
     preload() {
