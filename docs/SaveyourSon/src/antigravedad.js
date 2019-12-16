@@ -12,7 +12,6 @@ export default class Antigravedad extends PowerUp{
 
 changeModifier(){
     this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
-    //this.body.disableBody(true,true);
 }
 
 }

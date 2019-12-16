@@ -25,8 +25,9 @@ export default class HUD extends Phaser.GameObjects.Container{
         
         this.barra = scene.add.sprite(550,100,'barraProgreso').setScale(3.5);
         this.add(this.barra);
-            this.ContornoModifier = scene.add.sprite(0,100,'interfazModifier').setScale(3);
-            this.add(this.ContornoModifier);
+
+        this.ContornoModifier = scene.add.sprite(0,100,'interfazModifier').setScale(3);
+        this.add(this.ContornoModifier);
 
         this.jetpackHUD = scene.add.sprite(0,100,'jetpackHUD').setScale(0.2);
         this.add(this.jetpackHUD);
@@ -46,16 +47,8 @@ export default class HUD extends Phaser.GameObjects.Container{
         this.avaliableModifierHUD = scene.add.sprite(0,100,'modifierNoDisponible').setScale(0.2);
         this.add(this.avaliableModifierHUD);
 
-    // this.muteHUD = scene.add.sprite(1100,-750,'playerHUD').setScale(0.1);
-    // this.muteHUD.setInteractive();
-    // this.add(this.muteHUD);
-
-    // this.pauseHUD = scene.add.sprite(1000,-750,'playerHUD').setScale(0.1);
-    // this.pauseHUD.setInteractive();
-    // this.add(this.pauseHUD);
-
-    this.metaHUD = scene.add.sprite(1000,100,'meta').setScale(0.1);
-    this.add(this.metaHUD);
+        this.metaHUD = scene.add.sprite(1000,100,'meta').setScale(0.1);
+        this.add(this.metaHUD);
 
 
 this.mouseClick=false;
@@ -64,39 +57,8 @@ this.pause = false;
     }
  
     preUpdate(time, delta){
-        // this.muteHUD.on('pointerdown',pointer => {
-        //     if(!this.mouseClick){
-        //     console.log("Muteado");
-        //         this.mouseClick=true;
-        // }
-            
-        //     });
-        //     this.muteHUD.on('pointerup',pointer => {
-        //         if(this.mouseClick){
-        //             this.mouseClick=false;
-        //         }
-        //         });
-
-        //         this.pauseHUD.on('pointerdown',pointer => {
-        //             if(!this.mouseClick){
-                        
-        //                 this.escena.Pausar();
-        //             console.log("Pausa");
-        //                 this.mouseClick=true;
-        //         }
-                    
-        //             });
-        //             this.pauseHUD.on('pointerup',pointer => {
-        //                 if(this.mouseClick){
-        //                     this.mouseClick=false;
-        //                 }
-        //                 });
-
-
         this.x= this.lvM.GetPlayerX()-500+100;//El 500 es para que se situe con respecto al player y el + 100 debido al offset de la camara
         this.y=this.lvM.GetPlayerY()+300-125; // Igual que con la posicion x
-        //this.getAt(0).x = this.getAt(0).x+1;
-     
         if(!this.lvM.PlayerModifierAvaliable())
         this.avaliableModifierHUD.y=100;
         else

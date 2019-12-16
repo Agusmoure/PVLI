@@ -124,6 +124,8 @@ export default class Extra extends Phaser.GameObjects.Sprite{
 
     }
 
+
+//Dependiendo de si es polica (y de si está volando o no y si hace stun o slow) o preso tendrá una animación u otra
     SetAnim(){
         if(this.police && this.movement === 'horizontal'){
             if(this.stun)

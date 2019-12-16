@@ -306,30 +306,16 @@ this.contador=0;
 
       if(child != undefined)
       child.SetAnim();  
-    
   });
-    
     this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
     this.Presos = this.physics.add.group();
     this.Presos.add(this.preso);
     this.Presos.children.iterate(function (child) {
-
       if(child != undefined)
       child.SetAnim();  
-    
-  });
+  });    
 
-
-
-   //Creo plataformas ran
-    //Suelo para el alcaide
-    //this.floor = this.physics.add.staticGroup();
-    //this.physics.add.collider(this.enemy, this.floor);
-
-    
-    
     super.Colliders();
-
     super.Overlaps();
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);

@@ -14,15 +14,15 @@ import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import HookGunProyectile from "./HookGunProyectile.js"
 import fondo from "./fondo.js"
+import NoPowerUp from "./NoPowerUp.js";
 
 
 export default class Level2 extends Game {
 
   constructor() {
-    super(/*{ key: 'main' }*/ 'Level2');
+    super('Level2');
     this.gameOver=false;
     this.gM= new GameManager();
-   // this.lvM = new LevelManager();
   }
   preload() {
   super.preload();
@@ -168,27 +168,18 @@ create() {
     this.lvM.SetNumBombas(this.contador);
     
     this.proyectil=undefined;
-  
+  this.backtoNormal = new NoPowerUp(this,800,500,this.lvM);
+  this.noPowerUps.add(this.backtoNormal);
 
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
 this.HookGunProyectiles.add(this.HookGunProyectile);
-   //Creo plataformas random
-    //Paredes destructibles
-
-    //Suelo para el alcaide
-    //this.floor = this.physics.add.staticGroup();
-    //this.physics.add.collider(this.enemy, this.floor);
-
-
-
 
    super.Colliders();
     
 
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     super.Overlaps()
-    //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu
-   
+    //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu 
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
   }
 
