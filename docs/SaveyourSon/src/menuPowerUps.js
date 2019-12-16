@@ -18,8 +18,6 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.load.image('Llave','./SaveyourSon/assets/Key.png');
         this.load.image('menu','./SaveyourSon/assets/Menu.jpg');
         this.load.image('easterEgg','./SaveyourSon/assets/EasterEgg.png');
-
-       // this.load.image('nextLevel','');
         this.load.bitmapFont('font', './SaveyourSon/assets/carrier_command.png', './SaveyourSon/assets/carrier_command.xml');      
 
 
@@ -54,13 +52,18 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.add.bitmapText(721, 285, 'font', 'comprar');
         this.add.bitmapText(721, 485, 'font', 'comprar');
         this.add.bitmapText(721, 685, 'font', 'comprar');
-
-      this.txt=this.gM.GetSpeedImprovments()+'/'+this.gM.GetMaxImprovements();
-        this.add.bitmapText(595, 290, 'font', this.txt).setScale(0.75);
-         this.txt2=this.gM.GetSpeedPenalizations()+'/'+this.gM.GetMaxImprovements();
-
-        this.add.bitmapText(595, 490, 'font', this.txt2).setScale(0.75);
-         this.txt3=this.gM.GetJetpackImprovements()+'/'+this.gM.GetMaxImprovements();
+        this.speedImprovmentText= this.add.text(595,290,this.gM.GetSpeedImprovments()+'/'+this.gM.GetMaxImprovements());
+        this.speedImprovmentText.setAlign('center');
+        this.speedImprovmentText.setFont('font');
+        this.speedImprovmentText.setFontSize(40);
+        this.speedPenalizationText= this.add.text(595,490,this.gM.GetSpeedPenalizations()+'/'+this.gM.GetMaxImprovements());
+        this.speedPenalizationText.setAlign('center');
+        this.speedPenalizationText.setFont('font');
+        this.speedPenalizationText.setFontSize(40);
+        this.fuelText= this.add.text(595,690,this.gM.GetJetpackImprovements()+'/'+this.gM.GetMaxImprovements());
+        this.fuelText.setAlign('center');
+        this.fuelText.setFont('font');
+        this.fuelText.setFontSize(40);
 
         this.add.bitmapText(595, 690, 'font', this.txt3).setScale(0.75);
 
@@ -73,9 +76,10 @@ export default class MenuPowerUps extends Phaser.Scene {
     update(time, delta) {
 
     this.textoLLaves.setText(this.gM.GetKey());
-    this.txt=this.gM.GetSpeedImprovments()+'/'+this.gM.GetMaxImprovements();
-    this.txt2=this.gM.GetSpeedPenalizations()+'/'+this.gM.GetMaxImprovements();
-    this.txt3=this.gM.GetJetpackImprovements()+'/'+this.gM.GetMaxImprovements();
+    this.speedImprovmentText.setText(this.gM.GetSpeedImprovments()+'/'+this.gM.GetMaxImprovements());
+    this.speedPenalizationText.setText(this.gM.GetSpeedPenalizations()+'/'+this.gM.GetMaxImprovements());
+    this.fuelText.setText(this.gM.GetJetpackImprovements()+'/'+this.gM.GetMaxImprovements());
+
 this.arrow.on('pointerdown',pointer => {
 if(!this.mouseClick){
     this.scene.start(this.gM.GetSuperNextScene(), this.gM);
