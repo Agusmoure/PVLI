@@ -3,8 +3,8 @@ import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
-    let x=28950;
-    let y=800;
+    let x=500;
+    let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);

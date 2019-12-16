@@ -39,6 +39,8 @@ preload() {
   this.load.image('iconoPlayer','./SaveyourSon/assets/IconoPlayer.png');
   this.load.image('miraPuntero','./SaveyourSon/assets/miraPuntero.png');
   this.load.image('hitboxExtra','./SaveyourSon/assets/HitBoxExtra.png');
+  this.load.image('barraProgreso','./SaveyourSon/assets/BarraProgresoHUD.png');
+
   this.load.spritesheet('explosion', 
   './SaveyourSon/assets/explosion.png',
       { frameWidth: 64, frameHeight: 64 }
@@ -95,6 +97,7 @@ this.textoLLaves.setFontSize(40);
         this.Hud = new HUD(this,0,0,this.lvM,39800,this.textoLLaves);
         this.Hud.body.setGravityY(-1000);
       this.pausado=false;
+      
 
     //Creamos las animaciones 
         this.anims.create({

@@ -140,8 +140,5 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         }
         else if(!this.police)
         this.imagen.play('presoIdle'); 
-
-
-
        }
 }

@@ -58,11 +58,24 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
    
       this.extrasPolis.add(this.NUEVOPOLI);
     });
+    this.polisVerticalesStun =this.map.getObjectLayer('PoliVerticalSlow');
+    this.polisVerticalesStun.objects.forEach(object => { 
+      this.NUEVOPOLI = new Extra(this,object.x,object.y-1000,'vertical',0,20,50,this.lvM,false,true,100,300);
+   
+      this.extrasPolis.add(this.NUEVOPOLI);
+    });
     
-
+this.contador=0;
+    this.BombasMap =this.map.getObjectLayer('Bombas');
+    this.BombasMap.objects.forEach(object => { 
+      this.NUEVOPOLI = new Bomba(this,object.x,object.y-1000,this.lvM,this.contador);
+      this.contador++;
+   
+      this.extrasPolis.add(this.NUEVOPOLI);
+    });
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
-    this.lvM.SetNumBombas(3);
+   this.lvM.SetNumBombas(this.contador);
     
     this.player.changeModifierJetPack();
 
@@ -72,13 +85,10 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.keyCount=0;
     
     //this.background2.setScale(0.1);
-    this.lvM.SetNumBombas(3);
+    
   
-    this.bombas = this.physics.add.group();
-    this.bomba = new Bomba(this,400,100,this.lvM,0);
-    this.bomba2 = new Bomba(this,700,100,this.lvM,1);
-    this.bombas.add(this.bomba)
-    this.bombas.add(this.bomba2);
+   
+  
 
 
     //EXTRAS
@@ -141,42 +151,60 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.poli43=new Extra (this,56300,750,'vertical',0,100,150,this.lvM,true,true,30,300);
     this.poli44=new Extra (this,56300,1100,'vertical',0,100,150,this.lvM,true,true,30,300);
     this.poli45=new Extra (this,3100,-200,'vertical',0,75,150,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,3150,-600,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,6100,-350,'vertical',0,75,150,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,6400,-350,'vertical',0,75,150,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,6000,0,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,6500,0,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,7625,0,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,8200,-400,'vertical',0,150,175,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,8300,0,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,9075,-700,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,9075,-700,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,9900,0,'horizontal',0,75,100,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,10200,-500,'horizontal',0,75,0,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,10700,-600,'vertical',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,12600,-300,'vertical',0,50,50,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,14000,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,14500,500,'vertical',0,50,50,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,15700,1000,'vertical',0,50,50,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,16500,900,'vertical',0,100,50,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,17000,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,18050,900,'vertical',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,19350,900,'vertical',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20500,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20200,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20200,550,'vertical',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20500,550,'vertical',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20800,800,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,20800,400,'horizontal',0,75,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,24500,800,'horizontal',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,27000,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,27500,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,28300,800,'horaizontal',0,100,100,this.lvM,true,true,30,300);
-    this.poli45=new Extra (this,28400,1200,'vertical',0,100,100,this.lvM,false,true,30,300);
-    this.poli45=new Extra (this,28950,800,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli46=new Extra (this,3150,-600,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli47=new Extra (this,6100,-350,'vertical',0,75,150,this.lvM,true,true,30,300);
+    this.poli48=new Extra (this,6400,-350,'vertical',0,75,150,this.lvM,true,true,30,300);
+    this.poli49=new Extra (this,6000,0,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli50=new Extra (this,6500,0,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli51=new Extra (this,7625,0,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli52=new Extra (this,8200,-400,'vertical',0,150,175,this.lvM,true,true,30,300);
+    this.poli53=new Extra (this,8300,0,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli54=new Extra (this,9075,-700,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli55=new Extra (this,9075,-700,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli56=new Extra (this,9900,0,'horizontal',0,75,100,this.lvM,true,true,30,300);
+    this.poli57=new Extra (this,10200,-500,'horizontal',0,75,0,this.lvM,false,true,30,300);
+    this.poli58=new Extra (this,10700,-600,'vertical',0,75,100,this.lvM,false,true,30,300);
+    this.poli59=new Extra (this,12600,-300,'vertical',0,50,50,this.lvM,false,true,30,300);
+    this.poli60=new Extra (this,14000,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli61=new Extra (this,14500,500,'vertical',0,50,50,this.lvM,false,true,30,300);
+    this.poli62=new Extra (this,15700,1000,'vertical',0,50,50,this.lvM,false,true,30,300);
+    this.poli63=new Extra (this,16500,900,'vertical',0,100,50,this.lvM,false,true,30,300);
+    this.poli64=new Extra (this,17000,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli65=new Extra (this,18050,900,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli66=new Extra (this,19350,900,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli67=new Extra (this,20500,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli68=new Extra (this,20200,1000,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli69=new Extra (this,20200,550,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli70=new Extra (this,20500,550,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli71=new Extra (this,20800,800,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli72=new Extra (this,20800,400,'horizontal',0,75,100,this.lvM,false,true,30,300);
+    this.poli73=new Extra (this,24500,800,'horizontal',0,100,100,this.lvM,false,true,30,300);
+    this.poli74=new Extra (this,27000,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli75=new Extra (this,27500,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli76=new Extra (this,28300,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli77=new Extra (this,28400,1200,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli78=new Extra (this,28950,800,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli79=new Extra (this,30600,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli80=new Extra (this,31100,950,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli81=new Extra (this,31600,950,'vertical',0,100,100,this.lvM,false,true,30,300);
+    this.poli82=new Extra (this,32800,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli83=new Extra (this,34500,1100,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli84=new Extra (this,34900,1100,'horizontal',0,100,100,this.lvM,false,true,30,300);
+    this.poli85=new Extra (this,35200,1100,'horizontal',0,100,100,this.lvM,false,true,30,300);
+    this.poli86=new Extra (this,36700,1100,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli87=new Extra (this,37400,770,'vertical',0,100,100,this.lvM,true,true,30,300);
+    this.poli88=new Extra (this,42050,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli89=new Extra (this,44000,1150,'vertical',0,100,100,this.lvM,true,true,30,300);
+    this.poli90=new Extra (this,45000,1150,'vertical',0,100,100,this.lvM,true,true,30,300);
+    this.poli91=new Extra (this,47500,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli92=new Extra (this,51500,500,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli93=new Extra (this,52100,800,'vertical',0,100,100,this.lvM,true,true,30,300);
+    this.poli94=new Extra (this,52800,800,'horizontal',0,100,100,this.lvM,true,true,30,300);
+    this.poli95=new Extra (this,56800,800,'horizontal',0,100,100,this.lvM,false,true,30,300);
+    this.poli96=new Extra (this,56800,1000,'horizontal',0,100,100,this.lvM,false,true,30,300);
 
 
-    //this.extrasPolis = this.physics.add.group();
+    this.extrasPolis =this.physics.add.group();
     this.extrasPolis.add(this.poli);
     this.extrasPolis.add(this.poli2);
     this.extrasPolis.add(this.poli3);
@@ -222,6 +250,58 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.extrasPolis.add(this.poli43);
     this.extrasPolis.add(this.poli44);
     this.extrasPolis.add(this.poli45);
+    this.extrasPolis.add(this.poli46);
+    this.extrasPolis.add(this.poli47);
+    this.extrasPolis.add(this.poli48);
+    this.extrasPolis.add(this.poli49);
+    this.extrasPolis.add(this.poli50);
+    this.extrasPolis.add(this.poli51);
+    this.extrasPolis.add(this.poli52);
+    this.extrasPolis.add(this.poli53);
+    this.extrasPolis.add(this.poli54);
+    this.extrasPolis.add(this.poli55);
+    this.extrasPolis.add(this.poli56);
+    this.extrasPolis.add(this.poli57);
+    this.extrasPolis.add(this.poli58);
+    this.extrasPolis.add(this.poli59);
+    this.extrasPolis.add(this.poli60);
+    this.extrasPolis.add(this.poli61);
+    this.extrasPolis.add(this.poli62);
+    this.extrasPolis.add(this.poli63);
+    this.extrasPolis.add(this.poli64);
+    this.extrasPolis.add(this.poli65);
+    this.extrasPolis.add(this.poli66);
+    this.extrasPolis.add(this.poli67);
+    this.extrasPolis.add(this.poli68);
+    this.extrasPolis.add(this.poli60);
+    this.extrasPolis.add(this.poli70);
+    this.extrasPolis.add(this.poli71);
+    this.extrasPolis.add(this.poli72);
+    this.extrasPolis.add(this.poli73);
+    this.extrasPolis.add(this.poli74);
+    this.extrasPolis.add(this.poli75);
+    this.extrasPolis.add(this.poli76);
+    this.extrasPolis.add(this.poli77);
+    this.extrasPolis.add(this.poli78);
+    this.extrasPolis.add(this.poli79);
+    this.extrasPolis.add(this.poli80);
+    this.extrasPolis.add(this.poli81);
+    this.extrasPolis.add(this.poli82);
+    this.extrasPolis.add(this.poli83);
+    this.extrasPolis.add(this.poli84);
+    this.extrasPolis.add(this.poli85);
+    this.extrasPolis.add(this.poli86);
+    this.extrasPolis.add(this.poli87);
+    this.extrasPolis.add(this.poli88);
+    this.extrasPolis.add(this.poli89);
+    this.extrasPolis.add(this.poli90);
+    this.extrasPolis.add(this.poli91);
+    this.extrasPolis.add(this.poli92);
+    this.extrasPolis.add(this.poli93);
+    this.extrasPolis.add(this.poli94);
+    this.extrasPolis.add(this.poli95);
+    this.extrasPolis.add(this.poli96);
+    
     this.extrasPolis.children.iterate(function (child) {
 
       if(child != undefined)
