@@ -19,6 +19,7 @@ export default class Game extends Phaser.Scene {
     this.gameOver=false;
     //this.gM= new GameManager();
     this.lvM = new LevelManager();
+    
   }
 preload() {
 
@@ -31,6 +32,7 @@ preload() {
   this.load.image('bomba','./SaveyourSon/assets/bomba.png');
   this.load.image('jetpackHUD','./SaveyourSon/assets/jetpack.png');
   this.load.image('hookHUD','./SaveyourSon/assets/HookGun.png');
+  this.load.image('antigravedadHUD','./SaveyourSon/assets/AntigravedadHUD.png');
   this.load.image('playerHUD','./SaveyourSon/assets/botonNivel.png');
   this.load.image('modifierNoDisponible','./SaveyourSon/assets/ModifierNoDisponible.png');
   this.load.image('meta','./SaveyourSon/assets/Meta.png');

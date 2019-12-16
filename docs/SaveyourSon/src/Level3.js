@@ -68,14 +68,14 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 this.contador=0;
     this.BombasMap =this.map.getObjectLayer('Bombas');
     this.BombasMap.objects.forEach(object => { 
-      this.NUEVOPOLI = new Bomba(this,object.x,object.y-1000,this.lvM,this.contador);
+      this.bomba = new Bomba(this,object.x,object.y-1000,this.lvM,this.contador);
       this.contador++;
    
-      this.extrasPolis.add(this.NUEVOPOLI);
+      this.bombas.add(this.bomba);
     });
+    this.lvM.SetNumBombas(this.contador);
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
-   this.lvM.SetNumBombas(this.contador);
     
     this.player.changeModifierJetPack();
 

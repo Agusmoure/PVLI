@@ -30,6 +30,9 @@ export default class HUD extends Phaser.GameObjects.Container{
 
         this.jetpackHUD = scene.add.sprite(0,100,'jetpackHUD').setScale(0.2);
         this.add(this.jetpackHUD);
+
+        this.antigravedadHUD = scene.add.sprite(10,90,'antigravedadHUD').setScale(0.5);
+        this.add(this.antigravedadHUD);
         
         this.bombaHUD = scene.add.sprite(0,100,'bomba');
         this.add(this.bombaHUD);
@@ -109,10 +112,12 @@ this.pause = false;
             this.jetpackHUD.y=300;
             this.hookGunHUD.y=300;
             this.bombaHUD.y = 300;
+            this.antigravedadHUD.y=300;
             this.avaliableModifierHUD.y=300;
         }
         
         else if(modifier == 'antigravedad'){
+            this.antigravedadHUD.y=100;
             this.jetpackHUD.y=300;
             this.hookGunHUD.y=300;
             this.bombaHUD.y = 300;
@@ -121,6 +126,7 @@ this.pause = false;
         
         else if(modifier == 'jetpack'){
             this.jetpackHUD.y=100;
+            this.antigravedadHUD.y=300;
             this.hookGunHUD.y=300;
             this.bombaHUD.y = 300;
             this.avaliableModifierHUD.y=300;
@@ -128,12 +134,14 @@ this.pause = false;
        
         else if(modifier == 'gancho'){
             this.jetpackHUD.y=300;
+            this.antigravedadHUD.y=300;
             this.hookGunHUD.y=100;
             this.bombaHUD.y = 300;
             this.avaliableModifierHUD.y=300;
         }
         else if(modifier == 'bomba'){
             this.jetpackHUD.y=300;
+            this.antigravedadHUD.y=300;
             this.hookGunHUD.y=300;
             this.bombaHUD.y = 100;
             this.avaliableModifierHUD.y=300;
