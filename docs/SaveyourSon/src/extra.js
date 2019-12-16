@@ -45,14 +45,15 @@ export default class Extra extends Phaser.GameObjects.Sprite{
         this.iconoLLave.y = this.y-50;
         this.iconoLLave.visible=false;
         //////////////////////////////////////////////Movimiento del policia dependiendo de si es horizontal o verrtical////////////////////////////////////////////////
-        if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance)
+        if( this.police && this.movement==='horizontal' && this.x<(this.originX+this.distance) && this.x>this.originX-this.distance && Math.abs(this.body.velocity.x)>this.speedX/2)
         this.body.setVelocityX(this.speedX);
         else  if(this.police && this.movement==='horizontal'){
             if(this.x>this.originX)
             this.speedX=Math.abs(this.speedX)*-1;
-            else
+            else if(this.x<this.originX)
             this.speedX=Math.abs(this.speedX);
             this.body.setVelocityX(this.speedX);
+
         }
         
     if( this.police && this.movement==='vertical' && this.y<(this.originY+this.distance) && this.y>this.originY-this.distance)
@@ -124,10 +125,19 @@ export default class Extra extends Phaser.GameObjects.Sprite{
     }
 
     SetAnim(){
-        if(this.police && this.movement === 'horizontal')
-        this.imagen.play('poliWalking');  
-        else if(this.police && this.movement ==='vertical')
-        this.imagen.play('poliflying'); 
+        if(this.police && this.movement === 'horizontal'){
+            if(this.stun)
+            this.imagen.play('poliWalkingstun');
+            else
+            this.imagen.play('poliWalkingslow');
+        }
+        else if(this.police && this.movement ==='vertical'){
+
+         if(this.stun)
+            this.imagen.play('poliflyingstun');
+            else
+            this.imagen.play('poliflyingslow');
+        }
         else if(!this.police)
         this.imagen.play('presoIdle'); 
 

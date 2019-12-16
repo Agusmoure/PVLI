@@ -48,7 +48,11 @@ preload() {
   this.load.spritesheet('alcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
   this.load.spritesheet('presoIdle','./SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('poliVertical','./SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('poliVerticalStun','./SaveyourSon/assets/PoliVerticalStun.png',{frameWidth:64, frameHeight:64});
+  this.load.spritesheet('poliVerticalSlow','./SaveyourSon/assets/PoliVerticalSlow.png',{frameWidth:64, frameHeight:64});
     this.load.spritesheet('poliwalk','./SaveyourSon/assets/poliWalk.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('poliwalkstun','./SaveyourSon/assets/poliWalkStun.png',{frameWidth:64,frameHeight:64});
+    this.load.spritesheet('poliwalkslow','./SaveyourSon/assets/poliWalkSlow.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('AlcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
     this.load.spritesheet('playerJetpack', './SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('portalAnimation', './SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
@@ -107,6 +111,20 @@ this.textoLLaves.setFontSize(40);
         repeat: -1
       });
       this.anims.create({
+
+        key: 'poliWalkingstun',
+        frames: this.anims.generateFrameNumbers('poliwalkstun', { start: 0, end: 30 }),
+        frameRate: 10,
+        repeat: -1
+      });
+      this.anims.create({
+
+        key: 'poliWalkingslow',
+        frames: this.anims.generateFrameNumbers('poliwalkslow', { start: 0, end: 30 }),
+        frameRate: 10,
+        repeat: -1
+      });
+      this.anims.create({
         key: 'alcaideRunning',
         frames: this.anims.generateFrameNumbers('alcaideRun', { start: 0, end: 14 }),
         frameRate: 15,
@@ -140,6 +158,20 @@ this.textoLLaves.setFontSize(40);
 
       key: 'poliflying',
       frames: this.anims.generateFrameNumbers('poliVertical', { start: 0, end: 15 }),
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+
+      key: 'poliflyingslow',
+      frames: this.anims.generateFrameNumbers('poliVerticalSlow', { start: 0, end: 15 }),
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+
+      key: 'poliflyingstun',
+      frames: this.anims.generateFrameNumbers('poliVerticalStun', { start: 0, end: 15 }),
       frameRate: 5,
       repeat: -1
     });
