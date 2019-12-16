@@ -1,10 +1,10 @@
 export default class Enemy extends Phaser.GameObjects.Sprite{
 
-    constructor(scene){
+    constructor(scene,key){
     
         let x=0;
         let y=-200;
-        super(scene,x,y,'fondo');
+        super(scene,x,y,key);
         scene.add.existing(this);
         scene.physics.add.existing(this);
     }

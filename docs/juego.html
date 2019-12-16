@@ -21,6 +21,7 @@
         import Level3 from './SaveyourSon/src/Level3.js';
         import OwO from './SaveyourSon/src/OwO.js';
         import MenuPrincipal from './SaveyourSon/src/MenuPrincipal.js';
+        import HasPerdido from './SaveyourSon/src/HasPerdido.js'
 
         var config = {
             type: Phaser.AUTO,
@@ -34,7 +35,7 @@
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: [Level1,Level3,Level2,MenuPrincipal,MenuPowerUps],
+            scene: [Level1,Level3,Level2,MenuPrincipal,MenuPowerUps,HasPerdido],
             physics: { default: 'arcade', arcade: { gravity: { y: 1000 }, debug: false } }
         };
         new Phaser.Game(config);

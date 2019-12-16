@@ -1,12 +1,12 @@
 export default class GameManager{
     constructor(){
-        this.keys=1;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
+        this.keys=0;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
         this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
         this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
         this.speedPenalizationBought=0;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide
         this.jetpacksImprovementsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la resistencia del jetpack
-        this.bombImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la bomba
-        this.catapultImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la catapulta
+        this.maxImprovemnts=5;
+
         this.scenesForPlay=['Level1','MenuPowerUps','Level2','MenuPowerUps','Level3']
     }
     GetKey(){
@@ -56,5 +56,8 @@ if(this.keys<0) this.keys=0;
         this.scene++;
         console.log(this.scenesForPlay[this.scene]);
         return this.scenesForPlay[this.scene];
+    }
+    GetMaxImprovements(){
+        return this.maxImprovemnts;
     }
 }

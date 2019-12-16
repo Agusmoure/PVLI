@@ -307,7 +307,7 @@ PoliPilla(player,poli){
     this.enemy.body.setVelocityX(0);
   }
   EndGame(){
-    this.scene.start('MenuPowerUps',this.gM);
+    this.scene.start('HasPerdido');
 
   }
   Pausar(){
