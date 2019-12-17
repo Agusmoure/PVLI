@@ -62,10 +62,6 @@ create(/*data*/) {
     this.HookGun = new HookGun(this,this.lvM,100,100);
 
     this.keyCount=0;
-    this.bomba = new Bomba(this,400,200,this.lvM,0);
-    this.bomba2 = new Bomba(this,700,200,this.lvM,1);
-    this.bombas.add(this.bomba)
-    this.bombas.add(this.bomba2);
     this.door= new LevelChanger(this,this.gM,this.lvM,41600,100).setScale(0.5);
 
 
@@ -142,8 +138,8 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
    this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
    this.physics.add.collider(this.gancho,this.background);
    this.physics.add.collider(this.backtoNormal,this.background);
+   this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
-    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
     this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
     this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
   }

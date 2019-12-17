@@ -5,7 +5,7 @@ export default class Antigravedad extends PowerUp{
     
         let x=xPos;
         let y=yPos;
-        super(scene,x,y,'bomb');
+        super(scene,x,y,'antigravedadHUD');
         scene.add.existing(this);    
     scene.physics.add.existing(this);      
     }

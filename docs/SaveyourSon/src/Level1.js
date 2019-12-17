@@ -12,6 +12,7 @@ import LevelChanger from "./LevelChanger.js"
 import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
 import fondo from "./fondo.js"
+import NoPowerUp from "./NoPowerUp.js";
 
 
 export default class Level1 extends Game {
@@ -29,22 +30,30 @@ export default class Level1 extends Game {
     create() {
       this.fondo=new fondo(this,'fondo').setScale(1.7);
 super.create()
-    //Creamos el Tilemap
-        this.map = this.make.tilemap({ 
-          key: 'Nivel1', 
-            tileWidth: 64, 
-            tileHeight: 64 
-        });
-      
-        
-        let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
-        this.background= this.map.createStaticLayer('Nivel1', t);
-        this.background.x=0;
-        this.background.y=0;
-        this.background.setCollisionBetween(0, 10);
-    super.create();
-        this.jetpack = new JetPack(this,8500,150);
-        this.antigravedad = new Antigravedad(this,18000,150);
+//Creamos el Tilemap
+this.map = this.make.tilemap({ 
+  key: 'Nivel1', 
+  tileWidth: 64, 
+  tileHeight: 64 
+});
+
+
+let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
+this.background= this.map.createStaticLayer('Nivel1', t);
+this.background.x=0;
+this.background.y=0;
+this.background.setCollisionBetween(0, 10);
+super.create();
+
+this.player.x=500;
+this.player.y=900;
+this.player.oX=500;
+this.player.oY=900;
+this.enemy.x=0;
+this.enemy.y=900;
+this.enemy.oX=0;
+this.enemy.oY=900;
+    
         this.door= new LevelChanger(this,this.gM,this.lvM,40600,100).setScale(0.5);
         this.lvM.SetNumBombas(3);
 
@@ -114,10 +123,16 @@ this.lvM.SetNumBombas(this.contador);
     
   // });
 this.HookGun=new HookGun(this,this.lvM);
+this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
+this.jetpack = new JetPack(this,8500,700).setScale(0.15);
+this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
         
     super.Colliders();
     this.physics.add.collider(this.background,this.door);
         super.Overlaps();
+        this.physics.add.collider(this.jetpack,this.background);
+        this.physics.add.collider(this.backtoNormal,this.background);
+        this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
         this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
 
 
@@ -127,5 +142,34 @@ this.HookGun=new HookGun(this,this.lvM);
       update(time, delta) {   
         super.update();
         this.fondo.Update(this.player);
+      }
+
+      NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
+        player.changeModifierNormal();
+        //noPowerUp.PickMe();
+      }
+
+      Restart(){
+
+        // this.backtoNormal.destroy();
+        // this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
+        // this.physics.add.collider(this.backtoNormal,this.background);
+        // this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+
+        this.jetpack.destroy();
+        this.jetpack = new JetPack(this,8500,700).setScale(0.15);
+        this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
+        this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
+        this.physics.add.collider(this.jetpack,this.background);
+
+        this.antigravedad.destroy();
+this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
+this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
+        this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+        this.physics.add.collider(this.antigravedad,this.background);
+
+
+        this.enemy.Restart();
+        this.player.Restart('normal');
       }
     }

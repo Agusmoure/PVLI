@@ -108,13 +108,13 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       });
       this.lvM.SetNumBombas(this.contador);
     this.jetpack = new JetPack(this,24800,1000);
-    this.antigravedad = new Antigravedad(this,13100,-130);
+    this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
 this.noPowerUp = new NoPowerUp(this,49600,1250,this.lvM);
+this.HookGun = new HookGun(this,this.lvM,34500,800);
     
     this.player.changeModifierJetPack();
 
 
-    this.HookGun = new HookGun(this,this.lvM,34500,800);
 
     this.keyCount=0;
     

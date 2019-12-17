@@ -150,7 +150,7 @@ create(){
       key: 'alcaideAttacking',
       frames: this.anims.generateFrameNumbers('AlcaideAttack', { start: 0, end: 14 }),
       frameRate: 15,
-      repeat: -1
+      repeat: 0
   });
 
     this.anims.create({
@@ -379,7 +379,7 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
   }
 
   CatchPlayer(){        //SI el player es tocado por el alcaide
-    this.gameOver=true;
+   // this.gameOver=true;
     this.enemy.HitPlayer();
     this.player.dontMove();
     this.enemy.body.setVelocityX(0);
@@ -387,12 +387,11 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
 
   EndGame(){
-   // this.registry.destroy();
-//this.events.off();
-//this.scene.restart();
     this.scene.start('HasPerdido',this.gM);
   
   }
+
+
 
   Pausar(){
     if(!this.pausado){

@@ -4,7 +4,7 @@ export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
     let x=500;
-    let y=550;
+    let y=0;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -161,11 +161,11 @@ moveLeft(){
  dontMove(){
      if(this.sonido){
      this.body.setVelocityX(0);
-     this.speedX=0;
-     this.defaultSpeed=0;
+    //  this.speedX=0;
+    //  this.defaultSpeed=0;
      this.PlayerHit.play();
      this.sonido=false;
-     this.anims.stop();
+    // this.anims.stop();
      }
  }
  useGadget(){
@@ -217,48 +217,11 @@ moveUp(){
     //this.lvM.LiberarPreso(true);
     
 }
-else if(/*this.body.touching.down  &&*/  (this.modifier!=='normal') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){
+else if(/*this.body.touching.down  &&*/  (this.modifier!=='normal' && this.modifier !=='antigravedad') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){
     this.body.setVelocityY(-this.speedY);
    this.avalibleJump--;
    this.saltoSound.play();
 }
-
-    // else if(this.modifier==='jetpack' && this.modifierDisponible){
-    //     this.body.setVelocityY(-250);
-    //     if( this.fuel >0){
-    //         if(!this.animPlaying)
-    //         this.play('playerFlying');
-    //     this.fuel -=10;
-    //     if(!this.jetpackSound.isPlaying)
-    //     this.jetpackSound.play()
-    //     }
-    //     else{
-    //         if(this.jetpackSound.isPlaying)
-    //         this.jetpackSound.stop();
-    //     this.modifierDisponible=false;
-    //     }
-    //     console.log(this.fuel);
-    // }
-    // else  if(this.modifier==='jetpack' && !this.modifierDisponible && !this.noFuel.isPlaying)
-    // this.noFuel.play();
-    // else if(this.modifier === 'antigravedad' && this.modifierDisponible){
-    //     if(this.flipY)
-    //     this.flipY=false;
-    //     else
-    //     this.flipY=true;
-    //     this.gravity*=-1;
-    //     this.modifierDisponible=false;
-    //     this.body.setGravityY(this.gravity);
-    //     this.body.setVelocityY(0);
-    //     this.AntigravedadSound.play();
-    // }
-
-    // else if(this.modifier === 'bomba' && this.modifierDisponible){
-    //     this.lvM.SetBomba(this.bomba);
-    //     console.log(this.bomba);
-    //     this.modifier=this.modifierAUX;
-    //     this.lvM.SetPlayerModifier(this.modifierAUX);
-    // }
 }
  
 }
@@ -286,7 +249,6 @@ this.touchedSound.play();
 Impulse(velX,velY){
     this.impulsoX=velX;
     this.impulsoY=velY;
-    this.modifier='normal';
    
  }
  getStunned(time){
@@ -321,6 +283,16 @@ getVehicle(){
 getModifier(){
     return this.modifier;
 }
+
+Restart(modifi){
+this.x=this.oX;
+this.y = this.oY;
+this.modifier = modifi;
+this.lvM.SetPlayerModifier(modifi);
+this.anims.play('playerRunning');
+
+}
+
 ResetJumps(){
     //la condicion no funca
     //Esta condición es para que solo resetee saltos en todos los casos que no sean no tocar el suelo y tocar el lado derecho o izquierdo

@@ -3,11 +3,15 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
     
         let x=50;
         let y=150;
+
         super(scene,x,y,'alcaideRun');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
         //this.body.setCollideWorldBounds(true);
+        this.oX=0;
+        this.oY=0;
+        this.escena = scene;
         this.aire=false;
         this.vehicle=false;
         this.modifier='normal';
@@ -60,12 +64,14 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
 
     HitPlayer(){
 
-        if(!this.animPlaying){
-            this.anims.play('alcaideAttacking');
-            this.animPlaying=true;
-            // this.on('animationcomplete',()=>{super.anims.stop()});
-            // this.anims.stop();
-        }
+        this.escena.Restart()
+        // if(!this.animPlaying){
+        //     this.anims.play('alcaideAttacking');
+        //     this.animPlaying=true;
+        //      this.on('animationcomplete',()=>{this.escena.Restart();
+        //     });
+            
+        // }
     }
 
     Stun(){
@@ -90,6 +96,14 @@ this.stunTime=time;
         this.Stun();
         if(recover)
         this.Recover(); 
+
+    }
+
+    Restart(){
+        this.animPlaying=false;
+        this.x = this.oX;
+        this.y = this.oY;
+        this.anims.play('alcaideRunning');
 
     }
 }
