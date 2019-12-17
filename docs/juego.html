@@ -22,6 +22,8 @@
         import OwO from './SaveyourSon/src/OwO.js';
         import MenuPrincipal from './SaveyourSon/src/MenuPrincipal.js';
         import HasPerdido from './SaveyourSon/src/HasPerdido.js'
+        import HasGanado from './SaveyourSon/src/HasGanado.js'
+
 
         var config = {
             type: Phaser.AUTO,
@@ -36,7 +38,7 @@
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
 
-            scene: [Level2,Level3,Level1,MenuPrincipal,MenuPowerUps],
+            scene: [Level3,Level1,Level2,MenuPrincipal,MenuPowerUps,HasPerdido,HasGanado],
             physics: { default: 'arcade', arcade: { gravity: { y: 1000 }, debug: true } }
 
         };

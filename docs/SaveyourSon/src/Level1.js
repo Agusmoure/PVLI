@@ -64,6 +64,7 @@ this.bombitas.objects.forEach(object => {
   x++;
   this.bombas.add(this.bombita);
 });
+this.lvM.SetNumBombas(this.contador);
         this.presosSlow = this.map.getObjectLayer('PresosSlow');
     
         this.presosSlow.objects.forEach(object => { 

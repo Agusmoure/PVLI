@@ -1,8 +1,8 @@
 import PowerUp from "./powerup.js";
 export default class HookGun extends PowerUp{
-    constructor(scene,levelManager){
-        let x=-5000;
-        let y=200;
+    constructor(scene,levelManager,oX,oY){
+        let x=oX;
+        let y=oY;
         super(scene,x,y,'portalAnimation');
         this.picked=false;
         this.lvM=levelManager;

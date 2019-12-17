@@ -1,7 +1,7 @@
-export default class HasPerdido extends Phaser.Scene {
+export default class HasGanado extends Phaser.Scene {
 
     constructor() {
-      super(/*{ key: 'main' }*/ 'HasPerdido');
+      super(/*{ key: 'main' }*/ 'HasGanado');
     }
     preload(){
         this.load.image('menu','./SaveyourSon/assets/Menu.jpg');
@@ -10,7 +10,7 @@ export default class HasPerdido extends Phaser.Scene {
     create(data){
       this.gM=data;
     this.add.image(350, 350, 'menu').setScale(2);
-    this.add.bitmapText(50, 500, 'font', 'Has Perdido').setScale(3);
+    this.add.bitmapText(50, 500, 'font', 'Has Ganado').setScale(3);
     this.pointer = this.input.activePointer;
     }
 
