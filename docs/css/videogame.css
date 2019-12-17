@@ -41,9 +41,12 @@ img.img-header {
 .media-item {
   margin: 1rem;
 }
+img.img-people {
+max-height: 300px;
+max-width: 300px;
+}
 
-
-/* Featurettes
+/* Featurettespx
 ------------------------- */
 
 .featurette-divider {
