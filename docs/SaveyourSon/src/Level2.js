@@ -58,7 +58,7 @@ create(data) {
 
     this.lvM.SetNumBombas(3);
 
-    this.HookGun = new HookGun(this,this.lvM);
+    this.HookGun = new HookGun(this,this.lvM,100,100);
 
     this.keyCount=0;
     this.bomba = new Bomba(this,400,200,this.lvM,0);

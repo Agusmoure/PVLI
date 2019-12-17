@@ -47,7 +47,8 @@ preload() {
   this.load.spritesheet('alcaideRun','./SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('playerRun','./SaveyourSon/assets/PlayerRun.png',{frameWidth:64, frameHeight:64});
   this.load.spritesheet('alcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64, frameHeight:64});
-  this.load.spritesheet('presoIdle','./SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('presoIdleStun','./SaveyourSon/assets/PresoIdle.png',{frameWidth:64,frameHeight:64});
+  this.load.spritesheet('presoIdleSlow','./SaveyourSon/assets/PresoIdleSlow.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('poliVertical','./SaveyourSon/assets/PoliVertical.png',{frameWidth:64, frameHeight:64});
   this.load.spritesheet('poliVerticalStun','./SaveyourSon/assets/PoliVerticalStun.png',{frameWidth:64, frameHeight:64});
   this.load.spritesheet('poliVerticalSlow','./SaveyourSon/assets/PoliVerticalSlow.png',{frameWidth:64, frameHeight:64});
@@ -57,8 +58,9 @@ preload() {
   this.load.spritesheet('AlcaideAttack','./SaveyourSon/assets/AlcaideAttack.png',{frameWidth:64,frameHeight:64});
   this.load.spritesheet('playerJetpack', './SaveyourSon/assets/PlayerJetPack.png', { frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet('portalAnimation', './SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
-  this.load.spritesheet('presoStun', './SaveyourSon/assets/Prisionerstun.png', { frameWidth: 64, frameHeight: 64 });
-  this.load.spritesheet('presoSlow', './SaveyourSon/assets/PrisionerSlowRunLeft.png', { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet('presoStun', './SaveyourSon/assets/PrisionerstunDerecha.png', { frameWidth: 64, frameHeight: 64 });
+  this.load.spritesheet('presoSlow', './SaveyourSon/assets/PrisionerSlowRunRight.png', { frameWidth: 64, frameHeight: 64 });
+  
 
   this.load.spritesheet('dude', './SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 -
@@ -186,19 +188,19 @@ create(){
     //Preso quieto
     this.anims.create({
       key: 'presoIdle',
-      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frames: this.anims.generateFrameNumbers('presoIdleStun', { start: 0, end: 6 }),
       frameRate: 10,
       repeat: -1
     });
     this.anims.create({
       key: 'presoIdleStun',
-      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frames: this.anims.generateFrameNumbers('presoIdleStun', { start: 0, end: 6 }),
       frameRate: 10,
       repeat: -1
     });
     this.anims.create({
       key: 'presoIdleSlow',
-      frames: this.anims.generateFrameNumbers('presoIdle', { start: 0, end: 6 }),
+      frames: this.anims.generateFrameNumbers('presoIdleSlow', { start: 0, end: 6 }),
       frameRate: 10,
       repeat: -1
     });
@@ -217,7 +219,7 @@ create(){
     });
     this.pointer = this.input.activePointer;
     this.player = new Player(this, this.gM,this.lvM);
-    this.HookGun = new HookGun(this,this.lvM);
+    this.HookGun = new HookGun(this,this.lvM,-1000,-1000);
     this.enemy = new Enemy(this,this.player,this.gM);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
@@ -228,7 +230,6 @@ create(){
     this.extrasPolis = this.physics.add.group();
     this.keys= this.physics.add.group();
     this.Presos = this.physics.add.group();
-    this.noPowerUps = this.physics.add.group();
 
 
 
@@ -257,7 +258,6 @@ Overlaps(){
   this.physics.add.overlap(this.player,this.keys,this.PillarLlave,null,this);
   this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
   this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
-  this.physics.add.overlap(this.player,this.noPowerUps,this.NoPower,null,this);
    this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
@@ -411,11 +411,5 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
   NuevoProyectil(){    
     this.proyectil=null;
-  }
-
-
-  NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
-    player.changeModifierNormal();
-    noPowerUp.PickMe();
   }
 }
