@@ -8,6 +8,8 @@ import GameManager from "./GameManager.js";
 import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
 import Extra from "./extra.js";
+import Preso from "./preso.js";
+import Poli from "./poli.js";
 import HookGun from "./HookGun.js";
 import HookGunProyectile from "./HookGunProyectile.js"
 import MovableWall from "./movableWall.js";
@@ -60,40 +62,41 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     });
     this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
     this.poliHorizontal.objects.forEach(object => { 
-      this.policia = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,200,this.lvM,false,true,125,200);
+      this.policia = new Poli(this,object.x,object.y-1000,'horizontal',100,200,this.lvM,false,125);
       this.policia.SetAnim();
       this.extrasPolis.add(this.policia);
     });
     this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
     this.poliHorizontalStun.objects.forEach(object => { 
-      this.policia = new Extra(this,object.x,object.y-1000,'horizontal',-1,75,125,this.lvM,true,true,40,200);
+      this.policia = new Poli(this,object.x,object.y-1000,'horizontal',75,125,this.lvM,true,40);
       this.policia.SetAnim();
       this.extrasPolis.add(this.policia);
     });
   
     this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
     this.poliVertical.objects.forEach(object => { 
-      this.policia = new Extra(this,object.x,object.y-1000,'vertical',-1,100,200,this.lvM,false,true,125,200);
+      this.policia = new Poli(this,object.x,object.y-1000,'vertical',100,200,this.lvM,false,125);
       this.policia.SetAnim();
       this.extrasPolis.add(this.policia);
     });
     this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
     this.poliVerticalStun.objects.forEach(object => { 
-      this.policia = new Extra(this,object.x,object.y-1000,'vertical',-1,75,125,this.lvM,true,true,40,200);
+     // (scene,oX,oY,movimiento,amplitud,velocidad,levelManager,stunear,tiempopenal)
+      this.policia = new Poli(this,object.x,object.y-1000,'vertical',75,125,this.lvM,true,40);
       this.policia.SetAnim();
       this.extrasPolis.add(this.policia);
     });
   
       this.presosMapa = this.map.getObjectLayer('PresosStun');
       this.presosMapa.objects.forEach(object => { 
-        this.preso = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,200,this.lvM,true,false,200,200);
+        this.preso = new Preso(this,object.x,object.y-1000,100,200,this.lvM,true,200,200);
         this.preso.SetAnim();
         this.Presos.add(this.preso);
       });
       
       this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
       this.presosSlowMapa.objects.forEach(object => { 
-        this.presoslow = new Extra(this,object.x,object.y-1000,'horizontal',-1,100,200,this.lvM,false,false,200,200);
+        this.presoslow = new Preso(this,object.x,object.y-1000,100,200,this.lvM,false,200,200);
         this.presoslow.SetAnim();
         this.Presos.add(this.presoslow);
       });

@@ -10,6 +10,8 @@ import LevelManager from "./LevelManager.js";
 import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
 import Extra from "./extra.js";
+import Poli from "./poli.js";
+import Preso from "./preso.js";
 import HookGun from "./HookGun.js";
 import fondo from "./fondo.js"
 import NoPowerUp from "./NoPowerUp.js";
@@ -74,48 +76,47 @@ this.bombitas.objects.forEach(object => {
   this.bombas.add(this.bombita);
 });
 this.lvM.SetNumBombas(this.contador);
-        this.presosSlow = this.map.getObjectLayer('PresosSlow');
-    
-        this.presosSlow.objects.forEach(object => { 
-          this.presosSlow = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,false,false,200,3);
-          this.Presos.add(this.presosSlow);
-        });
-        this.presosStun = this.map.getObjectLayer('PresosStun');
-    
-        this.presosStun.objects.forEach(object => { 
-          this.presosStun = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,true,false,200,3);
-          this.Presos.add(this.presosStun);
-        });
+this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
+this.poliHorizontal.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'horizontal',100,200,this.lvM,false,125);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
+this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
+this.poliHorizontalStun.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'horizontal',75,125,this.lvM,true,40);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
 
-        this.Presos.children.iterate(function (child) {
+this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
+this.poliVertical.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'vertical',100,200,this.lvM,false,125);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
+this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
+this.poliVerticalStun.objects.forEach(object => { 
+ // (scene,oX,oY,movimiento,amplitud,velocidad,levelManager,stunear,tiempopenal)
+  this.policia = new Poli(this,object.x,object.y,'vertical',75,125,this.lvM,true,40);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
 
-          if(child != undefined)
-          child.SetAnim();  
-      });
-      this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
-      this.poliHorizontal.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'horizontal',-1,100,200,this.lvM,false,true,125,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-      this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
-      this.poliHorizontalStun.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'horizontal',-1,75,125,this.lvM,true,true,40,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-    this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
-      this.poliVertical.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'vertical',-1,100,200,this.lvM,false,true,125,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-      this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
-      this.poliVerticalStun.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'vertical',-1,75,125,this.lvM,true,true,40,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
+  this.presosMapa = this.map.getObjectLayer('PresosStun');
+  this.presosMapa.objects.forEach(object => { 
+    this.preso = new Preso(this,object.x,object.y,100,200,this.lvM,true,200,200);
+    this.preso.SetAnim();
+    this.Presos.add(this.preso);
+  });
+  
+  this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
+  this.presosSlowMapa.objects.forEach(object => { 
+    this.presoslow = new Preso(this,object.x,object.y,100,200,this.lvM,false,200,200);
+    this.presoslow.SetAnim();
+    this.Presos.add(this.presoslow);
+  });
+
   //   this.extrasPolis.children.iterate(function (child) {
 
   //     if(child != undefined)
