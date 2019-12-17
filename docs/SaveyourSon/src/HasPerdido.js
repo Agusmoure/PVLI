@@ -18,7 +18,7 @@ export default class HasPerdido extends Phaser.Scene {
       this.input.on('pointerdown',pointer=>{
 
         this.gM.scene--;
-        this.scene.start(this.gM.GetSuperNextScene(),this.gM);
+       // this.scene.start(this.gM.GetSuperNextScene(),this.gM);
       });
     }
     }

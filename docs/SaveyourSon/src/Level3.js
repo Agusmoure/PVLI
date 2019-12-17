@@ -22,7 +22,7 @@ export default class Level3 extends Game {
 
   constructor() {
     super(/*{ key: 'main' }*/  'Level3');
-    this.gM=new GameManager();
+   // this.gM=new GameManager();
 
   }
   preload() {
@@ -33,8 +33,8 @@ this.load.tilemapTiledJSON('Nivel3', './SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
   
-  create(/*data*/) {
-    //this.gM=data;
+  create(data) {
+    this.gM=data;
     this.fondo=new fondo(this,'fondo3')/*.setScale(0.2)*/;
 
     this.map = this.make.tilemap({ 
@@ -133,6 +133,7 @@ this.noPowerUp = new NoPowerUp(this,49600,1250,this.lvM);
   });    
 
     super.Colliders();
+    
     super.Overlaps();
     this.physics.add.overlap(this.player,this.extrasPolis,this.PoliPilla,null,this);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);

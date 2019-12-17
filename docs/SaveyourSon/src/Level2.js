@@ -31,8 +31,8 @@ export default class Level2 extends Game {
   this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 }
 
-create(data) {
-  this.gM=data;
+create(/*data*/) {
+  //this.gM=data;
   // this.fondo=new fondo(this,'fondo2').setScale(1.5);
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
@@ -65,53 +65,6 @@ create(data) {
     this.bomba2 = new Bomba(this,700,200,this.lvM,1);
     this.bombas.add(this.bomba)
     this.bombas.add(this.bomba2);
-
-
-    //EXTRAS
-    //this.poli=new Extra (this,500,100,'horizontal',0,50,100,this.lvM,true,true,100,300);
-    // this.poli2=new Extra (this,800,100,'vertical',0,50,100,this.lvM,true,true,200,300);
-    // this.poli3= new Extra(this,2800,300,'vertical',0,50,100,this.lvM,true,true,200,300);
-    // this.poli4= new Extra(this,2800,610,'vertical',0,50,100,this.lvM,true,true,200,300);
-    // this.poli5= new Extra(this,4700,300,'vertical',0,300,300,this.lvM,true,true,200,300);
-    // this.poli6= new Extra(this,8400,400,'vertical',0,150,300,this.lvM,true,true,200,300);
-    // this.poli7= new Extra(this,12300,1300,'horizontal',0,0,0,this.lvM,true,true,200,300);
-    // this.poli8= new Extra(this,14520,650,'horizontal',0,100,200,this.lvM,true,true,200,300);
-    // this.poli9= new Extra(this,16000,1000,'vertical',0,10,50,this.lvM,true,true,200,300);
-    // this.poli10= new Extra(this,18600,1000,'vertical',0,50,100,this.lvM,true,true,200,300);
-    // this.poli11= new Extra(this,22410,1000,'horizontal',0,50,100,this.lvM,true,true,200,300);
-    // this.poli12= new Extra(this,25850,1150,'vertical',0,150,200,this.lvM,true,true,200,300);
-    // this.poli13= new Extra(this,27800,1250,'vertical',0,75,200,this.lvM,true,true,200,300);
-    // this.poli14= new Extra(this,27150,1250,'vertical',0,75,210,this.lvM,true,true,200,300);
-    // this.poli15= new Extra(this,27500,1250,'vertical',0,75,205,this.lvM,true,true,200,300);
-    // this.poli16= new Extra(this,30100,750,'vertical',0,25,100,this.lvM,true,true,200,300);
-    // this.poli16= new Extra(this,30100,750,'vertical',0,25,100,this.lvM,true,true,200,300);
-    // this.poli17= new Extra(this,34650,1800,'vertical',0,25,100,this.lvM,true,true,200,300);
-    // this.poli17= new Extra(this,35175,1800,'horizontal',0,0,0,this.lvM,true,true,200,300);
-    // this.poli18= new Extra(this,37075,1920,'vertical',0,25,100,this.lvM,true,true,200,300);
-    // this.poli19= new Extra(this,38670,1920,'horizontal',0,0,0,this.lvM,true,true,200,300);
-    // this.poli20= new Extra(this,17650,1000,'horizontal',0,0,0,this.lvM,true,true,200,300);
-
-
-    // //this.extrasPolis.add(this.poli);
-    // this.extrasPolis.add(this.poli2);
-    // this.extrasPolis.add(this.poli3);
-    // this.extrasPolis.add(this.poli4);
-    // this.extrasPolis.add(this.poli5);
-    // this.extrasPolis.add(this.poli6);
-    // this.extrasPolis.add(this.poli7);
-    // this.extrasPolis.add(this.poli8);
-    // this.extrasPolis.add(this.poli9);
-    // this.extrasPolis.add(this.poli10);
-    // this.extrasPolis.add(this.poli11);
-    // this.extrasPolis.add(this.poli12);
-    // this.extrasPolis.add(this.poli13);
-    // this.extrasPolis.add(this.poli14);
-    // this.extrasPolis.add(this.poli15);
-    // this.extrasPolis.add(this.poli16);
-    // this.extrasPolis.add(this.poli17);
-    // this.extrasPolis.add(this.poli18);
-    // this.extrasPolis.add(this.poli19);
-    // this.extrasPolis.add(this.poli20);
     this.extrasPolis.children.iterate(function (child) {
 
       if(child != undefined)
@@ -169,23 +122,38 @@ create(data) {
     this.lvM.SetNumBombas(this.contador);
     
     this.proyectil=undefined;
-  this.backtoNormal = new NoPowerUp(this,800,500,this.lvM);
-  this.noPowerUps.add(this.backtoNormal);
+    this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM);
+  this.backtoNormal = new NoPowerUp(this,30500,1300,this.lvM);
+  this.gancho =new HookGun(this,this.lvM,19600,1350);
+  
 
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
 this.HookGunProyectiles.add(this.HookGunProyectile);
 
    super.Colliders();
-    
+   this.physics.add.collider(this.gancho,this.background);
+   this.physics.add.collider(this.backtoNormal,this.background);
 
     //Puedo hacer llamadas a varios métodos en un mismo evento overlap
     super.Overlaps()
     //Dependiendo de si es un preso o un policia hay que hacerlo con el alcaide o el player pero solo con uno, para que un preso no estu 
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
+    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+    this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
+    this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
   }
 
   update(time, delta) {
-    this.fondo.Update(this.player);
+    //this.fondo.Update(this.player);
     super.update();
+  }
+  NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
+    player.changeModifierNormal();
+    noPowerUp.PickMe();
+  }
+
+  GetGancho(player,gancho){
+    player.changeModifierGancho();
+  gancho.PickMe();
   }
 }
