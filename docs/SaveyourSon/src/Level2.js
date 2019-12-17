@@ -35,6 +35,7 @@ export default class Level2 extends Game {
 create(/*data*/) {
   //this.gM=data;
   // this.fondo=new fondo(this,'fondo2').setScale(1.5);
+
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
       tileWidth: 64, 
@@ -53,6 +54,15 @@ create(/*data*/) {
       this.keys.add(this.llave);
     });
     this.player.changeModifierJetPack();
+    this.player.x=500;
+    this.player.y=500;
+    this.player.oX=500;
+    this.player.oY=500;
+    this.enemy.x=0;
+    this.enemy.y=500;
+    this.enemy.oX=0;
+    this.enemy.oY=500;
+
     this.lvM.HUD = this.Hud;
     this.jetpack = new JetPack(this);
     this.antigravedad = new Antigravedad(this);
@@ -156,5 +166,21 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
   GetGancho(player,gancho){
     player.changeModifierGancho();
   gancho.PickMe();
+  }
+
+
+  Restart(){
+
+    // this.backtoNormal.destroy();
+    // this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
+    // this.physics.add.collider(this.backtoNormal,this.background);
+    // this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+    this.gancho.destroy();
+    this.gancho = new HookGun(this,this.lvM,19600,1350);
+    this.physics.add.overlap(this.player,this.gancho,this.player.changeModifierGancho,null,this.player);
+    this.physics.add.overlap(this.player,this.gancho,this.gancho.changeModifier,null,this.gancho);
+    this.physics.add.collider(this.gancho,this.background);
+    this.enemy.Restart();
+    this.player.Restart('jetpack');
   }
 }

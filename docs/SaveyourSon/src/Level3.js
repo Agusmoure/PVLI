@@ -109,10 +109,18 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       this.lvM.SetNumBombas(this.contador);
     this.jetpack = new JetPack(this,24800,1000);
     this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
+    this.HookGun = new HookGun(this,this.lvM,34500,800);
 this.noPowerUp = new NoPowerUp(this,49600,1250,this.lvM);
-this.HookGun = new HookGun(this,this.lvM,34500,800);
     
     this.player.changeModifierJetPack();
+    this.player.x=500;
+    this.player.y=0;
+    this.player.oX=500;
+    this.player.oY=0;
+    this.enemy.x=0;
+    this.enemy.y=0;
+    this.enemy.oX=0;
+    this.enemy.oY=0;
 
 
 
@@ -151,5 +159,32 @@ this.HookGun = new HookGun(this,this.lvM,34500,800);
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
     noPowerUp.PickMe();
+  }
+
+  Restart(){
+    // this.backtoNormal.destroy();
+    // this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
+    // this.physics.add.collider(this.backtoNormal,this.background);
+    // this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+    this.HookGun.destroy();
+    this.HookGun = new HookGun(this,this.lvM,34500,800);
+    this.physics.add.overlap(this.player,this.HookGun,this.player.changeModifierGancho,null,this.player);
+    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.changeModifier,null,this.HookGun);
+    this.physics.add.collider(this.HookGun,this.background);
+
+    this.jetpack.destroy();
+    this.jetpack = new JetPack(this,24800,1000);
+    this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
+    this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
+    this.physics.add.collider(this.jetpack,this.background);
+
+    this.antigravedad.destroy();
+    this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
+    this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
+    this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+    this.physics.add.collider(this.antigravedad,this.background);
+
+    this.enemy.Restart();
+    this.player.Restart('jetpack');
   }
 }
