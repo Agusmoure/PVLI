@@ -35,7 +35,7 @@ this.load.tilemapTiledJSON('Nivel3', './SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
   
-  create(/*data*/) {
+  create(data) {
     //this.gM=data;
     this.fondo=new fondo(this,'fondo3')/*.setScale(0.2)*/;
 

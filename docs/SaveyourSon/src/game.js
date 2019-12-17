@@ -230,6 +230,7 @@ create(){
     this.extrasPolis = this.physics.add.group();
     this.keys= this.physics.add.group();
     this.Presos = this.physics.add.group();
+    
 
 
 
@@ -386,7 +387,11 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
 
   EndGame(){
+   // this.registry.destroy();
+//this.events.off();
+//this.scene.restart();
     this.scene.start('HasPerdido',this.gM);
+  
   }
 
   Pausar(){

@@ -32,8 +32,8 @@ export default class Level2 extends Game {
   this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 }
 
-create(data) {
- // this.gM=data;
+create(/*data*/) {
+  //this.gM=data;
   // this.fondo=new fondo(this,'fondo2').setScale(1.5);
   this.map = this.make.tilemap({ 
     key: 'Nivel2', 
@@ -128,8 +128,10 @@ create(data) {
     this.lvM.SetNumBombas(this.contador);
     
     this.proyectil=undefined;
-  this.backtoNormal = new NoPowerUp(this,800,500,this.lvM);
-  this.noPowerUps.add(this.backtoNormal);
+    this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM);
+  this.backtoNormal = new NoPowerUp(this,30500,1300,this.lvM);
+  this.gancho =new HookGun(this,this.lvM,19600,1350);
+  
 
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
 this.HookGunProyectiles.add(this.HookGunProyectile);
@@ -138,11 +140,25 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
    this.physics.add.collider(this.background,this.door);
    super.Overlaps();
    this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
+   this.physics.add.collider(this.gancho,this.background);
+   this.physics.add.collider(this.backtoNormal,this.background);
     this.physics.add.overlap(this.enemy,this.Presos,this.PresoPilla,null,this);
+    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+    this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
+    this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
   }
 
   update(time, delta) {
     //this.fondo.Update(this.player);
     super.update();
+  }
+  NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
+    player.changeModifierNormal();
+    noPowerUp.PickMe();
+  }
+
+  GetGancho(player,gancho){
+    player.changeModifierGancho();
+  gancho.PickMe();
   }
 }
