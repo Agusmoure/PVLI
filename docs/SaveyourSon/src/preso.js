@@ -18,7 +18,7 @@ export default class Preso extends Phaser.GameObjects.Sprite{
      this.speedX=velocidad;
      this.distance=amplitud;
      this.lvM=levelManager;
-     this.coste=1; // las llaves que cuesta cada uno de los presos para que sean liberado
+     this.coste=10; // las llaves que cuesta cada uno de los presos para que sean liberado
     this.imagen = scene.add.sprite(oX,oY,'alcaideRun');
     this.imagen.play('alcaideRunning');     
     /*Carlos somos uno de los grupos que tuvimos problemas para renderizar las animaciones, debido a que solo se renderizaba el primer
@@ -96,6 +96,7 @@ export default class Preso extends Phaser.GameObjects.Sprite{
             this.imagen.play('presoIdleStun');
             else
             this.imagen.play('presoIdleSlow');
+
         
        }
 }

@@ -140,7 +140,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
    this.physics.add.collider(this.gancho,this.background);
    this.physics.add.collider(this.backtoNormal2,this.background);
     this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
-  //   this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
+     this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
   }
 //metodo update
   update(time, delta) {
