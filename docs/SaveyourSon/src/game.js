@@ -244,10 +244,8 @@ Colliders(){
    this.physics.add.collider(this.extrasPolis,this.background);
    this.physics.add.collider(this.Presos,this.background);
    this.physics.add.collider(this.HookGun,this.background);
-   this.physics.add.collider(this.Presos,this.background);
    this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
    this.physics.add.collider(this.background,this.door);
-   this.physics.add.collider(this.jetpack,this.background);
    this.physics.add.collider(this.backtoNormal,this.background);
 
 }
@@ -269,7 +267,7 @@ Overlaps(){
    this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
    this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
-}
+  }
 
 
 update(){

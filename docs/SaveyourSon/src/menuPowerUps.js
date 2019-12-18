@@ -76,12 +76,12 @@ export default class MenuPowerUps extends Phaser.Scene {
     }
     //metodo update se encarga de manejar los eventos de los botones de compra y de editar los textos en funcion de su necesidad
     update(time, delta) {
-
+//texto
     this.textoLLaves.setText(this.gM.GetKey());
     this.speedImprovmentText.setText(this.gM.GetSpeedImprovments()+'/'+this.gM.GetMaxImprovements());
     this.speedPenalizationText.setText(this.gM.GetSpeedPenalizations()+'/'+this.gM.GetMaxImprovements());
     this.fuelText.setText(this.gM.GetJetpackImprovements()+'/'+this.gM.GetMaxImprovements());
-
+//botones
 this.arrow.on('pointerdown',pointer => {
 if(!this.mouseClick){
     this.scene.start(this.gM.GetSuperNextScene(), this.gM);

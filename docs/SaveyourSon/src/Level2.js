@@ -51,10 +51,10 @@ create(data) {
   super.create();
 //seteamos una serie de variables de este nivel y los modifiers
     this.player.changeModifierJetPack();
-    this.player.x=500;
-    this.player.y=100;
-    this.player.oX=500;
-    this.player.oY=500;
+    this.player.x=200;
+    this.player.y=400;
+    this.player.oX=200;
+    this.player.oY=400;
     this.enemy.x=0;
     this.enemy.y=500;
     this.enemy.oX=0;
@@ -66,7 +66,7 @@ create(data) {
 
     this.lvM.SetNumBombas(3);
 
-    this.HookGun = new HookGun(this,this.lvM,100,100);
+    this.HookGun = new HookGun(this,this.lvM,-999999900,100);
 
     this.keyCount=0;
     this.door= new LevelChanger(this,this.gM,this.lvM,41600,100).setScale(0.5);
@@ -142,7 +142,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
    this.physics.add.collider(this.gancho,this.background);
    this.physics.add.collider(this.backtoNormal2,this.background);
     this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
-    this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
+  //   this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
   }
 //metodo update
   update(time, delta) {
