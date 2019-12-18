@@ -21,7 +21,6 @@ export default class Game extends Phaser.Scene {
   //Cargamos todas las imagenes comunes
 preload() {
 
-  this.load.image('bombWall', './SaveyourSon/assets/BombWall.png');
   this.load.image('key','./SaveyourSon/assets/Key.png');
   this.load.image('bomba','./SaveyourSon/assets/bomba.png');
   this.load.image('jetpackHUD','./SaveyourSon/assets/jetpack.png');
@@ -57,10 +56,7 @@ preload() {
   this.load.spritesheet('portalAnimation', './SaveyourSon/assets/PortalAnimation.png', { frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet('presoStun', './SaveyourSon/assets/PrisionerstunDerecha.png', { frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet('presoSlow', './SaveyourSon/assets/PrisionerSlowRunRight.png', { frameWidth: 64, frameHeight: 64 });
-  
 
-  this.load.spritesheet('dude', './SaveyourSon/assets/dude.png', { frameWidth: 32, frameHeight: 48 });
--
   
 
      this.load.audio('explosion','./SaveyourSon/assets/Sonidos/Explosion.wav');
