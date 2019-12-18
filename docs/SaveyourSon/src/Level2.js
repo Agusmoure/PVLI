@@ -162,7 +162,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 //reinicia el nivel
   Restart(){
     this.gancho.destroy();
-    this.gancho = new HookGun(this,this.lvM,19600,1350);
+    this.gancho = new HookGun(this,this.lvM,19600,1350).setScale(0.2);
     this.physics.add.overlap(this.player,this.gancho,this.player.changeModifierGancho,null,this.player);
     this.physics.add.overlap(this.player,this.gancho,this.gancho.changeModifier,null,this.gancho);
     this.physics.add.collider(this.gancho,this.background);

@@ -361,6 +361,8 @@ update(){
         let varY = this.pointer.worldY-this.player.y;
         let modulo=Math.sqrt(Math.pow(varX,2)+Math.pow(varY,2));
         this.proyectil = new HookGunProyectile(this,this.lvM, (varX/modulo),(varY/modulo),this.player.x+20,this.player.y+20);
+        console.log(this.HookGunProyectiles);
+        console.log(this.keys);
         this.HookGunProyectiles.add(this.proyectil);
       }
     

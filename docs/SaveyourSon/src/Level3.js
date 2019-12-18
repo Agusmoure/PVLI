@@ -102,10 +102,10 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       });
       this.lvM.SetNumBombas(this.contador);
       //creamos los modifiers
-    this.jetpack = new JetPack(this,24800,1000);
+    this.jetpack = new JetPack(this,24800,1000).setScale(0.15);
     this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
-    this.HookGun = new HookGun(this,this.lvM,34500,800);
-    this.HookGunProyectiles=new HookGunProyectile(this,this.lvM,0,0,-99999999,99999999)
+    this.HookGun = new HookGun(this,this.lvM,34500,800).setScale(0.2);
+    this.HookGunProyectile=new HookGunProyectile(this,this.lvM,0,0,-99999999,99999999)
     this.backtoNormal = new NoPowerUp(this,49600,1250,this.lvM);
     //seteamos las variables concretas
     this.player.changeModifierJetPack();
@@ -138,13 +138,13 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 //metodo que reinicia la posicion del player, del enemy y vuelve a poner los modifiers en su lugar
   Restart(){
     this.HookGun.destroy();
-    this.HookGun = new HookGun(this,this.lvM,34500,800);
+    this.HookGun = new HookGun(this,this.lvM,34500,800).setScale(0.2);
     this.physics.add.overlap(this.player,this.HookGun,this.player.changeModifierGancho,null,this.player);
     this.physics.add.overlap(this.player,this.HookGun,this.HookGun.changeModifier,null,this.HookGun);
     this.physics.add.collider(this.HookGun,this.background);
 
     this.jetpack.destroy();
-    this.jetpack = new JetPack(this,24800,1000);
+    this.jetpack = new JetPack(this,24800,1000).setScale(0.15);
     this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
     this.physics.add.collider(this.jetpack,this.background);
