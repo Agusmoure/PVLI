@@ -3,15 +3,12 @@ import GameManager from "./GameManager.js"
 export default class Player extends Phaser.GameObjects.Sprite{
     ///Crea al jugador y para ello se le pasa la escena, el GM y el LVM
 constructor(scene,gameManager,levelManager){
-    let x=40000;
-    let y=1200;
+    let x=100;
+    let y=100;
     super(scene,x,y,'dude');
     scene.add.existing(this);
     scene.physics.add.existing(this);
-   // this.gm=gameManager;
    this.lvM=levelManager;
-//this.body.setCollideWorldBounds(true);
-this.vehicle=false;
 this.modifier='normal';
 this.modifierAUX='normal';
 this.modifierDisponible=true;
@@ -53,12 +50,11 @@ this.touchedSound = scene.sound.add('PlayerTouched',config);
 this.jetpackSound = scene.sound.add('Jetpack',config);
 this.noFuel = scene.sound.add('JetpackNoFuel',config);
 this.pickUpItem = scene.sound.add('PickUpItem',config);
-//levelManager.SetPlayerModifier('normal');
 }
 
 update(){
-    console.log(this.modifier+"");
 
+    //En caso de que el player no esté stuneado
     if(this.stunTime<1){
 if(this.right)
 this.body.setVelocityX(this.defaultSpeed+this.impulsoX);
@@ -85,17 +81,23 @@ if(Math.abs(this.impulsoX)>0){
     else
     this.impulsoX=this.impulsoX+10;
 }
-
- }
+}
+//Si el player esta stuneado, no se moverá y voy quitando tiempo de stun
     else{
         this.body.setVelocityX(0);
     this.stunTime= this.stunTime-1;
     console.log(this.stunTime);
     }
-    if(this.body.velocity.y>=this.maxSpeedY)this.body.velocity.y=this.maxSpeedY;
-    else if(this.body.velocity.y<=-this.maxSpeedY) this.body.velocity.y=-this.maxSpeedY;
+
+    //Controlamos que el player no se mueva demasiado rapido en ninguno de los ejes para que no haya problemas 
+    //a la hora de colisionar con determinados elementos
+    if(this.body.velocity.y>=this.maxSpeedY)
+    this.body.velocity.y=this.maxSpeedY;
+    else if(this.body.velocity.y<=-this.maxSpeedY) 
+    this.body.velocity.y=-this.maxSpeedY;
 }
-//SETERS
+
+//SETERS DE MODIFIERS
 changeModifierNormal(){
     this.body.setGravityY(Math.abs(this.gravity));
     this.modifier='normal';
@@ -140,34 +142,31 @@ changeModifierAntigravedad(){
     this.pickUpItem.play();
  }
 
- 
+ //Cuando el jugador presiona el boton de moverse a la derecha
 moveRight(){
     if(this.stunTime<1)
     this.body.setVelocityX(this.speedX+this.impulsoX);
     this.right=true;
     this.flipX=false;
-
-
 }
+//Cuando el jugador ha pulsado el botón de moverse a la izquierda
 moveLeft(){
     if(this.stunTime<1)
     this.body.setVelocityX(-this.speedX+this.impulsoX);
     this.right=false;
     this.flipX=true;
-    
-
 }
 
+//Metodo que se llama cuando el player es pillado por el alcaide
  dontMove(){
      if(this.sonido){
      this.body.setVelocityX(0);
-    //  this.speedX=0;
-    //  this.defaultSpeed=0;
      this.PlayerHit.play();
      this.sonido=false;
-    // this.anims.stop();
      }
  }
+
+
  useGadget(){
      if(this.stunTime<1){
     if(this.modifier==='jetpack' && this.modifierDisponible){
@@ -208,13 +207,14 @@ moveLeft(){
     }
 }
  }
+
+ //Metodo para saltar
 moveUp(){
     if(this.stunTime<1){
     if( /*this.body.touching.down  &&*/  (this.modifier==='normal') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){   // Que la velocidad sea muy pequeña para poder saltar (parecido a que estuviese tocando el suelo)
     this.body.setVelocityY(-this.speedY);
    this.avalibleJump--;
    this.saltoSound.play();
-    //this.lvM.LiberarPreso(true);
     
 }
 else if(/*this.body.touching.down  &&*/  (this.modifier!=='normal' && this.modifier !=='antigravedad') &&  Math.abs(this.body.velocity.y)<10&&this.avalibleJump>0){
@@ -226,6 +226,7 @@ else if(/*this.body.touching.down  &&*/  (this.modifier!=='normal' && this.modif
  
 }
 
+//Metodo que controla cuando se ha dejado de pulsar el botón de usar el modifiers para que el antigravedad no cambie la gravedad cada frame
 keyUp(){
     if(this.modifier==='jetpack' || this.modifier === 'bomba' ){
        this.jetpackSound.stop();
@@ -237,6 +238,8 @@ keyUp(){
     
 }
 
+
+//Le digo al level manager que he pulsado el botón de liberar presos
 LiberarPresos(valor){
 this.lvM.LiberarPreso(valor);
 }
@@ -246,44 +249,42 @@ this.speedX=this.speedX+velModifier;
 if(velModifier<0)
 this.touchedSound.play();
 }
+
+//Acumulo un impulso en cada eje para cuando el jugador está cerca de las bombas y tiene que ser expulsado
 Impulse(velX,velY){
     this.impulsoX=velX;
     this.impulsoY=velY;
-   
  }
+
+ //Me guardo el tiempo que tengo que estar en estado Stun 
  getStunned(time){
 this.stunTime=time;
 this.touchedSound.play();
  }
-GetVelX(){
+
+ aumentSpeed(){
+     this.speedX *=4;
+    }
+    resetSpeed(){
+        this.speedX=160;
+    }
+   GetVelX(){
     return this.body.velocity.x;
-}
-changeG(){
-    this.body.gravity.y();
-}
-aumentSpeed(){
-    this.speedX *=4;
-}
-resetSpeed(){
-    this.speedX=160;
-}
+    }
+
 getSpeedX(){
     return this.speedX;
 }
 getSpeedY(){
     return this.speedY;
 }
-setVehicle(haveVehicle){
-    this.vehicle=haveVehicle;
-}
-getVehicle(){
-    return this.vehicle;
-}
-
 getModifier(){
     return this.modifier;
 }
 
+
+//Pongo al jugador su primera posición del nivel, ajusto el modifier al primero que tenía, le digo que se renderice corriendo y le pongo la gravedad normal
+//Por si fue pillado con el modifier antigravedad 
 Restart(modifi){
 this.x=this.oX;
 this.y = this.oY;
@@ -295,7 +296,6 @@ this.body.setGravityY(Math.abs(this.gravity));
 }
 
 ResetJumps(){
-    //la condicion no funca
     //Esta condición es para que solo resetee saltos en todos los casos que no sean no tocar el suelo y tocar el lado derecho o izquierdo
     if(!(!this.body.touching.down&&(this.body.touching.right||this.body.touching.left)))
     this.avalibleJump=this.maxJump;

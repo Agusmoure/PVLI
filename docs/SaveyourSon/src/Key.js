@@ -23,7 +23,7 @@ export default class Key extends PowerUp{
     };
     this.pickMeSound = scene.sound.add('CojerLlave',config);
     }
-    //Se realiza para que no tenga gravedad
+    //Se realiza para que no tenga me mueva de mi posicion inicial
     preUpdate(time, delta){
         this.body.setVelocityY(0);
 this.x=this.oX;

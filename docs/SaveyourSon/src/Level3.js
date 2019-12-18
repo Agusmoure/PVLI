@@ -7,13 +7,13 @@ import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
 import Level1 from "./Level1.js";
 import LevelManager from "./LevelManager.js";
-import Extra from "./extra.js";
+//import Extra from "./extra.js";
 import Preso from "./preso.js";
 import Poli from "./poli.js";
 import HookGun from "./HookGun.js";
 import HookGunProyectile from "./HookGunProyectile.js"
-import MovableWall from "./movableWall.js";
-import BombWall from "./bombWall.js";
+//import MovableWall from "./movableWall.js";
+//import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import Game from "./game.js"
 import fondo from "./fondo.js"
@@ -137,9 +137,9 @@ this.noPowerUp = new NoPowerUp(this,49600,1250,this.lvM);
       if(child != undefined)
       child.SetAnim();  
   });
-    this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
+   // this.preso = new Extra(this,500,100,'horizontal',-1,50,100,this.lvM,true,false,300,300);
     //this.Presos = this.physics.add.group();
-    this.Presos.add(this.preso);
+    //this.Presos.add(this.preso);
     this.Presos.children.iterate(function (child) {
       if(child != undefined)
       child.SetAnim();  

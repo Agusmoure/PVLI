@@ -131,7 +131,7 @@ this.llaves.objects.forEach(object => {
     this.proyectil=undefined;
     this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM);
   this.backtoNormal = new NoPowerUp(this,30500,1300,this.lvM);
-  this.gancho =new HookGun(this,this.lvM,19600,1350);
+  this.gancho =new HookGun(this,this.lvM,19600,1350).setScale(0.2);
   
 
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);

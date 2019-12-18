@@ -8,7 +8,6 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
-        //this.body.setCollideWorldBounds(true);
         this.oX=0;
         this.oY=0;
         this.escena = scene;
@@ -21,9 +20,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.gM=gameManager;
         this.speedX=250-(gameManager.GetSpeedPenalizations()*this.penalization);
         this.player=jugador;
-        //this.play('alcaideRunning');
         this.anims.play('alcaideRunning');
-        this.animPlaying=false;
         const config = {
             mute: false,
             volume: 1,
@@ -38,6 +35,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
 
     followPlayer(){
 
+        //Si no estoy stuneado sigo al player dependiendo de donde esté
         if(this.stunTime<1){
         if(this.player.x<this.x)
         this.body.setVelocityX(-this.speedX);
@@ -47,11 +45,6 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         this.body.setVelocityY(-this.speedY);
         else
         this.body.setVelocityY(this.speedY);
-
-        // this.body.setVelocityX(this.speedX);
-        // this.body.setVelocityX((Math.abs(this.player.x-this.x))/(this.player.x-this.x)*this.speedX);
-        // this.body.setVelocityY((Math.abs(this.player.y-this.y))/(this.player.y-this.y)*this.speedY);
-       //this.body.setVelocityX((this.player.x-this.x));
         }
         else{
             this.body.setVelocityX(0);
@@ -62,34 +55,33 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
        
     }
 
+    //Metodo que se llama cuando el alcaide ha pillado al player
     HitPlayer(){
-
         this.escena.Restart()
-        // if(!this.animPlaying){
-        //     this.anims.play('alcaideAttacking');
-        //     this.animPlaying=true;
-        //      this.on('animationcomplete',()=>{this.escena.Restart();
-        //     });
-            
-        // }
     }
 
+    //Pongo mi velocidad a 0
     Stun(){
         this.speedX=0;
         this.touchedSound.play();
     }
+    //Recupero mi velocidad y le pregunto al gameManager por todas las penalizaciones que ha comprado el player
     Recover(){
         this.speedX=250-(this.gM.GetSpeedPenalizations()*this.penalization);
     }
+    //Aplico a mi velocidad el modificador que me ha llegado
     ChangeSpeed(slow){
         if(slow<0)
         this.touchedSound.play();
       this.speedX=this.speedX+slow;
 
     }
+    //Acumulo/guardo e stun
     getStunned(time){
 this.stunTime=time;
     }
+
+
     Update(stuned, recover){
         this.followPlayer();
         if(stuned)
@@ -99,8 +91,8 @@ this.stunTime=time;
 
     }
 
+    //Vuelvo a mi posición del comienzo del nivel
     Restart(){
-        this.animPlaying=false;
         this.x = this.oX;
         this.y = this.oY;
         this.anims.play('alcaideRunning');

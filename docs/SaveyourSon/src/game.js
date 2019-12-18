@@ -6,10 +6,7 @@ import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
 import LevelManager from "./LevelManager.js";
-import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
-import MovableWall from "./movableWall.js";
-import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import NoPowerUp from "./NoPowerUp.js"
 import HookGunProyectile from "./HookGunProyectile.js"
@@ -40,6 +37,7 @@ preload() {
   this.load.image('hitboxExtra','./SaveyourSon/assets/HitBoxExtra.png');
   this.load.image('barraProgreso','./SaveyourSon/assets/BarraProgresoHUD.png');
   this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
+  this.load.image('portalGun','./SaveyourSon/assets/Rifle.png');
 
 
   this.load.spritesheet('explosion', './SaveyourSon/assets/explosion.png',{ frameWidth: 64, frameHeight: 64 });
