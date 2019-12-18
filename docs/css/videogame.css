@@ -19,9 +19,13 @@ body {
 -------------------------------------------------- */
 
 img.img-header {
-  max-height: 500px;
+  max-height: 600px;
+  max-width:400px;
 }
-
+text.text-header{
+  font-size: 30px;
+  font-family: "Ubuntu";
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
@@ -44,6 +48,10 @@ img.img-header {
 img.img-people {
 max-height: 300px;
 max-width: 300px;
+}
+img.img-controles{
+  max-height: 400px;
+max-width: 400px;
 }
 
 /* Featurettespx
