@@ -24,8 +24,6 @@ export default class MenuPowerUps extends Phaser.Scene {
     create(data) {
 
         this.gM=data;
-        console.log(data);
-        console.log(this.gM);
         //añadimos las imagenes, el texto  y hacemos interactivas las de comprar 
         this.mouseClick=false;
         this.add.image(350, 350, 'menu').setScale(2);
@@ -88,21 +86,12 @@ if(!this.mouseClick){
 this.mouseClick=true;
 });
 
-this.Mejora.on('pointerup',pointer => {
-    if(this.mouseClick){
-        console.log('adios');
-    }
-    this.mouseClick=false;
-    });
-
 
     this.buttonSpeedImprovement.on('pointerdown',pointer => {
         if(!this.mouseClick&&this.gM.GetMaxImprovements()>this.gM.GetSpeedImprovments()){
             if(this.gM.GetKey()>=this.speedImprovementPrice){
             this.gM.AddSpeedImprovment(1);
-            console.log("before"+this.gM.GetKey()+" "+this.gM.GetSpeedImprovments());
             this.gM.AddKeys(-this.speedImprovementPrice);
-            console.log("after"+this.gM.GetKey());
             }
 
         }
@@ -118,9 +107,7 @@ this.Mejora.on('pointerup',pointer => {
                 if(!this.mouseClick){
                     if(this.gM.GetKey()>=this.speedPenalizationPrice&&this.gM.GetMaxImprovements()>this.gM.GetSpeedPenalizations()){
                     this.gM. AddSpeedPenalization(1);
-                    console.log("before"+this.gM.GetKey()+" "+this.gM.GetSpeedPenalizations());
                     this.gM.AddKeys(-this.speedPenalizationPrice);
-                    console.log("after"+this.gM.GetKey());
                     }
         
                 }
@@ -134,9 +121,7 @@ this.Mejora.on('pointerup',pointer => {
                         if(!this.mouseClick){
                             if(this.gM.GetKey()>=this.fuelPrice&&this.gM.GetMaxImprovements()>this.gM.GetJetpackImprovements()){
                             this.gM. AddJetPackImprovment(1);
-                            console.log("before"+this.gM.GetKey()+" "+this.gM.GetJetpackImprovements());
                             this.gM.AddKeys(-this.fuelPrice);
-                            console.log("after"+this.gM.GetKey());
                             }
                 
                         }
@@ -146,7 +131,5 @@ this.Mejora.on('pointerup',pointer => {
      this.buttonfuel.on('pointerup',pointer => {
                             this.mouseClick=false;
                             }); 
-                
-                            console.log("kdjc");
                 }
         }

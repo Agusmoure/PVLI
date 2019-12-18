@@ -19,7 +19,6 @@
         import Level2 from './SaveyourSon/src/Level2.js';
         import MenuPowerUps from './SaveyourSon/src/menuPowerUps.js';
         import Level3 from './SaveyourSon/src/Level3.js';
-        import HasPerdido from './SaveyourSon/src/HasPerdido.js'
         import HasGanado from './SaveyourSon/src/HasGanado.js'
 
 
@@ -36,7 +35,7 @@
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
 
-            scene: [Level1,Level2,Level3,MenuPowerUps,HasPerdido,HasGanado],
+            scene: [Level1,Level2,Level3,MenuPowerUps,HasGanado],
             physics: { default: 'arcade', arcade: { gravity: { y: 1000 }, debug: true } }
 
         };

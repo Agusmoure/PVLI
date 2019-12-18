@@ -32,8 +32,6 @@ export default class Level2 extends Game {
 //Create de esta escena
 create(data) {
   this.gM=data;
-  console.log(data);
-  console.log(this.gM);
   //Creamos el fondo para que este al fondo de todo
   this.fondo=new fondo(this,'fondo2').setScale(1.5);
 //Creamos el Tilemap
@@ -51,7 +49,7 @@ create(data) {
   super.create();
 //seteamos una serie de variables de este nivel y los modifiers
     this.player.changeModifierJetPack();
-    this.player.x=200;
+    this.player.x=500;
     this.player.y=400;
     this.player.oX=200;
     this.player.oY=400;

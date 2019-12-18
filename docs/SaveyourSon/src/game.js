@@ -1,14 +1,10 @@
 import Player from "./player.js";
-import JetPack from "./jetpack.js";
 import Enemy from "./enemy.js";
-import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
-import GameManager from "./GameManager.js";
 import LevelManager from "./LevelManager.js";
 import HookGun from "./HookGun.js";
 import HUD from "./HUD.js";
-import NoPowerUp from "./NoPowerUp.js"
 import HookGunProyectile from "./HookGunProyectile.js"
 export default class Game extends Phaser.Scene {
 
@@ -26,7 +22,6 @@ preload() {
   this.load.image('jetpackHUD','./SaveyourSon/assets/jetpack.png');
   this.load.image('hookHUD','./SaveyourSon/assets/HookGun.png');
   this.load.image('antigravedadHUD','./SaveyourSon/assets/AntigravedadHUD.png');
-  this.load.image('playerHUD','./SaveyourSon/assets/botonNivel.png');
   this.load.image('modifierNoDisponible','./SaveyourSon/assets/ModifierNoDisponible.png');
   this.load.image('meta','./SaveyourSon/assets/Meta.png');
   this.load.image('interfazModifier','./SaveyourSon/assets/FondoModifierHUD.png');
@@ -235,7 +230,8 @@ create(){
 }
 //se generan todos los colliders comunes a todas las escenas
 Colliders(){
-      
+      /*En la colision con el tilemap dando igual el grosor en ocasiones se salta los frame de colision en el script player.js podrás observar que la velocidad del player esta limitada
+      pero aun asi no funciona de forma correcta*/
    this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
    this.physics.add.collider(this.jetpack,this.background);
    this.physics.add.collider(this.antigravedad,this.background);
