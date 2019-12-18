@@ -150,7 +150,10 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
   }
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
-    noPowerUp.PickMe();
+    this.bombas.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+    });
   }
 //cambia el modifier a gancho y destruye el gancho
   GetGancho(player,gancho){
@@ -167,5 +170,10 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     this.physics.add.collider(this.gancho,this.background);
     this.enemy.Restart();
     this.player.Restart('jetpack');
+    this.bombas.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+  });
+
   }
 }

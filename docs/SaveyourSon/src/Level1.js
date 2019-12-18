@@ -132,7 +132,13 @@ this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
       }
 
       NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
+
         player.changeModifierNormal();
+        this.bombas.children.iterate(function (child) {
+          if(child != undefined)
+          child.Restart();
+      });
+        
       }
 
       Restart(){
@@ -147,7 +153,10 @@ this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
 this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
         this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
         this.physics.add.collider(this.antigravedad,this.background);
-
+        this.bombas.children.iterate(function (child) {
+          if(child != undefined)
+          child.Restart();
+      });
 
         this.enemy.Restart();
         this.player.Restart('normal');

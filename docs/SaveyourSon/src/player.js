@@ -292,6 +292,7 @@ this.modifier = modifi;
 this.lvM.SetPlayerModifier(modifi);
 this.anims.play('playerRunning');
 this.body.setGravityY(Math.abs(this.gravity));
+this.flipY=false;
 
 }
 

@@ -130,7 +130,10 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
-    noPowerUp.PickMe();
+    this.bombas.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+    });
   }
 //metodo que reinicia la posicion del player, del enemy y vuelve a poner los modifiers en su lugar
   Restart(){
@@ -154,5 +157,10 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 
     this.enemy.Restart();
     this.player.Restart('jetpack');
+    this.bombas.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+  });
+
   }
 }

@@ -352,7 +352,7 @@ this.fondo.Update(this.player);
 
 //metodo que se usa al pillar la bomba
 PillarBomba(player,bomba){
-  if(!bomba.recogida){
+  if(!bomba.recogida && player.modifier !== 'bomba'){  // Si el player ya tiene una bomba la nueva bmba no se pilla
    bomba.PickMe();
    player.changeModifierBomba(bomba.index);
   }
