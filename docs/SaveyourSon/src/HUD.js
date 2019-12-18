@@ -18,11 +18,14 @@ export default class HUD extends Phaser.GameObjects.Container{
         this.iconoLlave = scene.add.sprite(0,-720,'key');
         this.add(this.iconoLlave);
 
+
+        //Me quedo con el texto que me llega y lo pongo en su posición
         this.textoLlaves = texto;
         this.add(this.textoLlaves);
         this.textoLlaves.x=-5;
         this.textoLlaves.y=-665;
         
+        //Creo todas las imagenes del HUD, me las añado y las pongo en su posición
         this.barra = scene.add.sprite(550,100,'barraProgreso').setScale(3.5);
         this.add(this.barra);
 
@@ -52,23 +55,27 @@ export default class HUD extends Phaser.GameObjects.Container{
 
 
 this.mouseClick=false;
-this.pause = false;
     
     }
  
     preUpdate(time, delta){
+        // sigo al player y Me situo en una posición determinada 
         this.x= this.lvM.GetPlayerX()-500+100;//El 500 es para que se situe con respecto al player y el + 100 debido al offset de la camara
         this.y=this.lvM.GetPlayerY()+300-125; // Igual que con la posicion x
+        //Pregunto si el player tiene disponible el modifier para hacer visible la 
         if(!this.lvM.PlayerModifierAvaliable())
         this.avaliableModifierHUD.y=100;
         else
         this.avaliableModifierHUD.y=300;
 
+        //LE pongo al texto el numero de llaves que el player ha pillado
         this.textoLlaves.setText(this.lvM.keys);
         this.AvanzarPlayerHUD();
     }
 
 
+
+    //Dependiendo del modifier que me haya llegado hago que las imágenes del HUD se vean o no
     SetModifier(modifier){
         if(modifier == 'normal'){
             this.jetpackHUD.y=300;
@@ -111,6 +118,7 @@ this.pause = false;
        
     }
 
+    //Con este metodo dependiendo de la posición del player y o grande que sea el nivel muevo el icono del  con respecto a la barra del progreso del nivel
     AvanzarPlayerHUD(){
 
         this.playerHUD.x = 200+(((100*this.lvM.GetPlayerX())/this.largoEscena)*800)/100;

@@ -25,12 +25,12 @@ export default class NoPowerUp extends PowerUp{
     }
     preUpdate(time, delta){
         this.body.setVelocityY(0);
+        //Evito que se mueva
 this.x=this.oX;
 this.y = this.oY;
     }
     PickMe(){
         this.pickUpItem.play();
-        //gameManager.AddKeyToActuallevel();
-        this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
+        this.destroy();
         }    
 }

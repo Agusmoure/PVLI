@@ -23,8 +23,6 @@ export default class Level3 extends Game {
     //llamamos al preload del padre
 super.preload();
 this.load.image('fondo3','./SaveyourSon/assets/Level3.jpg')
-this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
-
 this.load.tilemapTiledJSON('Nivel3', './SaveyourSon/assets/Nivel3.json');
 this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   }
@@ -75,7 +73,6 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     });
     this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
     this.poliVerticalStun.objects.forEach(object => { 
-     // (scene,oX,oY,movimiento,amplitud,velocidad,levelManager,stunear,tiempopenal)
       this.policia = new Poli(this,object.x,object.y-1000,'vertical',75,125,this.lvM,true,40);
       this.policia.SetAnim();
       this.extrasPolis.add(this.policia);
@@ -104,7 +101,7 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
         this.bombas.add(this.bomba);
       });
       this.lvM.SetNumBombas(this.contador);
-      //creamos los mdifiers
+      //creamos los modifiers
     this.jetpack = new JetPack(this,24800,1000);
     this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
     this.HookGun = new HookGun(this,this.lvM,34500,800);
@@ -120,31 +117,22 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.enemy.y=0;
     this.enemy.oX=0;
     this.enemy.oY=0;
-    this.keyCount=0;
-    this.extrasPolis.children.iterate(function (child) {
-
-      if(child != undefined)
-      child.SetAnim();  
-  });
-    this.Presos.children.iterate(function (child) {
-      if(child != undefined)
-      child.SetAnim();  
-  });    
-
+    this.keyCount=0;    
+//Llamamos a los metodos collider y ovelaps del padre
     super.Colliders();
     super.Overlaps();
 
   }
-
-  update(time, delta) {  
-    this.fondo.Update(this.player);
+//metodo update de esta escena
+  update(time, delta) { 
+    //llama al metodo update del padre
     super.update(); 
   }
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
     noPowerUp.PickMe();
   }
-
+//metodo que reinicia la posicion del player, del enemy y vuelve a poner los modifiers en su lugar
   Restart(){
     this.HookGun.destroy();
     this.HookGun = new HookGun(this,this.lvM,34500,800);

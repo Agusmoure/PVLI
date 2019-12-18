@@ -8,6 +8,7 @@ export default class PowerUp extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);    
     scene.physics.add.existing(this);      
     }
+    //Me destruyo porque el player me acaba de pillar
     PickMe(){
         this.destroy();
         }    

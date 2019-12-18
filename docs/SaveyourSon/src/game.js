@@ -6,10 +6,7 @@ import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
 import LevelManager from "./LevelManager.js";
-import Extra from "./extra.js";
 import HookGun from "./HookGun.js";
-import MovableWall from "./movableWall.js";
-import BombWall from "./bombWall.js";
 import HUD from "./HUD.js";
 import NoPowerUp from "./NoPowerUp.js"
 import HookGunProyectile from "./HookGunProyectile.js"
@@ -40,6 +37,7 @@ preload() {
   this.load.image('hitboxExtra','./SaveyourSon/assets/HitBoxExtra.png');
   this.load.image('barraProgreso','./SaveyourSon/assets/BarraProgresoHUD.png');
   this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
+  this.load.image('portalGun','./SaveyourSon/assets/Rifle.png');
 
 
   this.load.spritesheet('explosion', './SaveyourSon/assets/explosion.png',{ frameWidth: 64, frameHeight: 64 });
@@ -84,7 +82,7 @@ create(){
     this.pointer = this.input.activePointer;
     this.miraSniper = this.add.sprite(0,0,'miraPuntero');
     this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); // Utilizar Modifier
-    this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);//Parar al alcaide
+    this.P = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);//Parar al alcaide
     this.E = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);//Liberar al preso
     this.R = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);//Que el alcaide vuelva a perseguirte
     this.W =this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);//Salto
@@ -151,7 +149,7 @@ create(){
       frameRate: 15,
       repeat: 0
   });
-
+//animacion del jugador corriendo
     this.anims.create({
       key: 'playerRunning',
       frames: this.anims.generateFrameNumbers('playerRun', { start: 0, end: 14 }),
@@ -172,12 +170,14 @@ create(){
       frameRate: 5,
       repeat: -1
     });
+    //policia volando
     this.anims.create({
       key: 'poliflyingslow',
       frames: this.anims.generateFrameNumbers('poliVerticalSlow', { start: 0, end: 15 }),
       frameRate: 5,
       repeat: -1
     });
+    //policia de stun volando
     this.anims.create({
       key: 'poliflyingstun',
       frames: this.anims.generateFrameNumbers('poliVerticalStun', { start: 0, end: 15 }),
@@ -191,6 +191,7 @@ create(){
       frameRate: 10,
       repeat: -1
     });
+    //preso de stun quieto
     this.anims.create({
       key: 'presoIdleStun',
       frames: this.anims.generateFrameNumbers('presoIdleStun', { start: 0, end: 6 }),
@@ -203,19 +204,21 @@ create(){
       frameRate: 10,
       repeat: -1
     });
-
+//preso stun corriendo
     this.anims.create({
       key: 'presoRunStun',
       frames: this.anims.generateFrameNumbers('presoStun', { start: 0, end: 15 }),
       frameRate: 10,
       repeat: -1
     });
+    //Preso slow corriendo
     this.anims.create({
       key: 'presoRunSlow',
       frames: this.anims.generateFrameNumbers('presoSlow', { start: 0, end: 15 }),
       frameRate: 10,
       repeat: -1
     });
+    //Se genera lo común a todas las escenas
     this.pointer = this.input.activePointer;
     this.player = new Player(this, this.gM,this.lvM);
     this.HookGun = new HookGun(this,this.lvM,-1000,-1000);
@@ -234,6 +237,7 @@ create(){
 
 
 }
+//se generan todos los colliders comunes a todas las escenas
 Colliders(){
       
    this.physics.add.collider(this.player, this.background,this.player.ResetJumps,null,this.player);
@@ -250,7 +254,7 @@ Colliders(){
 
 }
 
-
+//Se generan todos los overlaps comunes a las escenas
 Overlaps(){
   this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
   this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
@@ -264,19 +268,20 @@ Overlaps(){
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickGun,null,this.HookGun);
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
    this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
-   this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
    this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
   }
 
-
+//metodo update
 update(){
   if(this.gameOver) this.EndGame() ;
-   let stuned=this.S.isDown;
+  //si se pulsa la letra P se stunea al alcaide y con la r se le liberará
+   let stuned=this.P.isDown;
    let release=this.R.isDown;
+   //realiza el update del enemy y del player
    this.enemy.Update(stuned,release);
    this.player.update();
-   
+   //Segun la tecla que se toque se mueve a la izquierda, a la derecha o hacia arriba 
    if (this.D.isDown){
     this.player.moveRight();
   }
@@ -288,7 +293,7 @@ update(){
     this.player.moveUp();
     if(this.spacebar.isDown)
     this.player.useGadget();
-
+//la cámara sigue al jugador y establece el offset
     this.camera.startFollow(this.player);
     this.camera.setFollowOffset(-100, 225);//Para que no se vea por debajo del mapa
 
@@ -313,44 +318,34 @@ update(){
   else{
     this.miraSniper.visible=false;
   }
-
+//Si pulsa la E liberará el preso si esta en la distancia que debe
     if(this.E.isDown)
       this.player.LiberarPresos(true);
      
      else if(!this.E.isDown)
       this.player.LiberarPresos(false);
-      
-
-   
 
     if(Phaser.Input.Keyboard.JustUp( this.W ) || Phaser.Input.Keyboard.JustUp( this.spacebar ))
       this.player.keyUp();
 
-      if(Phaser.Input.Keyboard.JustDown(this.spacebar)){
-this.player.LiberarPresos(true);
-      }
-      else if(Phaser.Input.Keyboard.JustUp(this.spacebar)){
-this.player.LiberarPresos(false);
-      }
-
-
+//realiza el Update de cada bomba
     this.bombas.children.iterate(function (child) {
       if(child != undefined)
       child.Update();
   });
-
+//realiza el update de todos los polis
   this.extrasPolis.children.iterate(function (child) {
     if(child != undefined)
     child.Update();
 });
-
+//realiza el update a todos los presos
 if(this.Presos!=undefined&&this.Presos!=null)
 this.Presos.children.iterate(function(child){
   if(child != undefined)
     child.Update();
 });
 
-
+//Si existe proyectil realiza su update
 
 if(this.proyectil!==null && this.proyectil!== undefined)
 this.proyectil.Update();
@@ -359,7 +354,7 @@ this.fondo.Update(this.player);
 }
 
 
-
+//metodo que se usa al pillar la bomba
 PillarBomba(player,bomba){
   if(!bomba.recogida){
    bomba.PickMe();
@@ -367,12 +362,12 @@ PillarBomba(player,bomba){
   }
 }
 
-
+//metodo que se usa al pillar la llave
 PillarLlave(player,llave){
   llave.PickMe();
 }
 
-
+//metodo que se usa al pillar al poli
 PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un poli
   poli.caught();
   }
@@ -384,40 +379,17 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
   }
 
   CatchPlayer(){        //SI el player es tocado por el alcaide
-   // this.gameOver=true;
     this.enemy.HitPlayer();
     this.player.dontMove();
     this.enemy.body.setVelocityX(0);
   }
-
-
-  EndGame(){
-    this.scene.start('HasPerdido',this.gM);
-  
-  }
-
-
-
-  Pausar(){
-    if(!this.pausado){
-    this.pausado=true;
-      this.scene.pause();
-    }
-    else{
-      console.log('kjewbkwbkeb');
-      this.pausado=false;
-    this.scene.resume('Level2');
-    }
-  }
-
-
+  //llama al metodo collision del proyectil
   Enganchado(proyc,back){  //Si el proyectil toca con alguna plataforma/suelo/techo
     if(proyc !==undefined)
     proyc.Collision();
-  
   }
 
-
+//establece el proyectil a null
   NuevoProyectil(){    
     this.proyectil=null;
   }

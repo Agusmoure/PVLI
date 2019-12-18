@@ -115,7 +115,7 @@ this.poliVerticalStun.objects.forEach(object => {
     this.Presos.add(this.presoslow);
   });
   //Creamos los modifier de este nivel
-this.HookGun=new HookGun(this,this.lvM);
+this.HookGun=new HookGun(this,this.lvM).setScale(0.2);
 this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
 this.jetpack = new JetPack(this,8500,700).setScale(0.15);
 this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
