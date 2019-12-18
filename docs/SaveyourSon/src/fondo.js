@@ -8,6 +8,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
     }
+    //metodo que situa el fondo donde esta el player
     Update(player){
         //this.body.gravity=0;
         this.body.setVelocityY(0);

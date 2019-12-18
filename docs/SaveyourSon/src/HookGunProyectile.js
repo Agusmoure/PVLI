@@ -25,6 +25,7 @@ const config = {
 };
 this.TPSound = scene.sound.add('Gancho',config);
 }
+//metodo que controla el movimiento de la bala
 Update(){
     if(!this.end){
     this.body.setVelocityX(this.xSpeed);
@@ -36,6 +37,7 @@ Update(){
     this.body.setVelocityY(0);
     }
 }
+//Si colisiona se ejecuta
 Collision(){
 if(!this.end){
     this.lvM.TeleportPlayer(this.body.x,this.body.y);

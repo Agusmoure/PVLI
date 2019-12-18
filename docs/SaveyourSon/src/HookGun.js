@@ -4,7 +4,6 @@ export default class HookGun extends PowerUp{
         let x=oX;
         let y=oY;
         super(scene,x,y,'portalAnimation');
-        this.picked=false;
         this.lvM=levelManager;
         this.xSpeed=0;
         this.ySpeed=0;
@@ -12,7 +11,6 @@ export default class HookGun extends PowerUp{
     scene.physics.add.existing(this);      
     }
     PickGun(player){
-        this.picked=true;
         player.changeModifierGancho();
         this.PickMe();
     }

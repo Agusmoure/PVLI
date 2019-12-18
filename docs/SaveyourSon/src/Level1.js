@@ -1,50 +1,50 @@
-import Player from "./player.js";
+//realizamos los imports necesarios para el nivel
 import JetPack from "./jetpack.js";
-import Enemy from "./enemy.js";
 import Antigravedad from "./antigravedad.js";
 import Key from "./Key.js";
 import Bomba from "./bomb.js";
 import GameManager from "./GameManager.js";
 import Game from "./game.js";
-import LevelManager from "./LevelManager.js";
-import HUD from "./HUD.js";
 import LevelChanger from "./LevelChanger.js"
-import Extra from "./extra.js";
+import Poli from "./poli.js";
+import Preso from "./preso.js";
 import HookGun from "./HookGun.js";
 import fondo from "./fondo.js"
 import NoPowerUp from "./NoPowerUp.js";
 
-
+//constructor de lvl1 en la que creamos el GM que nos acompañará a lo largo del juego
 export default class Level1 extends Game {
     constructor(){
         super('Level1')
         this.gM=new GameManager();
     }
+    //Preload de esta escena
     preload() {
+      //llamos al preload de game.js
     super.preload();
-    this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
+//Hacemos load de las imagenes que unicamente requiere este nivel y del tilemap de este nivel
       this.load.image('fondo','./SaveyourSon/assets/Level1.jpg');
     this.load.tilemapTiledJSON('Nivel1', './SaveyourSon/assets/Nivel1.json');
     this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
       }
+      //Create de esta escena
     create() {
+      //Creamos el fondo para que este al fondo de todo
       this.fondo=new fondo(this,'fondo').setScale(1.7);
-super.create()
 //Creamos el Tilemap
 this.map = this.make.tilemap({ 
   key: 'Nivel1', 
   tileWidth: 64, 
   tileHeight: 64 
 });
-
-
 let t = this.map.addTilesetImage('Tileset', 'patronesTilemap');
 this.background= this.map.createStaticLayer('Nivel1', t);
 this.background.x=0;
 this.background.y=0;
 this.background.setCollisionBetween(0, 10);
-super.create();
-
+      //llamamos al metodo create del padre
+super.create()
+//seteamos una serie de variables de este nivel
 this.player.x=500;
 this.player.y=900;
 this.player.oX=500;
@@ -53,19 +53,19 @@ this.enemy.x=0;
 this.enemy.y=900;
 this.enemy.oX=0;
 this.enemy.oY=900;
-    
-        this.door= new LevelChanger(this,this.gM,this.lvM,40600,100).setScale(0.5);
-        this.lvM.SetNumBombas(3);
+    //Creamos la puerta
+this.door= new LevelChanger(this,this.gM,this.lvM,40600,100).setScale(0.5);
 
-        this.player.changeModifierNormal();
-        this.llaves = this.map.getObjectLayer('LLaves');
+this.player.changeModifierNormal();
+//con el tilemap y las posiciones que en él hemos guardado creamos las llaves, bombas, enemigos, presos
+this.llaves = this.map.getObjectLayer('LLaves');
     
-        this.llaves.objects.forEach(object => { 
-          this.llave = new Key(this,object.x,object.y,this.lvM).setScale(0.25);
-          this.keys.add(this.llave);
-        });
-        this.keyCount=0;        
-        this.bombas = this.physics.add.group();
+this.llaves.objects.forEach(object => { 
+  this.llave = new Key(this,object.x,object.y,this.lvM).setScale(0.25);
+  this.keys.add(this.llave);
+  });
+this.keyCount=0;        
+this.bombas = this.physics.add.group();
 this.bombitas=this.map.getObjectLayer('Bombas');
 let x=0;
 this.bombitas.objects.forEach(object => { 
@@ -73,89 +73,69 @@ this.bombitas.objects.forEach(object => {
   x++;
   this.bombas.add(this.bombita);
 });
-this.lvM.SetNumBombas(this.contador);
-        this.presosSlow = this.map.getObjectLayer('PresosSlow');
-    
-        this.presosSlow.objects.forEach(object => { 
-          this.presosSlow = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,false,false,200,3);
-          this.Presos.add(this.presosSlow);
-        });
-        this.presosStun = this.map.getObjectLayer('PresosStun');
-    
-        this.presosStun.objects.forEach(object => { 
-          this.presosStun = new Extra(this,object.x,object.y,'',-1,100,200,this.lvM,true,false,200,3);
-          this.Presos.add(this.presosStun);
-        });
 
-        this.Presos.children.iterate(function (child) {
+this.lvM.SetNumBombas(x);
+this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
+this.poliHorizontal.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'horizontal',100,200,this.lvM,false,125);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
+this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
+this.poliHorizontalStun.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'horizontal',75,125,this.lvM,true,40);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
 
-          if(child != undefined)
-          child.SetAnim();  
-      });
-      this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
-      this.poliHorizontal.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'horizontal',-1,100,200,this.lvM,false,true,125,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-      this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
-      this.poliHorizontalStun.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'horizontal',-1,75,125,this.lvM,true,true,40,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-    this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
-      this.poliVertical.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'vertical',-1,100,200,this.lvM,false,true,125,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-      this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
-      this.poliVerticalStun.objects.forEach(object => { 
-        this.policia = new Extra(this,object.x,object.y,'vertical',-1,75,125,this.lvM,true,true,40,200);
-        this.policia.SetAnim();
-        this.extrasPolis.add(this.policia);
-      });
-  //   this.extrasPolis.children.iterate(function (child) {
+this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
+this.poliVertical.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'vertical',100,200,this.lvM,false,125);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
+this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
+this.poliVerticalStun.objects.forEach(object => { 
+  this.policia = new Poli(this,object.x,object.y,'vertical',75,125,this.lvM,true,40);
+  this.policia.SetAnim();
+  this.extrasPolis.add(this.policia);
+});
 
-  //     if(child != undefined)
-  //     child.SetAnim();  
-    
-  // });
+  this.presosMapa = this.map.getObjectLayer('PresosStun');
+  this.presosMapa.objects.forEach(object => { 
+    this.preso = new Preso(this,object.x,object.y,100,200,this.lvM,true,200,200);
+    this.preso.SetAnim();
+    this.Presos.add(this.preso);
+  });
+  
+  this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
+  this.presosSlowMapa.objects.forEach(object => { 
+    this.presoslow = new Preso(this,object.x,object.y,100,200,this.lvM,false,200,200);
+    this.presoslow.SetAnim();
+    this.Presos.add(this.presoslow);
+  });
+  //Creamos los modifier de este nivel
 this.HookGun=new HookGun(this,this.lvM);
 this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
 this.jetpack = new JetPack(this,8500,700).setScale(0.15);
 this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
-        
+        //llamamos al metodo Collider y Overlap del padre
     super.Colliders();
-    this.physics.add.collider(this.background,this.door);
         super.Overlaps();
-        this.physics.add.collider(this.jetpack,this.background);
-        this.physics.add.collider(this.backtoNormal,this.background);
-        this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
-        this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
-
-
       
           }
-    
-      update(time, delta) {   
+    //metodo Update
+      update(time, delta) {
+        //llama al metodo Update del padre   
         super.update();
-        this.fondo.Update(this.player);
+        
       }
 
       NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
         player.changeModifierNormal();
-        //noPowerUp.PickMe();
       }
 
       Restart(){
-
-        // this.backtoNormal.destroy();
-        // this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
-        // this.physics.add.collider(this.backtoNormal,this.background);
-        // this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
-
         this.jetpack.destroy();
         this.jetpack = new JetPack(this,8500,700).setScale(0.15);
         this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);

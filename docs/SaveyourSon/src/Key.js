@@ -23,15 +23,16 @@ export default class Key extends PowerUp{
     };
     this.pickMeSound = scene.sound.add('CojerLlave',config);
     }
+    //Se realiza para que no tenga gravedad
     preUpdate(time, delta){
         this.body.setVelocityY(0);
 this.x=this.oX;
 this.y = this.oY;
     }
+    //metodo al que se llama al collisionar con el player
     PickMe(){
         this.lvM.AddKey();
         this.pickMeSound.play();
-        //gameManager.AddKeyToActuallevel();
-        this.destroy(); //Importante que despues de esta linea no se vayan a ejecutar más instrucciones, sino va a petar
+        this.destroy();
         }    
 }

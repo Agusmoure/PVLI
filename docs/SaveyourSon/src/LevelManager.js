@@ -1,17 +1,11 @@
 export default class LevelManager{
     constructor(){
-        this.keys=0;//En esta variable guardaremos las llaves que el jugador tiene para comprar mejoras
+        this.keys=0;
         this.bomba=undefined;
         this.player=undefined;
         this.alcaide=undefined;
         this.liberation=false;
         this.HUD = undefined;
-    //    // this.scene=0;//en esta escena guardaremos la escena en la que nos encontramos 
-    //     //this.speedImprovmentsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la velocidad del jugador
-    //     this.speedPenalizationBought=5;//En esta variable se guardará cuantas veces hemos reducido la velocidad del alcaide
-    //     this.jetpacksImprovementsBought=0;//En esta variable se guardará cuantas veces hemos ampliado la resistencia del jetpack
-    //     this.bombImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la bomba
-    //     this.catapultImprovmentBought=0;//En esta variable se guardará cuantas veces hemos ampliado la fuerza de la catapulta
     }
 
     SetNumBombas(cantidad){

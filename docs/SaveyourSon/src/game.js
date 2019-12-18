@@ -21,14 +21,11 @@ export default class Game extends Phaser.Scene {
     this.lvM = new LevelManager();
     
   }
+  //Cargamos todas las imagenes comunes
 preload() {
 
-  this.load.image('sky', './SaveyourSon/assets/sky.png');
   this.load.image('bombWall', './SaveyourSon/assets/BombWall.png');
-  this.load.image('ground', './SaveyourSon/assets/platform.png');
   this.load.image('key','./SaveyourSon/assets/Key.png');
-  this.load.image('star', './SaveyourSon/assets/star.png');
-  this.load.image('bomb', './SaveyourSon/assets/bomb.png');
   this.load.image('bomba','./SaveyourSon/assets/bomba.png');
   this.load.image('jetpackHUD','./SaveyourSon/assets/jetpack.png');
   this.load.image('hookHUD','./SaveyourSon/assets/HookGun.png');
@@ -42,6 +39,8 @@ preload() {
   this.load.image('miraPuntero','./SaveyourSon/assets/miraPuntero.png');
   this.load.image('hitboxExtra','./SaveyourSon/assets/HitBoxExtra.png');
   this.load.image('barraProgreso','./SaveyourSon/assets/BarraProgresoHUD.png');
+  this.load.image('door','./SaveyourSon/assets/ExitDoor.png');
+
 
   this.load.spritesheet('explosion', './SaveyourSon/assets/explosion.png',{ frameWidth: 64, frameHeight: 64 });
   this.load.spritesheet('alcaideRun','./SaveyourSon/assets/AlcaideRun.png',{frameWidth:64,frameHeight:64});
@@ -247,6 +246,10 @@ Colliders(){
    this.physics.add.collider(this.HookGun,this.background);
    this.physics.add.collider(this.Presos,this.background);
    this.physics.add.collider(this.HookGunProyectiles,this.background,this.Enganchado,null,this);
+   this.physics.add.collider(this.background,this.door);
+   this.physics.add.collider(this.jetpack,this.background);
+   this.physics.add.collider(this.backtoNormal,this.background);
+
 }
 
 
@@ -264,6 +267,8 @@ Overlaps(){
    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.PickMe,null,this.HookGun);
    this.physics.add.overlap(this.player,this.enemy,this.CatchPlayer,null,this);
    this.physics.add.overlap(this.player,this.enemy,this.Muerte2,null,this);
+   this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
+   this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
 }
 
 
@@ -351,6 +356,8 @@ this.Presos.children.iterate(function(child){
 
 if(this.proyectil!==null && this.proyectil!== undefined)
 this.proyectil.Update();
+this.fondo.Update(this.player);
+
 }
 
 

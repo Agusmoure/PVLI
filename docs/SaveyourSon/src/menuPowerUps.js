@@ -1,13 +1,13 @@
 
 export default class MenuPowerUps extends Phaser.Scene {
-
+//Escena de power ups
     constructor() {
-      super(/*{ key: 'main' }*/ 'MenuPowerUps');
+      super( 'MenuPowerUps');
     this.fuelPrice=40;
     this.speedImprovementPrice=50;
     this.speedPenalizationPrice=50;
     }
-
+//preload de esta escena
     preload() {
 
         this.load.image('sky', './SaveyourSon/assets/sky.png');
@@ -17,18 +17,19 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.load.image('FondoLlaveHUD','./SaveyourSon/assets/FondoLlaveHUD.png');
         this.load.image('Llave','./SaveyourSon/assets/Key.png');
         this.load.image('menu','./SaveyourSon/assets/Menu.jpg');
-        this.load.image('easterEgg','./SaveyourSon/assets/EasterEgg.png');
         this.load.bitmapFont('font', './SaveyourSon/assets/carrier_command.png', './SaveyourSon/assets/carrier_command.xml');      
 
 
     }
-
+//create de la escema
     create(data) {
+
         this.gM=data;
-        
+        console.log(data);
+        console.log(this.gM);
+        //añadimos las imagenes, el texto  y hacemos interactivas las de comprar 
         this.mouseClick=false;
         this.add.image(350, 350, 'menu').setScale(2);
-        this.add.image(700,100,'easterEgg').setScale(0.5);
         this.add.image(100,100,'FondoLlaveHUD').setScale(3);
         this.add.image(100,90,'Llave').setScale(1);
         this.textoLLaves= this.add.text(95,135,'0');
@@ -73,6 +74,7 @@ export default class MenuPowerUps extends Phaser.Scene {
         this.add.bitmapText(290, 685, 'font', 'Mejora Jetpack\n\n'+this.fuelPrice).setScale(0.5);
 
     }
+    //metodo update se encarga de manejar los eventos de los botones de compra y de editar los textos en funcion de su necesidad
     update(time, delta) {
 
     this.textoLLaves.setText(this.gM.GetKey());
@@ -113,7 +115,7 @@ this.Mejora.on('pointerup',pointer => {
             });
 
 
-     this.buttonSpeedPenalization.on('pointerdown',pointer => {
+    this.buttonSpeedPenalization.on('pointerdown',pointer => {
                 if(!this.mouseClick){
                     if(this.gM.GetKey()>=this.speedPenalizationPrice&&this.gM.GetMaxImprovements()>this.gM.GetSpeedPenalizations()){
                     this.gM. AddSpeedPenalization(1);
@@ -129,7 +131,7 @@ this.Mejora.on('pointerup',pointer => {
     this.buttonSpeedPenalization.on('pointerup',pointer => {
                     this.mouseClick=false;
                     });
-                    this.buttonfuel.on('pointerdown',pointer => {
+    this.buttonfuel.on('pointerdown',pointer => {
                         if(!this.mouseClick){
                             if(this.gM.GetKey()>=this.fuelPrice&&this.gM.GetMaxImprovements()>this.gM.GetJetpackImprovements()){
                             this.gM. AddJetPackImprovment(1);
@@ -142,9 +144,10 @@ this.Mejora.on('pointerup',pointer => {
                         this.mouseClick=true;
                         });
                         
-            this.buttonfuel.on('pointerup',pointer => {
+     this.buttonfuel.on('pointerup',pointer => {
                             this.mouseClick=false;
-                            });
+                            }); 
                 
+                            console.log("kdjc");
                 }
         }

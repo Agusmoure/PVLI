@@ -10,6 +10,7 @@ export default class LevelChanger extends Phaser.GameObjects.Sprite{
     this.lvM=levelManager;
     this.gM=gameManager;
     }
+    //metodo que cambia de nivel
     ChangeLevel(){
         if(this.lvM!=undefined&&this.lvM!=null){
             this.gM.AddKeys(this.lvM.GetKey())

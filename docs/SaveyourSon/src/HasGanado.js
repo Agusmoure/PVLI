@@ -1,7 +1,7 @@
 export default class HasGanado extends Phaser.Scene {
-
+//Escena que sale al finalizar el juego
     constructor() {
-      super(/*{ key: 'main' }*/ 'HasGanado');
+      super( 'HasGanado');
     }
     preload(){
         this.load.image('menu','./SaveyourSon/assets/Menu.jpg');
