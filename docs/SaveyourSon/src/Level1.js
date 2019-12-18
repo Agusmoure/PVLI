@@ -59,7 +59,6 @@ this.door= new LevelChanger(this,this.gM,this.lvM,40600,100).setScale(0.5);
 this.player.changeModifierNormal();
 //con el tilemap y las posiciones que en él hemos guardado creamos las llaves, bombas, enemigos, presos
 this.llaves = this.map.getObjectLayer('LLaves');
-    
 this.llaves.objects.forEach(object => { 
   this.llave = new Key(this,object.x,object.y,this.lvM).setScale(0.25);
   this.keys.add(this.llave);

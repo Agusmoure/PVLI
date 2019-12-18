@@ -297,6 +297,7 @@ this.body.setGravityY(Math.abs(this.gravity));
 
 ResetJumps(){
     //Esta condición es para que solo resetee saltos en todos los casos que no sean no tocar el suelo y tocar el lado derecho o izquierdo
+    //sabemos que la condición correcta sería if(this.body.touching.down) pero realizando esto no se resetea el salto al tocar el suelo
     if(!(!this.body.touching.down&&(this.body.touching.right||this.body.touching.left)))
     this.avalibleJump=this.maxJump;
 
