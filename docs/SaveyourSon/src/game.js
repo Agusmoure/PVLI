@@ -267,7 +267,66 @@ Overlaps(){
    this.physics.add.overlap(this.player,this.backtoNormal,this.NoPower,null,this);
    this.physics.add.overlap(this.player,this.door,this.door.ChangeLevel,null,this);
   }
+  //genera los objetos declarado en el tiled que son comunes a los 3 niveles
+GenerateObjects(){
+  //Gracias a tilemap creamos todos los elementos que hay en él
+  this.llaves = this.map.getObjectLayer('Llaves');
+  console.log(this.llaves);
 
+  this.llaves.objects.forEach(object => { 
+    this.llave = new Key(this,object.x,object.y-1000,this.lvM).setScale(0.25);
+    this.keys.add(this.llave);
+  });
+  this.poliHorizontal = this.map.getObjectLayer('PoliHorizontalSlow');
+  this.poliHorizontal.objects.forEach(object => { 
+    this.policia = new Poli(this,object.x,object.y-1000,'horizontal',100,200,this.lvM,false,125);
+    this.policia.SetAnim();
+    this.extrasPolis.add(this.policia);
+  });
+  this.poliHorizontalStun = this.map.getObjectLayer('PoliHorizontalStun');
+  this.poliHorizontalStun.objects.forEach(object => { 
+    this.policia = new Poli(this,object.x,object.y-1000,'horizontal',75,125,this.lvM,true,40);
+    this.policia.SetAnim();
+    this.extrasPolis.add(this.policia);
+  });
+
+  this.poliVertical = this.map.getObjectLayer('PoliVerticalSlow');
+  this.poliVertical.objects.forEach(object => { 
+    this.policia = new Poli(this,object.x,object.y-1000,'vertical',100,200,this.lvM,false,125);
+    this.policia.SetAnim();
+    this.extrasPolis.add(this.policia);
+  });
+  this.poliVerticalStun = this.map.getObjectLayer('PoliVerticalStun');
+  this.poliVerticalStun.objects.forEach(object => { 
+    this.policia = new Poli(this,object.x,object.y-1000,'vertical',75,125,this.lvM,true,40);
+    this.policia.SetAnim();
+    this.extrasPolis.add(this.policia);
+  });
+
+    this.presosMapa = this.map.getObjectLayer('PresosStun');
+    this.presosMapa.objects.forEach(object => { 
+      this.preso = new Preso(this,object.x,object.y-1000,100,200,this.lvM,true,200,200);
+      this.preso.SetAnim();
+      this.Presos.add(this.preso);
+    });
+    
+    this.presosSlowMapa = this.map.getObjectLayer('PresosSlow');
+    this.presosSlowMapa.objects.forEach(object => { 
+      this.presoslow = new Preso(this,object.x,object.y-1000,100,200,this.lvM,false,200,200);
+      this.presoslow.SetAnim();
+      this.Presos.add(this.presoslow);
+    });
+
+    this.contador=0;
+    this.BombasMap =this.map.getObjectLayer('Bombas');
+    this.BombasMap.objects.forEach(object => { 
+      this.bomba = new Bomba(this,object.x,object.y-1000,this.lvM,this.contador);
+      this.contador++;
+   
+      this.bombas.add(this.bomba);
+    });
+    this.lvM.SetNumBombas(this.contador);
+}
 //metodo update
 update(){
   if(this.gameOver) this.EndGame() ;
