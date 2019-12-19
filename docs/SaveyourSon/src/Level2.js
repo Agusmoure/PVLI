@@ -127,8 +127,8 @@ this.llaves.objects.forEach(object => {
     this.lvM.SetNumBombas(this.contador);
     
     this.proyectil=undefined;
-    this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM);
-  this.backtoNormal = new NoPowerUp(this,30500,1250,this.lvM).setScale(1.5);
+    this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM).setScale(1.5);
+  this.backtoNormal = new NoPowerUp(this,30500,1350,this.lvM).setScale(1.5);
   this.HookGun =new HookGun(this,this.lvM,19600,1350).setScale(0.2);
   
 
