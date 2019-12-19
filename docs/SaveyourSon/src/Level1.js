@@ -45,7 +45,7 @@ this.background.setCollisionBetween(0, 10);
       //llamamos al metodo create del padre
 super.create()
 //seteamos una serie de variables de este nivel
-this.player.x=500;
+this.player.x=40500;
 this.player.y=900;
 this.player.oX=500;
 this.player.oY=900;
@@ -127,16 +127,14 @@ this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
       update(time, delta) {
         //llama al metodo Update del padre   
         super.update();
-        
+        if(this.player.y>5000) //Por si el player ataviesa el suela, que no tenga que volver a empezar el juego, slo el nivel
+    this.Restart();
       }
 
       NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
 
         player.changeModifierNormal();
-        this.bombas.children.iterate(function (child) {
-          if(child != undefined)
-          child.Restart();
-      });
+     this.noBombaEnMano();
         
       }
 
@@ -152,11 +150,8 @@ this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
 this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
         this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
         this.physics.add.collider(this.antigravedad,this.background);
-        this.bombas.children.iterate(function (child) {
-          if(child != undefined)
-          child.Restart();
-      });
-
+      this.noBombaEnMano();
+      this.RestartEnemigos();
         this.enemy.Restart();
         this.player.Restart('normal');
       }

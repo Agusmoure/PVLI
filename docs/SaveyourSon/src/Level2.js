@@ -129,7 +129,7 @@ this.llaves.objects.forEach(object => {
     this.proyectil=undefined;
     this.backtoNormal2 = new NoPowerUp(this,10120,550,this.lvM);
   this.backtoNormal = new NoPowerUp(this,30500,1300,this.lvM);
-  this.gancho =new HookGun(this,this.lvM,19600,1350).setScale(0.2);
+  this.HookGun =new HookGun(this,this.lvM,19600,1350).setScale(0.2);
   
 
     this.HookGunProyectile=new HookGunProyectile(this,LevelManager,0,0,-89999,-89999);
@@ -137,21 +137,20 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 //metodos collider y overlap del padre
    super.Colliders();
    super.Overlaps();
-   this.physics.add.collider(this.gancho,this.background);
+   this.physics.add.collider(this.HookGun,this.background);
    this.physics.add.collider(this.backtoNormal2,this.background);
     this.physics.add.overlap(this.player,this.backtoNormal2,this.NoPower,null,this);
-     this.physics.add.overlap(this.player,this.gancho,this.GetGancho,null,this);
-  }
+     this.physics.add.overlap(this.player,this.HookGun,this.GetGancho,null,this);
+    }
 //metodo update
   update(time, delta) {
     super.update();
+    if(this.player.y>5000) //Por si el player ataviesa el suela, que no tenga que volver a empezar el juego, slo el nivel
+    this.Restart();
   }
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
-    this.bombas.children.iterate(function (child) {
-      if(child != undefined)
-      child.Restart();
-    });
+   this.noBombaEnMano();
   }
 //cambia el modifier a gancho y destruye el gancho
   GetGancho(player,gancho){
@@ -161,17 +160,16 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
 
 //reinicia el nivel
   Restart(){
-    this.gancho.destroy();
-    this.gancho = new HookGun(this,this.lvM,19600,1350).setScale(0.2);
-    this.physics.add.overlap(this.player,this.gancho,this.player.changeModifierGancho,null,this.player);
-    this.physics.add.overlap(this.player,this.gancho,this.gancho.changeModifier,null,this.gancho);
-    this.physics.add.collider(this.gancho,this.background);
+    this.HookGun.destroy();
+    this.HookGun = new HookGun(this,this.lvM,19600,1350).setScale(0.2);
+    this.physics.add.overlap(this.player,this.HookGun,this.player.changeModifierGancho,null,this.player);
+    this.physics.add.overlap(this.player,this.HookGun,this.HookGun.changeModifier,null,this.HookGun);
+    this.physics.add.collider(this.HookGun,this.background);
+
     this.enemy.Restart();
     this.player.Restart('jetpack');
-    this.bombas.children.iterate(function (child) {
-      if(child != undefined)
-      child.Restart();
-  });
+  this.noBombaEnMano();
+  this.RestartEnemigos();
 
   }
 }

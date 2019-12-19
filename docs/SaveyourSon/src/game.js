@@ -248,6 +248,9 @@ Colliders(){
 
 //Se generan todos los overlaps comunes a las escenas
 Overlaps(){
+  this.physics.add.overlap(this.player,this.jetpack,this.noBombaEnMano,null,this);
+  this.physics.add.overlap(this.player,this.HookGun,this.noBombaEnMano,null,this);
+  this.physics.add.overlap(this.player,this.antigravedad,this.noBombaEnMano,null,this);
   this.physics.add.overlap(this.player,this.bombas,this.PillarBomba,null,this);
   this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
   this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
@@ -442,6 +445,21 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
     proyc.Collision();
   }
 
+  //LLamo a todas las bombas para que si cambio de modifier y tengo una en la mano, esa se destruya
+  noBombaEnMano(){
+    this.bombas.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+    });
+  }
+
+  //Para que al volver a empezar el nivel los enemigos puedan volver a hacerte stun
+  RestartEnemigos(){
+    this.extrasPolis.children.iterate(function (child) {
+      if(child != undefined)
+      child.Restart();
+    });
+  }
 //establece el proyectil a null
   NuevoProyectil(){    
     this.proyectil=null;

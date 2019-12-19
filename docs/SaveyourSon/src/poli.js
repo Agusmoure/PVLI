@@ -115,4 +115,9 @@ export default class Poli extends Phaser.GameObjects.Sprite{
             this.imagen.play('poliflyingslow');
         }
        }
+
+
+       Restart(){
+           this.tocado=false;
+       }
 }

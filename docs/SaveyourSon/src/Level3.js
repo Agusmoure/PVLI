@@ -127,13 +127,12 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
   update(time, delta) { 
     //llama al metodo update del padre
     super.update(); 
+    if(this.player.y>5000) //Por si el player ataviesa el suela, que no tenga que volver a empezar el juego, slo el nivel
+    this.Restart();
   }
   NoPower(player, noPowerUp){       //Devuelvo al player al estado de normal
     player.changeModifierNormal();
-    this.bombas.children.iterate(function (child) {
-      if(child != undefined)
-      child.Restart();
-    });
+  this.noBombaEnMano();
   }
 //metodo que reinicia la posicion del player, del enemy y vuelve a poner los modifiers en su lugar
   Restart(){
@@ -157,10 +156,6 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
 
     this.enemy.Restart();
     this.player.Restart('jetpack');
-    this.bombas.children.iterate(function (child) {
-      if(child != undefined)
-      child.Restart();
-  });
-
+   this.noBombaEnMano();
   }
 }

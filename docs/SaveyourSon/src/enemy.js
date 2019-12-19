@@ -37,10 +37,18 @@ export default class Enemy extends Phaser.GameObjects.Sprite{
 
         //Si no estoy stuneado sigo al player dependiendo de donde esté
         if(this.stunTime<1){
-        if(this.player.x<this.x)
+        if(this.player.x<this.x){
+        if(Math.abs(Math.abs(this.player.x)-Math.abs(this.x))<500)
         this.body.setVelocityX(-this.speedX);
         else
+        this.body.setVelocityX(-this.speedX*1.5);  //Para que si lo sacas de pantalla no tarde mucho en volver
+        }
+        else{
+            if(Math.abs(Math.abs(this.player.x)-Math.abs(this.x))<500)
         this.body.setVelocityX(this.speedX);
+        else
+        this.body.setVelocityX(this.speedX*1.5);
+        }
         if(this.player.y<this.y)
         this.body.setVelocityY(-this.speedY);
         else
