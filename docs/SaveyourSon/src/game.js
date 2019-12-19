@@ -6,6 +6,7 @@ import LevelManager from "./LevelManager.js";
 import HookGun from "./HookGun.js";
 import HUD from "./HUD.js";
 import HookGunProyectile from "./HookGunProyectile.js"
+import JetPack from "./jetpack.js";
 export default class Game extends Phaser.Scene {
 
   constructor(key) {
@@ -214,6 +215,7 @@ create(){
     this.player = new Player(this, this.gM,this.lvM);
     this.HookGun = new HookGun(this,this.lvM,-1000,-1000);
     this.enemy = new Enemy(this,this.player,this.gM);
+    this.jetpack = new JetPack(this,-1000,0);
     this.lvM.player=this.player;
     this.lvM.alcaide=this.enemy;
     this.camera = this.cameras.main
@@ -447,6 +449,7 @@ PoliPilla(player,poli){   // En caso de que el player haya sio tocado por un pol
 
   //LLamo a todas las bombas para que si cambio de modifier y tengo una en la mano, esa se destruya
   noBombaEnMano(){
+    console.log('no bomba en mano');
     this.bombas.children.iterate(function (child) {
       if(child != undefined)
       child.Restart();

@@ -140,18 +140,21 @@ this.load.image('patronesTilemap', './SaveyourSon/assets/patrones.png');
     this.HookGun = new HookGun(this,this.lvM,34500,800).setScale(0.2);
     this.physics.add.overlap(this.player,this.HookGun,this.player.changeModifierGancho,null,this.player);
     this.physics.add.overlap(this.player,this.HookGun,this.HookGun.changeModifier,null,this.HookGun);
+    this.physics.add.overlap(this.player,this.HookGun,this.noBombaEnMano,null,this);
     this.physics.add.collider(this.HookGun,this.background);
 
     this.jetpack.destroy();
     this.jetpack = new JetPack(this,24800,1000).setScale(0.15);
     this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
     this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
-    this.physics.add.collider(this.jetpack,this.background);
+    this.physics.add.overlap(this.player,this.jetpack,this.noBombaEnMano,null,this);
+    this.physics.add.collider(this.jetpack,this.background);  
 
     this.antigravedad.destroy();
     this.antigravedad = new Antigravedad(this,13100,-130).setScale(0.35);
     this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
     this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+    this.physics.add.overlap(this.player,this.antigravedad,this.noBombaEnMano,null,this);
     this.physics.add.collider(this.antigravedad,this.background);
 
     this.enemy.Restart();

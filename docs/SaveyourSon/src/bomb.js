@@ -33,29 +33,28 @@ export default class Bomba extends PowerUp{
     Update(){
     
         
-
         //Si estoy en la mano del player
-if(this.recogida===true && !this.lvM.LanzarBomba(this.index)){
-this.x=this.lvM.GetPlayerX();
-this.y=this.lvM.GetPlayerY();
-}
-
-//Compruebo si tengo que ser lanzada
-else if(this.recogida===true && this.lvM.LanzarBomba(this.index) && !this.lanzada){
+        if(this.recogida===true && !this.lvM.LanzarBomba(this.index)){
+            this.x=this.lvM.GetPlayerX();
+            this.y=this.lvM.GetPlayerY();
+        }
+        
+        //Compruebo si tengo que ser lanzada
+        else if(this.recogida===true && this.lvM.LanzarBomba(this.index) && !this.lanzada){
     this.Lanzamiento(this.lvM.GetPlayerVelX());
     this.lanzada=true;
 }
 
 //Temporizador para explotar
 else if(this.lanzada){
-this.temp=this.temp+10;
-
-//El temporizador de la explosion acabó y aun no he explotado, hay que explotar hay que mandar el impulso al jugador
-if(this.temp>1000 && !this.boom){
+    this.temp=this.temp+10;
+    
+    //El temporizador de la explosion acabó y aun no he explotado, hay que explotar hay que mandar el impulso al jugador
+    if(this.temp>1000 && !this.boom){
     //Me quedo con la distancia de mi al player
     let distanciaX= Math.abs(this.lvM.GetPlayerX()-this.x);
     let distanciaY= Math.abs(this.lvM.GetPlayerY()-this.y);
-
+    
     //Le mando el impulso al player dependiendo de si esta a mi izquierda o a mi derecha
     //Si la fuerza de impulso es un valor Q. Utilizo trigonometría para sacar Qx u Qy y pasarselas al player
     if(this.lvM.GetPlayerX()<this.x && Math.abs(this.lvM.GetPlayerX()-this.x)<200)  
@@ -70,9 +69,14 @@ if(this.temp>1000 && !this.boom){
     this.on('animationcomplete',this.Explode,this); //En el momento de que la animacion de mi explosion llamo a explode para que termine mi ejecucion
 }
 }
+
+//Si el player me ha pillado, pero no he sido lazada y el player me dice que ya no tiene una bomba me destruyo
+if(this.recogida && !this.lanzada && this.lvM.player.modifier !=='bomba')
+this.Explode();
 }
 PickMe(){
-    this.recogida=true;    
+    this.recogida=true;  
+    console.log('recogida');  
 }
 //He sido lanzada y dependiendo de la direccion que me llegue, soy lanzada hacia una posicion u otra
 Lanzamiento(sentido){
@@ -89,7 +93,7 @@ Lanzamiento(sentido){
 
 Restart(){
     if(this.recogida)
-    this.Explode();
+        this.Explode();
 }
 
 //Como bomba termina mi ejecucion

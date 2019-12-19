@@ -114,7 +114,7 @@ this.poliVerticalStun.objects.forEach(object => {
     this.Presos.add(this.presoslow);
   });
   //Creamos los modifier de este nivel
-this.HookGun=new HookGun(this,this.lvM).setScale(0.2);
+this.HookGun=new HookGun(this,this.lvM,-1000,0).setScale(0.2);
 this.backtoNormal = new NoPowerUp(this,30400,900,this.lvM);
 this.jetpack = new JetPack(this,8500,700).setScale(0.15);
 this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
@@ -143,12 +143,14 @@ this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
         this.jetpack = new JetPack(this,8500,700).setScale(0.15);
         this.physics.add.overlap(this.player,this.jetpack,this.player.changeModifierJetPack,null,this.player);
         this.physics.add.overlap(this.player,this.jetpack,this.jetpack.changeModifier,null,this.jetpack);
+        this.physics.add.overlap(this.player,this.jetpack,super.noBombaEnMano,null,this);
         this.physics.add.collider(this.jetpack,this.background);
 
         this.antigravedad.destroy();
 this.antigravedad = new Antigravedad(this,18000,150).setScale(0.35);
 this.physics.add.overlap(this.player,this.antigravedad,this.player.changeModifierAntigravedad,null,this.player);
         this.physics.add.overlap(this.player,this.antigravedad,this.antigravedad.changeModifier,null,this.antigravedad);
+        this.physics.add.overlap(this.player,this.antigravedad,this.noBombaEnMano,null,this);
         this.physics.add.collider(this.antigravedad,this.background);
       this.noBombaEnMano();
       this.RestartEnemigos();

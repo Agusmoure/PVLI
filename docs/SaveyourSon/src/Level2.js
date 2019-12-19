@@ -164,6 +164,7 @@ this.HookGunProyectiles.add(this.HookGunProyectile);
     this.HookGun = new HookGun(this,this.lvM,19600,1350).setScale(0.2);
     this.physics.add.overlap(this.player,this.HookGun,this.player.changeModifierGancho,null,this.player);
     this.physics.add.overlap(this.player,this.HookGun,this.HookGun.changeModifier,null,this.HookGun);
+    this.physics.add.overlap(this.player,this.HookGun,this.noBombaEnMano,null,this);
     this.physics.add.collider(this.HookGun,this.background);
 
     this.enemy.Restart();
