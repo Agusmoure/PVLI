@@ -45,7 +45,7 @@ this.background.setCollisionBetween(0, 10);
       //llamamos al metodo create del padre
 super.create()
 //seteamos una serie de variables de este nivel
-this.player.x=40500;
+this.player.x=500;
 this.player.y=900;
 this.player.oX=500;
 this.player.oY=900;
